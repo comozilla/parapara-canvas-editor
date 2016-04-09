@@ -12,9 +12,29 @@ html, body {
   height: 100%;
   transition: left 0.25s ease-in-out 0s;
   background-color: rgba(255, 255, 0, 0.5);
+  padding: 5px;
+  box-sizing: border-box;
 }
 #menu.menu-open {
   left: 0px;
+}
+#menu-colors {
+  display: flex;
+  padding: 0;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+#menu-colors li {
+  list-style-type: none;
+  width: 3vw;
+  height: 3vw;
+  margin: 3px;
+  cursor: pointer;
+  border-radius: 3vw;
+  transition: transform 0.25s cubic-bezier(.18,.89,1,1.7) 0s;
+}
+#menu-colors li:hover {
+  transform: scale(1.2);
 }
 #btn-open-inspector {
   position: absolute;
