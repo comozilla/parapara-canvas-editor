@@ -2,8 +2,10 @@
   var canvas = {
     isMouseDown: false,
     element: null,
+    context: null,
     setupCanvas: function() {
       canvas.element = document.getElementById("canvas");
+      canvas.context = canvas.element.getContext("2d");
       canvas.element.addEventListener("mousedown", function() {
         canvas.isMouseDown = true;
       });
@@ -25,7 +27,12 @@
     canvas.setupCanvas();
     canvas.attachMouseMoveListener(mouseMoveCanvas);
   });
-  function mouseMoveCanvas() {
-    
+  function mouseMoveCanvas(event) {
+    if (event.buttons === 1) {
+      canvas.context.fillStyle = "red";
+      canvas.context.beginPath();
+      canvas.context.arc(event.clientX, event.clientY, 10, Math.PI * 2, false);
+      canvas.context.fill();
+    }
   }
 }();
