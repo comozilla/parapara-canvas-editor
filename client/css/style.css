@@ -4,9 +4,21 @@ html, body {
   margin: 0;
   overflow: hidden;
 }
-#btn-open-inspector {
+#menu {
   position: fixed;
+  left: -20%;
+  top: 0px;
+  width: 20%;
+  height: 100%;
+  transition: left 0.25s ease-in-out 0s;
+  background-color: rgba(255, 255, 0, 0.5);
+}
+#menu.menu-open {
   left: 0px;
+}
+#btn-open-inspector {
+  position: absolute;
+  left: 100%;
   top: 40%;
   height: 20%;
   padding: 0px 5px;

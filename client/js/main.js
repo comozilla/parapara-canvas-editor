@@ -26,6 +26,9 @@
   document.addEventListener("DOMContentLoaded", function() {
     canvas.setupCanvas();
     canvas.attachMouseMoveListener(mouseMoveCanvas);
+    document.getElementById("btn-open-inspector").addEventListener("click", function() {
+      document.getElementById("menu").classList.toggle("menu-open");
+    });
   });
   function mouseMoveCanvas(event) {
     if (event.buttons === 1) {
