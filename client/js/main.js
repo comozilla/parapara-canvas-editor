@@ -1,49 +1,59 @@
 +function() {
-  var canvas = {
-    isMouseDown: false,
-    element: null,
-    context: null,
-    beforeMousePosX: 0,
-    beforeMousePosY: 0,
-    setupCanvas: function() {
-      canvas.element = document.getElementById("canvas");
-      canvas.context = canvas.element.getContext("2d");
-      canvas.resizeCanvas();
-      window.addEventListener("resize", canvas.resizeCanvas);
-      canvas.context.strokeStyle = "red";
-      canvas.context.lineWidth = 10;
-      canvas.element.addEventListener("mousedown", function(event) {
-        canvas.isMouseDown = true;
-        beforeMousePosX = event.clientX;
-        beforeMousePosY = event.clientY;
-      });
-      canvas.element.addEventListener("mouseup", function() {
-        canvas.isMouseDown = false;
-      });
-      canvas.element.addEventListener("mousemove", function(event) {
-        if (canvas.isMouseDown) {
-          canvas.context.beginPath();
-          canvas.context.moveTo(beforeMousePosX, beforeMousePosY);
-          canvas.context.lineTo(event.clientX, event.clientY);
-          canvas.context.lineCap = "round";
-          canvas.context.stroke();
+  var canvas = {};
+  !function() {
+    var canvasElement;
+    var ctx;
+    var beforeMousePosX = 0;
+    var beforeMousePosY = 0;
+    canvas = {
+      isMouseDown: false,
+      setupCanvas: function() {
+        canvasElement = document.getElementById("canvas");
+        ctx = canvasElement.getContext("2d");
+        canvas.resizeCanvas();
+        window.addEventListener("resize", canvas.resizeCanvas);
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = 10;
+        canvasElement.addEventListener("mousedown", function(event) {
+          canvas.isMouseDown = true;
           beforeMousePosX = event.clientX;
           beforeMousePosY = event.clientY;
+        });
+        canvasElement.addEventListener("mouseup", function() {
+          canvas.isMouseDown = false;
+        });
+        canvasElement.addEventListener("mousemove", function(event) {
+          if (canvas.isMouseDown) {
+            ctx.beginPath();
+            ctx.moveTo(beforeMousePosX, beforeMousePosY);
+            ctx.lineTo(event.clientX, event.clientY);
+            ctx.lineCap = "round";
+            ctx.stroke();
+            beforeMousePosX = event.clientX;
+            beforeMousePosY = event.clientY;
+          }
+        });
+      },
+      addEventListener: function(eventName, listener) {
+        canvasElement.addEventListener(eventName, listener);
+      },
+      resizeCanvas: function() {
+        canvasElement.width = window.innerWidth;
+        canvasElement.height = window.innerHeight;
+      },
+      setLineWidth: function(width) {
+        ctx.lineWidth = width;
+      },
+      setColor: function(color) {
+        if (color === "white") {
+          ctx.globalCompositeOperation = 'destination-out';
+        } else {
+          ctx.globalCompositeOperation = 'source-over';
         }
-      });
-    },
-    addEventListener: function(eventName, listener) {
-      canvas.element.addEventListener(eventName, listener);
-    },
-    resizeCanvas: function() {
-      canvas.element.width = window.innerWidth;
-      canvas.element.height = window.innerHeight;
-    },
-    setLineWidth: function(width) {
-      console.log(width);
-      canvas.context.lineWidth = width;
-    }
-  };
+        ctx.strokeStyle = color;
+      }
+    };
+  }();
   document.addEventListener("DOMContentLoaded", function() {
     canvas.setupCanvas();
     setDefaultValues();
@@ -67,12 +77,7 @@
     document.getElementById("menu-line-width").value = 10;
   }
   function clickColorItem() {
-    if (this.style.backgroundColor === "white") {
-      canvas.context.globalCompositeOperation = 'destination-out';
-    } else {
-      canvas.context.globalCompositeOperation = 'source-over';
-    }
-    canvas.context.strokeStyle = this.style.backgroundColor;
+    canvas.setColor(this.style.backgroundColor);
   }
   function toggleOpenMenuButton(isVisible) {
     document.getElementById("btn-open-inspector").style.display = isVisible ? "block" : "none";
