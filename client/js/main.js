@@ -46,15 +46,12 @@
       nodes.addEventListener("click", clickColorItem);
     });
   });
-  var beforeMousePosX = -1;
-  var beforeMousePosY = -1;
   function clickColorItem() {
     if (this.style.backgroundColor === "white") {
       canvas.context.globalCompositeOperation = 'destination-out';
     } else {
       canvas.context.globalCompositeOperation = 'source-over';
     }
-    console.log(canvas.context.globalCompositeOperation);
     canvas.context.strokeStyle = this.style.backgroundColor;
   }
 }();
