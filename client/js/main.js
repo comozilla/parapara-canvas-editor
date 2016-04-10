@@ -42,6 +42,12 @@
     }
   }
   function clickColorItem() {
+    if (this.style.backgroundColor === "white") {
+      canvas.context.globalCompositeOperation = 'destination-out';
+    } else {
+      canvas.context.globalCompositeOperation = 'source-over';
+    }
+    console.log(canvas.context.globalCompositeOperation);
     canvas.context.fillStyle = this.style.backgroundColor;
   }
 }();
