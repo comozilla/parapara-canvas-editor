@@ -8,7 +8,10 @@
     setupCanvas: function() {
       canvas.element = document.getElementById("canvas");
       canvas.context = canvas.element.getContext("2d");
-      canvas.context.fillStyle = "red";
+      canvas.resizeCanvas();
+      window.addEventListener("resize", canvas.resizeCanvas);
+      canvas.context.strokeStyle = "red";
+      canvas.context.lineWidth = 10;
       canvas.element.addEventListener("mousedown", function(event) {
         canvas.isMouseDown = true;
         beforeMousePosX = event.clientX;
@@ -19,7 +22,6 @@
       });
       canvas.element.addEventListener("mousemove", function(event) {
         if (canvas.isMouseDown) {
-          canvas.context.lineWidth = 10;
           canvas.context.beginPath();
           canvas.context.moveTo(beforeMousePosX, beforeMousePosY);
           canvas.context.lineTo(event.clientX, event.clientY);
@@ -29,23 +31,32 @@
           beforeMousePosY = event.clientY;
         }
       });
-      canvas.resizeCanvas();
-      window.addEventListener("resize", canvas.resizeCanvas);
     },
     resizeCanvas: function() {
       canvas.element.width = window.innerWidth;
       canvas.element.height = window.innerHeight;
+    },
+    setLineWidth: function(width) {
+      console.log(width);
+      canvas.context.lineWidth = width;
     }
   };
   document.addEventListener("DOMContentLoaded", function() {
     canvas.setupCanvas();
+    setDefaultValues();
     document.getElementById("btn-open-inspector").addEventListener("click", function() {
       document.getElementById("menu").classList.toggle("menu-open");
     });
     Array.prototype.forEach.call(document.getElementById("menu-colors").childNodes, function(nodes) {
       nodes.addEventListener("click", clickColorItem);
     });
+    document.getElementById("menu-line-width").addEventListener("change", function() {
+      canvas.setLineWidth(this.value);
+    });
   });
+  function setDefaultValues() {
+    document.getElementById("menu-line-width").value = 10;
+  }
   function clickColorItem() {
     if (this.style.backgroundColor === "white") {
       canvas.context.globalCompositeOperation = 'destination-out';

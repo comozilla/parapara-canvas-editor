@@ -48,3 +48,22 @@ html, body {
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
 }
+#menu-line-width {
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  border: medium none;
+}
+#menu-line-width::-moz-range-thumb {
+  padding: 5px 0;
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+#menu-line-width::-moz-range-thumb::before {
+  content: "hoge";
+  color: black;
+}
