@@ -63,15 +63,11 @@
     canvas.addEventListener("mouseup", function() {
       toggleOpenMenuButton(true);
     });
-    document.getElementById("btn-open-inspector").addEventListener("click", function() {
-      document.getElementById("menu").classList.toggle("menu-open");
-    });
+    document.getElementById("btn-open-inspector").addEventListener("click", clickToggleMenu);
     Array.prototype.forEach.call(document.getElementById("menu-colors").childNodes, function(nodes) {
       nodes.addEventListener("click", clickColorItem);
     });
-    document.getElementById("menu-line-width").addEventListener("change", function() {
-      canvas.setLineWidth(this.value);
-    });
+    document.getElementById("menu-line-width").addEventListener("change", changeLineWidthValue);
   });
   function setDefaultValues() {
     document.getElementById("menu-line-width").value = 10;
@@ -81,5 +77,11 @@
   }
   function toggleOpenMenuButton(isVisible) {
     document.getElementById("btn-open-inspector").style.display = isVisible ? "block" : "none";
+  }
+  function changeLineWidthValue() {
+    canvas.setLineWidth(this.value);
+  }
+  function clickToggleMenu() {
+    document.getElementById("menu").classList.toggle("menu-open");
   }
 }();
