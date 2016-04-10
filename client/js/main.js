@@ -32,6 +32,9 @@
         }
       });
     },
+    addEventListener: function(eventName, listener) {
+      canvas.element.addEventListener(eventName, listener);
+    },
     resizeCanvas: function() {
       canvas.element.width = window.innerWidth;
       canvas.element.height = window.innerHeight;
@@ -44,6 +47,12 @@
   document.addEventListener("DOMContentLoaded", function() {
     canvas.setupCanvas();
     setDefaultValues();
+    canvas.addEventListener("mousedown", function() {
+      toggleOpenMenuButton(false);
+    });
+    canvas.addEventListener("mouseup", function() {
+      toggleOpenMenuButton(true);
+    });
     document.getElementById("btn-open-inspector").addEventListener("click", function() {
       document.getElementById("menu").classList.toggle("menu-open");
     });
@@ -64,5 +73,8 @@
       canvas.context.globalCompositeOperation = 'source-over';
     }
     canvas.context.strokeStyle = this.style.backgroundColor;
+  }
+  function toggleOpenMenuButton(isVisible) {
+    document.getElementById("btn-open-inspector").style.display = isVisible ? "block" : "none";
   }
 }();
