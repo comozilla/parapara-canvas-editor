@@ -54,14 +54,25 @@
       }
     };
   }();
+  var menu = {};
+  !function() {
+    menu = {
+      toggleOpenMenuButton: function (isVisible) {
+        document.getElementById("btn-open-inspector").style.display = isVisible ? "block" : "none";
+      },
+      setDefaultValues: function () {
+        document.getElementById("menu-line-width").value = 10;
+      }
+    };
+  }();
   document.addEventListener("DOMContentLoaded", function() {
     canvas.setupCanvas();
-    setDefaultValues();
+    menu.setDefaultValues();
     canvas.addEventListener("mousedown", function() {
-      toggleOpenMenuButton(false);
+      menu.toggleOpenMenuButton(false);
     });
     canvas.addEventListener("mouseup", function() {
-      toggleOpenMenuButton(true);
+      menu.toggleOpenMenuButton(true);
     });
     document.getElementById("btn-open-inspector").addEventListener("click", clickToggleMenu);
     Array.prototype.forEach.call(document.getElementById("menu-colors").childNodes, function(nodes) {
@@ -69,14 +80,8 @@
     });
     document.getElementById("menu-line-width").addEventListener("change", changeLineWidthValue);
   });
-  function setDefaultValues() {
-    document.getElementById("menu-line-width").value = 10;
-  }
   function clickColorItem() {
     canvas.setColor(this.style.backgroundColor);
-  }
-  function toggleOpenMenuButton(isVisible) {
-    document.getElementById("btn-open-inspector").style.display = isVisible ? "block" : "none";
   }
   function changeLineWidthValue() {
     canvas.setLineWidth(this.value);
