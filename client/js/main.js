@@ -5,15 +5,17 @@
     var ctx;
     var beforeMousePosX = 0;
     var beforeMousePosY = 0;
+    var setupCanvases = [];
     canvas = {
       isMouseDown: false,
-      setupCanvas: function() {
-        canvasElement = document.getElementById("canvas");
+      setupCanvas: function(id) {
+        canvasElement = document.getElementById("canvas" + id);
         ctx = canvasElement.getContext("2d");
         canvas.resizeCanvas();
         window.addEventListener("resize", canvas.resizeCanvas);
         ctx.strokeStyle = "red";
         ctx.lineWidth = 10;
+        setupCanvases.push(id);
         canvasElement.addEventListener("mousedown", function(event) {
           canvas.isMouseDown = true;
           beforeMousePosX = event.clientX;
@@ -51,6 +53,10 @@
           ctx.globalCompositeOperation = 'source-over';
         }
         ctx.strokeStyle = color;
+      },
+      removeCanvas: function() {
+        document.body.removeChild(canvasElement);
+        setupCanvases.filter(id => id !== menu.currentFrameId);
       }
     };
   }();
@@ -78,15 +84,34 @@
       initializeFrame: function() {
         menu.currentFrameId = 0;
         menu.frameCount = 1;
+        document.getElementById("canvas").id = "canvas" + menu.currentFrameId;
         menu.updateMenuFrameUI();
       },
+      addFrame: function(beforeFrameId) {
+        
+      },
+      removeFrame: function(frameId) {
+        
+      },
+      changeCurrentFrame: function(newCurrentFrameId) {
+        
+      },
       updateMenuFrameUI: function() {
+        // Todo:
+        // menu.toggleFrameButton という関数を作り、
+        // 第二引数で、disableかenable か渡せば、
+        // 冗長な if 文が抜ける
         if (menu.frameCount <= 1) {
           menu.disableFrameButton("btn-frame-prev");
           menu.disableFrameButton("btn-frame-remove");
+        } else {
+          menu.enableFrameButton("btn-frame-prev");
+          menu.enableFrameButton("btn-frame-remove");
         }
         if (menu.currentFrameId + 1 >= menu.frameCount) {
           menu.disableFrameButton("btn-frame-next");
+        } else {
+          menu.enableFrameButton("btn-frame-next");
         }
       },
       disableFrameButton: function(id) {
@@ -98,8 +123,8 @@
     };
   }();
   document.addEventListener("DOMContentLoaded", function() {
-    canvas.setupCanvas();
     menu.setDefaultValues();
+    canvas.setupCanvas(0);
     canvas.addEventListener("mousedown", function() {
       menu.hideMenu();
       menu.toggleOpenMenuButton(false);
@@ -112,6 +137,7 @@
       nodes.addEventListener("click", clickColorItem);
     });
     document.getElementById("menu-line-width").addEventListener("change", changeLineWidthValue);
+    document.getElementById("btn-frame-add").addEventListener("click", clickAddFrame);
   });
   function clickColorItem() {
     canvas.setColor(this.style.backgroundColor);
@@ -121,5 +147,10 @@
   }
   function clickToggleMenu() {
     menu.toggleMenu();
+  }
+  function clickAddFrame() {
+    var newFrameId = menu.addFrame(menu.currentFrameId);
+    menu.changeCurrentFrame(newFrameId);
+    menu.updateMenuFrameUI();
   }
 }();
