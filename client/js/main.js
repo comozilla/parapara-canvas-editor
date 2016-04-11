@@ -62,6 +62,38 @@
       },
       setDefaultValues: function () {
         document.getElementById("menu-line-width").value = 10;
+        menu.initializeFrame();
+      },
+      hideMenu: function() {
+        document.getElementById("menu").classList.remove("menu-open");
+      },
+      showMenu: function() {
+        document.getElementById("menu").classList.add("menu-open");
+      },
+      toggleMenu: function() {
+        document.getElementById("menu").classList.toggle("menu-open");
+      },
+      currentFrameId: 0,
+      frameCount: 0,
+      initializeFrame: function() {
+        menu.currentFrameId = 0;
+        menu.frameCount = 1;
+        menu.updateMenuFrameUI();
+      },
+      updateMenuFrameUI: function() {
+        if (menu.frameCount <= 1) {
+          menu.disableFrameButton("btn-frame-prev");
+          menu.disableFrameButton("btn-frame-remove");
+        }
+        if (menu.currentFrameId + 1 >= menu.frameCount) {
+          menu.disableFrameButton("btn-frame-next");
+        }
+      },
+      disableFrameButton: function(id) {
+        document.getElementById(id).classList.add("btn-menu-frame-disable");
+      },
+      enableFrameButton: function(id) {
+        document.getElementById(id).classList.remove("btn-menu-frame-disable");
       }
     };
   }();
@@ -69,6 +101,7 @@
     canvas.setupCanvas();
     menu.setDefaultValues();
     canvas.addEventListener("mousedown", function() {
+      menu.hideMenu();
       menu.toggleOpenMenuButton(false);
     });
     canvas.addEventListener("mouseup", function() {
@@ -87,6 +120,6 @@
     canvas.setLineWidth(this.value);
   }
   function clickToggleMenu() {
-    document.getElementById("menu").classList.toggle("menu-open");
+    menu.toggleMenu();
   }
 }();
