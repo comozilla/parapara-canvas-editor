@@ -5,6 +5,7 @@
     var ctx;
     var beforeMousePosX = 0;
     var beforeMousePosY = 0;
+    var canvasIdMax = 0;
     function setupCanvasContext(canvasId) {
       ctx = getCanvas(canvasId).getContext("2d");
       ctx.strokeStyle = "red";
@@ -64,7 +65,7 @@
       },
       addCanvas: function(canvasId) {
         var newCanvas = document.createElement("canvas");
-        newCanvas.id = canvasId;
+        newCanvas.id = "canvas" + canvasId;
         document.body.appendChild(newCanvas);
         setupCanvasContext(canvasId);
       },
@@ -80,18 +81,23 @@
         }
         getCanvas(canvasId).classList.add("current-canvas");
         currentCanvas = getCanvas(canvasId);
+      },
+      getNewCanvasId: () => ++canvasIdMax,
+      initializeCanvasIdMax: function() {
+        canvasIdMax = 0;
       }
     };
   }();
   var menu = {};
   !function() {
+    // canvasId を配列として記憶しておく
+    var frames = [];
     menu = {
       toggleOpenMenuButton: function (isVisible) {
         document.getElementById("btn-open-inspector").style.display = isVisible ? "block" : "none";
       },
       setDefaultValues: function () {
         document.getElementById("menu-line-width").value = 10;
-        menu.initializeFrame();
       },
       hideMenu: function() {
         document.getElementById("menu").classList.remove("menu-open");
@@ -103,34 +109,41 @@
         document.getElementById("menu").classList.toggle("menu-open");
       },
       currentFrameId: 0,
-      frameCount: 0,
-      initializeFrame: function() {
+      initializeFrame: function(defaultCurrentCanvasId) {
         menu.currentFrameId = 0;
-        menu.frameCount = 1;
+        frames = [defaultCurrentCanvasId];
         menu.updateMenuFrameUI();
       },
       addFrame: function(beforeFrameId) {
-        
+        var newFrameId = beforeFrameId + 1;
+        var newId = canvas.getNewCanvasId();
+        canvas.addCanvas(newId);
+        frames.splice(newFrameId, 0, newId);
+        return newFrameId;
       },
       removeFrame: function(frameId) {
         
       },
       changeCurrentFrame: function(newCurrentFrameId) {
-        
+        if (Object.keys(frames).indexOf(newCurrentFrameId.toString()) === -1) {
+          throw new Error("存在しないフレームを current にしようとしました。 : " + newCurrentFrameId);
+        }
+        menu.currentFrameId = newCurrentFrameId;
+        canvas.setCurrentCanvas(frames[newCurrentFrameId]);
       },
       updateMenuFrameUI: function() {
         // Todo:
         // menu.toggleFrameButton という関数を作り、
         // 第二引数で、disableかenable か渡せば、
         // 冗長な if 文が抜ける
-        if (menu.frameCount <= 1) {
+        if (frames.length <= 1) {
           menu.disableFrameButton("btn-frame-prev");
           menu.disableFrameButton("btn-frame-remove");
         } else {
           menu.enableFrameButton("btn-frame-prev");
           menu.enableFrameButton("btn-frame-remove");
         }
-        if (menu.currentFrameId + 1 >= menu.frameCount) {
+        if (menu.currentFrameId + 1 >= frames.length) {
           menu.disableFrameButton("btn-frame-next");
         } else {
           menu.enableFrameButton("btn-frame-next");
@@ -149,6 +162,8 @@
     menu.setDefaultValues();
     canvas.setupCanvas(defaultCurrentCanvasId);
     canvas.setCurrentCanvas(defaultCurrentCanvasId);
+    canvas.initializeCanvasIdMax();
+    menu.initializeFrame(defaultCurrentCanvasId);
     canvas.addEventListener("mousedown", function() {
       menu.hideMenu();
       menu.toggleOpenMenuButton(false);
