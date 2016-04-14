@@ -6,7 +6,7 @@
     var beforeMousePosX = 0;
     var beforeMousePosY = 0;
     var canvasIdMax = 0;
-    function setupCanvasContext(canvasId) {
+    function changeCanvasContext(canvasId) {
       ctx = getCanvas(canvasId).getContext("2d");
       ctx.strokeStyle = "red";
       ctx.lineWidth = 10;
@@ -22,7 +22,7 @@
         window.addEventListener("resize", function() {
           canvas.resizeCanvas(id);
         });
-        setupCanvasContext(id);
+        changeCanvasContext(id);
         canvasElem.addEventListener("mousedown", function(event) {
           canvas.isMouseDown = true;
           beforeMousePosX = event.clientX;
@@ -81,6 +81,7 @@
         }
         getCanvas(canvasId).classList.add("current-canvas");
         currentCanvas = getCanvas(canvasId);
+        changeCanvasContext(canvasId);
       },
       getNewCanvasId: () => ++canvasIdMax,
       initializeCanvasIdMax: function() {
@@ -137,16 +138,19 @@
         // 第二引数で、disableかenable か渡せば、
         // 冗長な if 文が抜ける
         if (frames.length <= 1) {
-          menu.disableFrameButton("btn-frame-prev");
           menu.disableFrameButton("btn-frame-remove");
         } else {
-          menu.enableFrameButton("btn-frame-prev");
           menu.enableFrameButton("btn-frame-remove");
         }
         if (menu.currentFrameId + 1 >= frames.length) {
           menu.disableFrameButton("btn-frame-next");
         } else {
           menu.enableFrameButton("btn-frame-next");
+        }
+        if (menu.currentFrameId - 1 < 0) {
+          menu.disableFrameButton("btn-frame-prev");
+        } else {
+          menu.enableFrameButton("btn-frame-prev");
         }
       },
       disableFrameButton: function(id) {
@@ -177,6 +181,8 @@
     });
     document.getElementById("menu-line-width").addEventListener("change", changeLineWidthValue);
     document.getElementById("btn-frame-add").addEventListener("click", clickAddFrame);
+    document.getElementById("btn-frame-prev").addEventListener("click", clickPrevFrame);
+    document.getElementById("btn-frame-next").addEventListener("click", clickNextFrame);
   });
   function clickColorItem() {
     canvas.setColor(this.style.backgroundColor);
@@ -190,6 +196,14 @@
   function clickAddFrame() {
     var newFrameId = menu.addFrame(menu.currentFrameId);
     menu.changeCurrentFrame(newFrameId);
+    menu.updateMenuFrameUI();
+  }
+  function clickPrevFrame() {
+    menu.changeCurrentFrame(menu.currentFrameId - 1);
+    menu.updateMenuFrameUI();
+  }
+  function clickNextFrame() {
+    menu.changeCurrentFrame(menu.currentFrameId + 1);
     menu.updateMenuFrameUI();
   }
 }();
