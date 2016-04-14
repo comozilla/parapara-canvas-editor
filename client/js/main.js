@@ -1,18 +1,14 @@
 +function() {
   var canvas = {};
   !function() {
-    var canvasElement;
+    var currentCanvas;
     var ctx;
     var beforeMousePosX = 0;
     var beforeMousePosY = 0;
-    var setupCanvases = [];
     function setupCanvasContext(canvasId) {
-      ctx = canvasElement.getContext("2d");
-      canvas.resizeCanvas();
-      window.addEventListener("resize", canvas.resizeCanvas);
+      ctx = getCanvas(canvasId).getContext("2d");
       ctx.strokeStyle = "red";
       ctx.lineWidth = 10;
-      setupCanvases.push(canvasId);
     }
     function getCanvas(id) {
       return document.getElementById("canvas" + id);
@@ -20,18 +16,21 @@
     canvas = {
       isMouseDown: false,
       setupCanvas: function(id) {
-        canvasElement = getCanvas(id);
+        var canvasElem = getCanvas(id);
+        canvas.resizeCanvas(id);
+        window.addEventListener("resize", function() {
+          canvas.resizeCanvas(id);
+        });
         setupCanvasContext(id);
-        canvas.setCurrentCanvas(id);
-        canvasElement.addEventListener("mousedown", function(event) {
+        canvasElem.addEventListener("mousedown", function(event) {
           canvas.isMouseDown = true;
           beforeMousePosX = event.clientX;
           beforeMousePosY = event.clientY;
         });
-        canvasElement.addEventListener("mouseup", function() {
+        canvasElem.addEventListener("mouseup", function() {
           canvas.isMouseDown = false;
         });
-        canvasElement.addEventListener("mousemove", function(event) {
+        canvasElem.addEventListener("mousemove", function(event) {
           if (canvas.isMouseDown) {
             ctx.beginPath();
             ctx.moveTo(beforeMousePosX, beforeMousePosY);
@@ -43,12 +42,14 @@
           }
         });
       },
+      // currentCanvasに！
       addEventListener: function(eventName, listener) {
-        canvasElement.addEventListener(eventName, listener);
+        currentCanvas.addEventListener(eventName, listener);
       },
-      resizeCanvas: function() {
-        canvasElement.width = window.innerWidth;
-        canvasElement.height = window.innerHeight;
+      resizeCanvas: function(id) {
+        var canvasElem = getCanvas(id);
+        canvasElem.width = window.innerWidth;
+        canvasElem.height = window.innerHeight;
       },
       setLineWidth: function(width) {
         ctx.lineWidth = width;
@@ -63,19 +64,22 @@
       },
       addCanvas: function(canvasId) {
         var newCanvas = document.createElement("canvas");
+        newCanvas.id = canvasId;
+        document.body.appendChild(newCanvas);
+        setupCanvasContext(canvasId);
       },
-      removeCanvas: function() {
-        document.body.removeChild(canvasElement);
-        setupCanvases.filter(id => id !== menu.currentFrameId);
+      removeCurrentCanvas: function() {
+        document.body.removeChild(currentCanvas);
       },
       setCurrentCanvas: function(canvasId) {
-        if (setupCanvases.indexOf(canvasId) === -1) {
+        if (getCanvas(canvasId) === null) {
           throw new Error("存在しない CanvasId を current にしようとしました。 : " + canvasId);
         }
         if (document.querySelector(".current-canvas") !== null) {
           document.querySelector(".current-canvas").classList.remove("current-canvas");
         }
         getCanvas(canvasId).classList.add("current-canvas");
+        currentCanvas = getCanvas(canvasId);
       }
     };
   }();
@@ -141,8 +145,10 @@
     };
   }();
   document.addEventListener("DOMContentLoaded", function() {
+    var defaultCurrentCanvasId = 0;
     menu.setDefaultValues();
-    canvas.setupCanvas(0);
+    canvas.setupCanvas(defaultCurrentCanvasId);
+    canvas.setCurrentCanvas(defaultCurrentCanvasId);
     canvas.addEventListener("mousedown", function() {
       menu.hideMenu();
       menu.toggleOpenMenuButton(false);
