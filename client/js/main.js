@@ -137,27 +137,12 @@
         // menu.toggleFrameButton という関数を作り、
         // 第二引数で、disableかenable か渡せば、
         // 冗長な if 文が抜ける
-        if (frames.length <= 1) {
-          menu.disableFrameButton("btn-frame-remove");
-        } else {
-          menu.enableFrameButton("btn-frame-remove");
-        }
-        if (menu.currentFrameId + 1 >= frames.length) {
-          menu.disableFrameButton("btn-frame-next");
-        } else {
-          menu.enableFrameButton("btn-frame-next");
-        }
-        if (menu.currentFrameId - 1 < 0) {
-          menu.disableFrameButton("btn-frame-prev");
-        } else {
-          menu.enableFrameButton("btn-frame-prev");
-        }
+        menu.toggleFrameButton("btn-frame-remove", frames.length > 1);
+        menu.toggleFrameButton("btn-frame-next", menu.currentFrameId + 1 < frames.length);
+        menu.toggleFrameButton("btn-frame-prev", menu.currentFrameId - 1 >= 0);
       },
-      disableFrameButton: function(id) {
-        document.getElementById(id).classList.add("btn-menu-frame-disable");
-      },
-      enableFrameButton: function(id) {
-        document.getElementById(id).classList.remove("btn-menu-frame-disable");
+      toggleFrameButton: function(id, enable) {
+        document.getElementById(id).disabled = !enable;
       }
     };
   }();

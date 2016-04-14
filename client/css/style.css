@@ -88,7 +88,7 @@ html, body {
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
 }
-#menu-frame-fields .btn-menu-frame-disable {
+#menu-frame-fields button:disabled {
   background-color: #f0f0f0;
   cursor: not-allowed;
 }
