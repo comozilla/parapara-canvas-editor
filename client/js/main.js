@@ -67,7 +67,7 @@
         var newCanvas = document.createElement("canvas");
         newCanvas.id = "canvas" + canvasId;
         document.body.appendChild(newCanvas);
-        setupCanvasContext(canvasId);
+        canvas.setupCanvas(canvasId);
       },
       removeCurrentCanvas: function() {
         document.body.removeChild(currentCanvas);
