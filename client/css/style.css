@@ -92,3 +92,9 @@ html, body {
   background-color: #f0f0f0;
   cursor: not-allowed;
 }
+canvas {
+  display: none;
+}
+.current-canvas {
+  display: block;
+}

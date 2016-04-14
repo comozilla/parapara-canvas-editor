@@ -6,16 +6,23 @@
     var beforeMousePosX = 0;
     var beforeMousePosY = 0;
     var setupCanvases = [];
+    function setupCanvasContext(canvasId) {
+      ctx = canvasElement.getContext("2d");
+      canvas.resizeCanvas();
+      window.addEventListener("resize", canvas.resizeCanvas);
+      ctx.strokeStyle = "red";
+      ctx.lineWidth = 10;
+      setupCanvases.push(canvasId);
+    }
+    function getCanvas(id) {
+      return document.getElementById("canvas" + id);
+    }
     canvas = {
       isMouseDown: false,
       setupCanvas: function(id) {
-        canvasElement = document.getElementById("canvas" + id);
-        ctx = canvasElement.getContext("2d");
-        canvas.resizeCanvas();
-        window.addEventListener("resize", canvas.resizeCanvas);
-        ctx.strokeStyle = "red";
-        ctx.lineWidth = 10;
-        setupCanvases.push(id);
+        canvasElement = getCanvas(id);
+        setupCanvasContext(id);
+        canvas.setCurrentCanvas(id);
         canvasElement.addEventListener("mousedown", function(event) {
           canvas.isMouseDown = true;
           beforeMousePosX = event.clientX;
@@ -54,9 +61,21 @@
         }
         ctx.strokeStyle = color;
       },
+      addCanvas: function(canvasId) {
+        var newCanvas = document.createElement("canvas");
+      },
       removeCanvas: function() {
         document.body.removeChild(canvasElement);
         setupCanvases.filter(id => id !== menu.currentFrameId);
+      },
+      setCurrentCanvas: function(canvasId) {
+        if (setupCanvases.indexOf(canvasId) === -1) {
+          throw new Error("存在しない CanvasId を current にしようとしました。 : " + canvasId);
+        }
+        if (document.querySelector(".current-canvas") !== null) {
+          document.querySelector(".current-canvas").classList.remove("current-canvas");
+        }
+        getCanvas(canvasId).classList.add("current-canvas");
       }
     };
   }();
@@ -84,7 +103,6 @@
       initializeFrame: function() {
         menu.currentFrameId = 0;
         menu.frameCount = 1;
-        document.getElementById("canvas").id = "canvas" + menu.currentFrameId;
         menu.updateMenuFrameUI();
       },
       addFrame: function(beforeFrameId) {
