@@ -1,6 +1,4 @@
 +function() {
-  var isPlaying = false;
-  
   var canvas = {};
   !function() {
     var currentCanvas;
@@ -27,17 +25,17 @@
         });
         changeCanvasContext(id);
         canvasElem.addEventListener("mousedown", function(event) {
-          if (isPlaying) return;
+          if (frame.isPlaying) return;
           canvas.isMouseDown = true;
           beforeMousePosX = event.clientX;
           beforeMousePosY = event.clientY;
         });
         canvasElem.addEventListener("mouseup", function() {
-          if (isPlaying) return;
+          if (frame.isPlaying) return;
           canvas.isMouseDown = false;
         });
         canvasElem.addEventListener("mousemove", function(event) {
-          if (isPlaying) return;
+          if (frame.isPlaying) return;
           if (canvas.isMouseDown) {
             ctx.beginPath();
             ctx.moveTo(beforeMousePosX, beforeMousePosY);
@@ -106,10 +104,6 @@
   }();
   var menu = {};
   !function() {
-    // canvasId を配列として記憶しておく
-    var frames = [];
-    var playIntervalId = null;
-    var playingFrameId = -1;
     menu = {
       toggleOpenMenuButton: function (isVisible) {
         document.getElementById("menu-side-btn").style.display = isVisible ? "block" : "none";
@@ -126,9 +120,40 @@
       toggleMenu: function() {
         document.getElementById("menu").classList.toggle("menu-open");
       },
+      updateMenuFrameUI: function() {
+        menu.toggleFrameButton("btn-frame-remove", frame.getFrameLength() > 1);
+        menu.toggleFrameButton("btn-frame-next", frame.currentFrameId + 1 < frame.getFrameLength());
+        menu.toggleFrameButton("btn-frame-prev", frame.currentFrameId - 1 >= 0);
+        document.getElementById("view-frame-page").textContent = frame.currentFrameId + 1;
+        document.getElementById("view-frame-length").textContent = frame.getFrameLength();
+      },
+      toggleFrameButton: function(id, enable) {
+        document.getElementById(id).disabled = !enable;
+      },
+      changeMenuSideButton: function() {
+        if (frame.isPlaying) {
+          document.getElementById("menu-side-btn").innerHTML = '<i class="fa fa-pause"></i>';
+        } else {
+          document.getElementById("menu-side-btn").innerHTML = '<i class="fa fa-cog"></i>';
+        }
+      }
+    };
+  }();
+  var frame = {};
+  !function() {
+    // canvasId を配列として記憶しておく
+    var frames = [];
+    var playIntervalId = null;
+    var playingFrameId = -1;
+    frame = {
+      isPlaying: false,
       currentFrameId: 0,
+      getFrameLength: function() {
+        return frames.length;
+      },
       initializeFrame: function(defaultCurrentCanvasId) {
-        menu.currentFrameId = 0;
+        frame.currentFrameId = 0;
+        frame.isPlaying = false;
         frames = [defaultCurrentCanvasId];
         menu.updateMenuFrameUI();
       },
@@ -146,59 +171,43 @@
         if (Object.keys(frames).indexOf(newCurrentFrameId.toString()) === -1) {
           throw new Error("存在しないフレームを current にしようとしました。 : " + newCurrentFrameId);
         }
-        menu.currentFrameId = newCurrentFrameId;
+        frame.currentFrameId = newCurrentFrameId;
         canvas.setCurrentCanvas(frames[newCurrentFrameId]);
       },
-      updateMenuFrameUI: function() {
-        menu.toggleFrameButton("btn-frame-remove", frames.length > 1);
-        menu.toggleFrameButton("btn-frame-next", menu.currentFrameId + 1 < frames.length);
-        menu.toggleFrameButton("btn-frame-prev", menu.currentFrameId - 1 >= 0);
-        document.getElementById("view-frame-page").textContent = menu.currentFrameId + 1;
-        document.getElementById("view-frame-length").textContent = frames.length;
-      },
-      toggleFrameButton: function(id, enable) {
-        document.getElementById(id).disabled = !enable;
-      },
-      changeMenuSideButton: function() {
-        if (isPlaying) {
-          document.getElementById("menu-side-btn").innerHTML = '<i class="fa fa-pause"></i>';
-        } else {
-          document.getElementById("menu-side-btn").innerHTML = '<i class="fa fa-cog"></i>';
-        }
-      },
       playFrame: function() {
-        playingFrameId = menu.currentFrameId;
+        frame.isPlaying = true;
+        playingFrameId = frame.currentFrameId;
         playIntervalId = setInterval(function() {
           playingFrameId++;
           if (playingFrameId >= frames.length) {
             playingFrameId = 0;
           }
-          menu.changeCurrentFrame(playingFrameId);
+          frame.changeCurrentFrame(playingFrameId);
         }, 250);
       },
       stopFrame: function() {
+        frame.isPlaying = false;
         clearInterval(playIntervalId);
-        menu.changeCurrentFrame(menu.currentFrameId);
+        frame.changeCurrentFrame(frame.currentFrameId);
       }
-    };
+    }
   }();
   document.addEventListener("DOMContentLoaded", function() {
-    isPlaying = false;
     var defaultCurrentCanvasId = 0;
     menu.setDefaultValues();
     canvas.addEventListener("mousedown", function() {
-      if (isPlaying) return;
+      if (frame.isPlaying) return;
       menu.hideMenu();
       menu.toggleOpenMenuButton(false);
     });
     canvas.addEventListener("mouseup", function() {
-      if (isPlaying) return;
+      if (frame.isPlaying) return;
       menu.toggleOpenMenuButton(true);
     });
     canvas.setupCanvas(defaultCurrentCanvasId);
     canvas.setCurrentCanvas(defaultCurrentCanvasId);
     canvas.initializeCanvasIdMax();
-    menu.initializeFrame(defaultCurrentCanvasId);
+    frame.initializeFrame(defaultCurrentCanvasId);
     document.getElementById("menu-side-btn").addEventListener("click", clickMenuSideBtn);
     Array.prototype.forEach.call(document.getElementById("menu-colors").childNodes, function(nodes) {
       nodes.addEventListener("click", clickColorItem);
@@ -216,31 +225,29 @@
     canvas.setLineWidth(this.value);
   }
   function clickMenuSideBtn() {
-    if (isPlaying) {
-      isPlaying = false;
+    if (frame.isPlaying) {
+      frame.stopFrame();
       menu.changeMenuSideButton();
-      menu.stopFrame();
     } else {
       menu.toggleMenu();
     }
   }
   function clickAddFrame() {
-    var newFrameId = menu.addFrame(menu.currentFrameId);
-    menu.changeCurrentFrame(newFrameId);
+    var newFrameId = frame.addFrame(frame.currentFrameId);
+    frame.changeCurrentFrame(newFrameId);
     menu.updateMenuFrameUI();
   }
   function clickPrevFrame() {
-    menu.changeCurrentFrame(menu.currentFrameId - 1);
+    frame.changeCurrentFrame(frame.currentFrameId - 1);
     menu.updateMenuFrameUI();
   }
   function clickNextFrame() {
-    menu.changeCurrentFrame(menu.currentFrameId + 1);
+    frame.changeCurrentFrame(frame.currentFrameId + 1);
     menu.updateMenuFrameUI();
   }
   function clickPlay() {
-    isPlaying = true;
     menu.hideMenu();
+    frame.playFrame();
     menu.changeMenuSideButton();
-    menu.playFrame();
   }
 }();
