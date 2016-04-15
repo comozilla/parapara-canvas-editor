@@ -97,6 +97,17 @@ html, body {
   background-color: #f0f0f0;
   cursor: not-allowed;
 }
+#btn-play {
+  margin: 10px auto;
+  display: block;
+  width: 10vh;
+  height: 10vh;
+  border: 5px solid darkorange;
+  background-color: beige;
+  color: darkorange;
+  border-radius: 3vh;
+  font-size: 2rem;
+}
 canvas {
   display: none;
 }
