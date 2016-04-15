@@ -36,7 +36,7 @@ html, body {
 #menu-colors li:hover {
   transform: scale(1.2);
 }
-#btn-open-inspector {
+#menu-side-btn {
   position: absolute;
   left: 100%;
   top: 40%;
@@ -47,9 +47,6 @@ html, body {
   border: medium none;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-}
-#btn-open-inspector.btn-open-inspector-hide {
-  
 }
 #menu-line-width {
   width: 100%;
