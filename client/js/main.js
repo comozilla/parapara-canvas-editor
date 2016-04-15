@@ -6,6 +6,7 @@
     var beforeMousePosX = 0;
     var beforeMousePosY = 0;
     var canvasIdMax = 0;
+    var currentCanvasListeners = {};
     function changeCanvasContext(canvasId) {
       ctx = getCanvas(canvasId).getContext("2d");
       ctx.strokeStyle = "red";
@@ -42,10 +43,19 @@
             beforeMousePosY = event.clientY;
           }
         });
+        Object.keys(currentCanvasListeners).forEach(eventName => {
+          currentCanvasListeners[eventName].forEach(listener => {
+            canvasElem.addEventListener(eventName, listener);
+          });
+        });
       },
       // currentCanvasに！
+      // setupCanvas よりも前に呼んでね
       addEventListener: function(eventName, listener) {
-        currentCanvas.addEventListener(eventName, listener);
+        if (!(currentCanvasListeners[eventName] instanceof Array)) {
+          currentCanvasListeners[eventName] = [];
+        }
+        currentCanvasListeners[eventName].push(listener);
       },
       resizeCanvas: function(id) {
         var canvasElem = getCanvas(id);
@@ -147,10 +157,6 @@
   document.addEventListener("DOMContentLoaded", function() {
     var defaultCurrentCanvasId = 0;
     menu.setDefaultValues();
-    canvas.setupCanvas(defaultCurrentCanvasId);
-    canvas.setCurrentCanvas(defaultCurrentCanvasId);
-    canvas.initializeCanvasIdMax();
-    menu.initializeFrame(defaultCurrentCanvasId);
     canvas.addEventListener("mousedown", function() {
       menu.hideMenu();
       menu.toggleOpenMenuButton(false);
@@ -158,6 +164,10 @@
     canvas.addEventListener("mouseup", function() {
       menu.toggleOpenMenuButton(true);
     });
+    canvas.setupCanvas(defaultCurrentCanvasId);
+    canvas.setCurrentCanvas(defaultCurrentCanvasId);
+    canvas.initializeCanvasIdMax();
+    menu.initializeFrame(defaultCurrentCanvasId);
     document.getElementById("btn-open-inspector").addEventListener("click", clickToggleMenu);
     Array.prototype.forEach.call(document.getElementById("menu-colors").childNodes, function(nodes) {
       nodes.addEventListener("click", clickColorItem);
