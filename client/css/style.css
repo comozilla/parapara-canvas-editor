@@ -73,12 +73,17 @@ html, body {
 #menu-frame-fields {
   display: flex;
 }
-#menu-frame-fields button {
+#menu-frame-fields button, #menu-frame-fields div {
   flex: 1;
   display: block;
   border: medium none;
   background-color: orange;
   height: 50px;
+}
+#menu-frame-fields div {
+  padding: 0 5px;
+  text-align: center;
+  line-height: 50px;
 }
 #menu-frame-fields button:first-child {
   border-top-left-radius: 10px;
