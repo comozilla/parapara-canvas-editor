@@ -82,8 +82,8 @@
         document.body.appendChild(newCanvas);
         canvas.setupCanvas(canvasId);
       },
-      removeCurrentCanvas: function() {
-        document.body.removeChild(currentCanvas);
+      removeCanvas: function(canvasId) {
+        document.body.removeChild(getCanvas(canvasId));
       },
       setCurrentCanvas: function(canvasId) {
         if (getCanvas(canvasId) === null) {
@@ -165,7 +165,14 @@
         return newFrameId;
       },
       removeFrame: function(frameId) {
-        
+        canvas.removeCanvas(frames[frameId]);
+        frames.splice(frameId, 1);
+        if (frameId >= frames.length) {
+          frame.changeCurrentFrame(frameId - 1);
+        } else {
+          frame.changeCurrentFrame(frameId);
+        }
+        menu.updateMenuFrameUI();
       },
       changeCurrentFrame: function(newCurrentFrameId) {
         if (Object.keys(frames).indexOf(newCurrentFrameId.toString()) === -1) {
@@ -214,6 +221,7 @@
     });
     document.getElementById("menu-line-width").addEventListener("change", changeLineWidthValue);
     document.getElementById("btn-frame-add").addEventListener("click", clickAddFrame);
+    document.getElementById("btn-frame-remove").addEventListener("click", clickRemoveFrame);
     document.getElementById("btn-frame-prev").addEventListener("click", clickPrevFrame);
     document.getElementById("btn-frame-next").addEventListener("click", clickNextFrame);
     document.getElementById("btn-play").addEventListener("click", clickPlay);
@@ -236,6 +244,9 @@
     var newFrameId = frame.addFrame(frame.currentFrameId);
     frame.changeCurrentFrame(newFrameId);
     menu.updateMenuFrameUI();
+  }
+  function clickRemoveFrame() {
+    frame.removeFrame(frame.currentFrameId);
   }
   function clickPrevFrame() {
     frame.changeCurrentFrame(frame.currentFrameId - 1);
