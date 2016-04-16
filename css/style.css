@@ -1,0 +1,161 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+#menu {
+  position: fixed;
+  left: -20%;
+  top: 0px;
+  width: 20%;
+  height: 100%;
+  transition: left 0.25s ease-in-out 0s;
+  background-color: rgba(255, 255, 0, 0.5);
+  padding: 5px;
+  box-sizing: border-box;
+}
+#menu.menu-open {
+  left: 0px;
+}
+#menu-colors {
+  display: flex;
+  padding: 0;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+#menu-colors li {
+  list-style-type: none;
+  width: 3vw;
+  height: 3vw;
+  margin: 3px;
+  cursor: pointer;
+  border-radius: 3vw;
+  transition: transform 0.25s cubic-bezier(.18,.89,1,1.7) 0s;
+}
+#menu-colors li:hover {
+  transform: scale(1.2);
+}
+#menu-side-btn {
+  position: absolute;
+  left: 100%;
+  top: 40%;
+  height: 20%;
+  padding: 0px 5px;
+  margin: 0px;
+  background-color: rgba(255, 255, 0, 0.5);
+  border: medium none;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+#menu-line-width {
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  border: medium none;
+}
+#menu-line-width::-moz-range-thumb {
+  padding: 5px 0;
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+#menu-line-width::-moz-range-thumb::before {
+  content: "hoge";
+  color: black;
+}
+#menu-frame-fields {
+  display: flex;
+}
+#menu-frame-fields button, #menu-frame-fields div {
+  flex: 1;
+  display: block;
+  border: medium none;
+  background-color: orange;
+  height: 50px;
+}
+#menu-frame-fields div {
+  padding: 0 5px;
+  text-align: center;
+  line-height: 50px;
+}
+#menu-frame-fields button:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+#menu-frame-fields button:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+#menu-frame-fields button:disabled {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}
+#menu-thumbnails {
+  overflow-y: scroll;
+  height: 50%;
+  padding: 0px;
+  padding-right: 10px;
+  margin: 15px;
+}
+#menu-thumbnails li {
+  list-style-type: none;
+  width: 100%;
+  height: 120px;
+  margin: 20px 0px;
+  background-color: white;
+  border: solid 2px #00F;
+  border-radius: 20px;
+  position: relative;
+}
+#menu-thumbnails .frame-delete {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 0px;
+  background-color: transparent;
+  font-size: 2rem;
+  color: #00F;
+}
+#menu-thumbnails .frame-up {
+  position: absolute;
+  left: 10px;
+  top: 0px;
+  font-size: 2rem;
+}
+#menu-thumbnails .frame-down {
+  position: absolute;
+  left: 10px;
+  bottom: 0;
+  font-size: 2rem;
+}
+#menu-thumbnails .frame-add {
+  position: absolute;
+  width: 100%;
+  height: 15px;
+  bottom: -20px;
+  background-color: #66f;
+  color: white;
+  text-align: center;
+}
+
+#btn-play {
+  margin: 10px auto;
+  display: block;
+  width: 10vh;
+  height: 10vh;
+  border: 5px solid darkorange;
+  background-color: beige;
+  color: darkorange;
+  border-radius: 3vh;
+  font-size: 2rem;
+}
+canvas {
+  display: none;
+}
+.current-canvas {
+  display: block;
+}
