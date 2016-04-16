@@ -1,0 +1,22 @@
+{
+  "name": "parapara-canvas-editor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/comozilla/Parapara-Canvas-Editor.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/comozilla/Parapara-Canvas-Editor/issues"
+  },
+  "homepage": "https://github.com/comozilla/Parapara-Canvas-Editor#readme",
+  "dependencies": {
+    "webpack": "^1.13.0"
+  }
+}
