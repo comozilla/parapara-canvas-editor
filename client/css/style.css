@@ -94,6 +94,54 @@ html, body {
   background-color: #f0f0f0;
   cursor: not-allowed;
 }
+#menu-thumbnails {
+  overflow-y: scroll;
+  height: 50%;
+  padding: 0px;
+  padding-right: 10px;
+  margin: 15px;
+}
+#menu-thumbnails li {
+  list-style-type: none;
+  width: 100%;
+  height: 120px;
+  margin: 20px 0px;
+  background-color: white;
+  border: solid 2px #00F;
+  border-radius: 20px;
+  position: relative;
+}
+#menu-thumbnails .frame-delete {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 0px;
+  background-color: transparent;
+  font-size: 2rem;
+  color: #00F;
+}
+#menu-thumbnails .frame-up {
+  position: absolute;
+  left: 10px;
+  top: 0px;
+  font-size: 2rem;
+}
+#menu-thumbnails .frame-down {
+  position: absolute;
+  left: 10px;
+  bottom: 0;
+  font-size: 2rem;
+}
+#menu-thumbnails .frame-add {
+  position: absolute;
+  width: 100%;
+  height: 15px;
+  bottom: -20px;
+  background-color: #66f;
+  color: white;
+  text-align: center;
+}
+
 #btn-play {
   margin: 10px auto;
   display: block;
