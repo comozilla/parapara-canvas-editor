@@ -36,10 +36,12 @@ var isMouseDown = false;
 var beforeMousePosition = {};
 function mouseDownCanvas(event) {
   menu.hideMenu();
+  menu.toggleOpenMenuButton(false);
   isMouseDown = true;
   beforeMousePosition = {x: event.clientX, y: event.clientY};
 }
 function mouseUpCanvas() {
+  menu.toggleOpenMenuButton(true);
   isMouseDown = false;
 }
 function mouseMoveCanvas(event) {
