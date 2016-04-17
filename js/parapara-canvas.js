@@ -11,7 +11,7 @@ function ParaparaCanvas(canvasElement) {
  * 線を描きます。
  */
 ParaparaCanvas.prototype.drawLine = function(startPosition, endPosition, strokeColor, lineWidth) {
-  this.canvasContext.strokeStyle = "strokeColor";
+  this.canvasContext.strokeStyle = strokeColor;
   this.canvasContext.lineWidth = lineWidth;
   this.canvasContext.beginPath();
   this.canvasContext.moveTo(startPosition.x, startPosition.y);
@@ -39,13 +39,17 @@ ParaparaCanvas.prototype.eraseByLine = function(startPosition, endPosition, line
  * canvasElementと、ParaparaCanvasのインスタンスを生成し、
  * ParaparaCanvasのインスタンスを返します。
  */
-ParaparaCanvas.createWithElement = function(canvasId) {
+ParaparaCanvas.createWithElement = function(canvasId, parentNode) {
   var canvasElem = document.createElement("canvas");
   canvasElem.width = window.innerWidth;
   canvasElem.height = window.innerHeight;
   canvasElem.id = "canvas" + canvasId;
   // + リスナー（mouseMoveなど）
-  document.body.appendChild(canvasElem);
+  parentNode.appendChild(canvasElem);
   return new ParaparaCanvas(canvasElem);
 }
+
+ParaparaCanvas.prototype.addEventListener = function(eventName, listener) {
+  this.canvasElement.addEventListener(eventName, listener);
+};
 module.exports = ParaparaCanvas;
