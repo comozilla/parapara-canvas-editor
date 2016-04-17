@@ -9,7 +9,7 @@ var colorPicker, lineWidthPicker;
 var menu;
 document.addEventListener("DOMContentLoaded", function() {
   frameServer = new FramesController(document.getElementById("frames"));
-  frameServer.append(0, new Frame(ParaparaCanvas.createWithElement(0, frameServer.element)));
+  frameServer.append(0, new Frame(new ParaparaCanvas(0, frameServer.element)));
   setListenerForCanvas(0);
   frameServer.setCurrentFrame(0);
   

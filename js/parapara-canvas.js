@@ -1,8 +1,16 @@
-function ParaparaCanvas(canvasElement) {
+// コンストラクタで、
+// HTMLCanvasElementとなる this.canvasElement も生成し、appendChildします。
+function ParaparaCanvas(canvasId, parentNode) {
   if (!(canvasElement instanceof HTMLCanvasElement)) {
     throw new Error("ParaparaCanvas インスタンスを作成しようとしましたが、canvasElementが不正な値です。 : " + canvasElement);
   }
-  this.canvasElement = canvasElement;
+  var canvasElem = document.createElement("canvas");
+  canvasElem.width = window.innerWidth;
+  canvasElem.height = window.innerHeight;
+  canvasElem.id = "canvas" + canvasId;
+  // + リスナー（mouseMoveなど）
+  parentNode.appendChild(canvasElem);
+  this.canvasElement = canvasElem;
   // private メンバにしたいけど・・
   this.canvasContext = this.canvasElement.getContext("2d");
 }
@@ -33,21 +41,6 @@ ParaparaCanvas.prototype.eraseByLine = function(startPosition, endPosition, line
   this.canvasContext.stroke();
   this.canvasContext.globalCompositeOperation = "source-over";
 };
-
-/**
- * C# でいう、「static void」
- * canvasElementと、ParaparaCanvasのインスタンスを生成し、
- * ParaparaCanvasのインスタンスを返します。
- */
-ParaparaCanvas.createWithElement = function(canvasId, parentNode) {
-  var canvasElem = document.createElement("canvas");
-  canvasElem.width = window.innerWidth;
-  canvasElem.height = window.innerHeight;
-  canvasElem.id = "canvas" + canvasId;
-  // + リスナー（mouseMoveなど）
-  parentNode.appendChild(canvasElem);
-  return new ParaparaCanvas(canvasElem);
-}
 
 ParaparaCanvas.prototype.addEventListener = function(eventName, listener) {
   this.canvasElement.addEventListener(eventName, listener);
