@@ -2,3 +2,4 @@ bower_components
 node_modules
 js/bundle.js
 npm-debug.log
+js/_main.js
