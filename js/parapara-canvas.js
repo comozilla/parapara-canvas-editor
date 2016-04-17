@@ -1,9 +1,6 @@
 // コンストラクタで、
 // HTMLCanvasElementとなる this.canvasElement も生成し、appendChildします。
 function ParaparaCanvas(canvasId, parentNode) {
-  if (!(canvasElement instanceof HTMLCanvasElement)) {
-    throw new Error("ParaparaCanvas インスタンスを作成しようとしましたが、canvasElementが不正な値です。 : " + canvasElement);
-  }
   var canvasElem = document.createElement("canvas");
   canvasElem.width = window.innerWidth;
   canvasElem.height = window.innerHeight;
