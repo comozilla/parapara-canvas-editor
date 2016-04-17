@@ -33,12 +33,12 @@ function setListenerForCanvas(frameId) {
 //   この情報をWebsocket で送ったり・・となるのであれば、
 //   それを parapara-canvas.js でやっていいの？となる。
 var isMouseDown = false;
-var beforeMousePosition = {};
+var previousMousePosition = {};
 function mouseDownCanvas(event) {
   menu.hideMenu();
   menu.toggleOpenMenuButton(false);
   isMouseDown = true;
-  beforeMousePosition = {x: event.clientX, y: event.clientY};
+  previousMousePosition = {x: event.clientX, y: event.clientY};
 }
 function mouseUpCanvas() {
   menu.toggleOpenMenuButton(true);
@@ -48,18 +48,18 @@ function mouseMoveCanvas(event) {
   if (isMouseDown) {
     if (colorPicker.color === "white") {
       framesController.frames[framesController.currentFrameId].paraparaCanvas.eraseByLine(
-        beforeMousePosition,
+        previousMousePosition,
         {x: event.clientX, y: event.clientY},
         lineWidthPicker.lineWidth
       );
     } else {
       framesController.frames[framesController.currentFrameId].paraparaCanvas.drawLine(
-        beforeMousePosition,
+        previousMousePosition,
         {x: event.clientX, y: event.clientY},
         colorPicker.color,
         lineWidthPicker.lineWidth
       );
     }
-    beforeMousePosition = {x: event.clientX, y: event.clientY};
+    previousMousePosition = {x: event.clientX, y: event.clientY};
   }
 }
