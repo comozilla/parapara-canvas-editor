@@ -43,12 +43,20 @@ function mouseUpCanvas() {
 }
 function mouseMoveCanvas(event) {
   if (isMouseDown) {
-    frameServer.frames[frameServer.currentFrameId].paraparaCanvas.drawLine(
-      beforeMousePosition,
-      {x: event.clientX, y: event.clientY},
-      colorPicker.color,
-      lineWidthPicker.lineWidth
-    );
+    if (colorPicker.color === "white") {
+      frameServer.frames[frameServer.currentFrameId].paraparaCanvas.eraseByLine(
+        beforeMousePosition,
+        {x: event.clientX, y: event.clientY},
+        lineWidthPicker.lineWidth
+      );
+    } else {
+      frameServer.frames[frameServer.currentFrameId].paraparaCanvas.drawLine(
+        beforeMousePosition,
+        {x: event.clientX, y: event.clientY},
+        colorPicker.color,
+        lineWidthPicker.lineWidth
+      );
+    }
     beforeMousePosition = {x: event.clientX, y: event.clientY};
   }
 }
