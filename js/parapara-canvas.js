@@ -10,7 +10,7 @@ function ParaparaCanvas(canvasElement) {
 /**
  * 線を描きます。
  */
-ParaparaScreen.prototype.drawLine = function(startPosition, endPosition, strokeColor, lineWidth) {
+ParaparaCanvas.prototype.drawLine = function(startPosition, endPosition, strokeColor, lineWidth) {
   this.canvasContext.strokeStyle = "strokeColor";
   this.canvasContext.lineWidth = lineWidth;
   this.canvasContext.beginPath();
@@ -34,4 +34,18 @@ ParaparaCanvas.prototype.eraseByLine = function(startPosition, endPosition, line
   this.canvasContext.globalCompositeOperation = "source-over";
 };
 
+/**
+ * C# でいう、「static void」
+ * canvasElementと、ParaparaCanvasのインスタンスを生成し、
+ * ParaparaCanvasのインスタンスを返します。
+ */
+ParaparaCanvas.createWithElement = function(canvasId) {
+  var canvasElem = document.createElement("canvas");
+  canvasElem.width = window.innerWidth;
+  canvasElem.height = window.innerHeight;
+  canvasElem.id = "canvas" + canvasId;
+  // + リスナー（mouseMoveなど）
+  document.body.appendChild(canvasElem);
+  return new ParaparaCanvas(canvasElem);
+}
 module.exports = ParaparaCanvas;
