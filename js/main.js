@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function setListenerForCanvas(frameId) {
-  var pCanvas = frameServer.frames[0].paraparaCanvas;
+  var pCanvas = frameServer.getCanvasElementByFrameId(frameId);
   pCanvas.addEventListener("mousedown", mouseDownCanvas);
   pCanvas.addEventListener("mouseup", mouseUpCanvas);
   pCanvas.addEventListener("mousemove", mouseMoveCanvas);

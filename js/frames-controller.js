@@ -7,6 +7,7 @@ function FramesController(elem) {
   this.currentFrameId = 0;
 }
 
+// パラメータ id は、将来的にどこにframeをappendするかで必要。
 FramesController.prototype.append = function(id, frame) {
   if (!(frame instanceof Frame)) {
     throw new Error("FrameServerに追加しようとしたFrameは不正です。:" + frame);
@@ -26,6 +27,10 @@ FramesController.prototype.setCurrentFrame = function(frameId) {
     document.querySelector(".current-canvas").classList.remove("current-canvas");
   }       
   this.frames[this.currentFrameId].paraparaCanvas.canvasElement.classList.add("current-canvas");
-}
+};
+
+FramesController.prototype.getCanvasElementByFrameId = function(frameId) {
+  return this.frames[frameId].paraparaCanvas.canvasElement;
+};
 
 module.exports = FramesController;
