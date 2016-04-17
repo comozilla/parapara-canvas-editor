@@ -47,13 +47,13 @@ function mouseUpCanvas() {
 function mouseMoveCanvas(event) {
   if (isMouseDown) {
     if (colorPicker.color === "white") {
-      framesController.frames[framesController.currentFrameId].paraparaCanvas.eraseByLine(
+      framesController.getCurrentFrame().paraparaCanvas.eraseByLine(
         previousMousePosition,
         {x: event.clientX, y: event.clientY},
         lineWidthPicker.lineWidth
       );
     } else {
-      framesController.frames[framesController.currentFrameId].paraparaCanvas.drawLine(
+      framesController.getCurrentFrame().paraparaCanvas.drawLine(
         previousMousePosition,
         {x: event.clientX, y: event.clientY},
         colorPicker.color,
