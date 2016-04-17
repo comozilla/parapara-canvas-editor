@@ -4,14 +4,14 @@ var FramesController = require("./frames-controller");
 var drawTools = require("./draw-tools");
 var Menu = require("./menu");
 
-var frameServer;
+var framesController;
 var colorPicker, lineWidthPicker;
 var menu;
 document.addEventListener("DOMContentLoaded", function() {
-  frameServer = new FramesController(document.getElementById("frames"));
-  frameServer.append(0, new Frame(new ParaparaCanvas(0, frameServer.element)));
+  framesController = new FramesController(document.getElementById("frames"));
+  framesController.append(0, new Frame(new ParaparaCanvas(0, framesController.element)));
   setListenerForCanvas(0);
-  frameServer.setCurrentFrame(0);
+  framesController.setCurrentFrame(0);
   
   colorPicker = new drawTools.ColorPicker(document.getElementById("menu-colors"), "red");
   lineWidthPicker = new drawTools.LineWidthPicker(document.getElementById("menu-line-width"), 10);
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function setListenerForCanvas(frameId) {
-  var pCanvas = frameServer.getCanvasElementByFrameId(frameId);
+  var pCanvas = framesController.getCanvasElementByFrameId(frameId);
   pCanvas.addEventListener("mousedown", mouseDownCanvas);
   pCanvas.addEventListener("mouseup", mouseUpCanvas);
   pCanvas.addEventListener("mousemove", mouseMoveCanvas);
@@ -47,13 +47,13 @@ function mouseUpCanvas() {
 function mouseMoveCanvas(event) {
   if (isMouseDown) {
     if (colorPicker.color === "white") {
-      frameServer.frames[frameServer.currentFrameId].paraparaCanvas.eraseByLine(
+      framesController.frames[framesController.currentFrameId].paraparaCanvas.eraseByLine(
         beforeMousePosition,
         {x: event.clientX, y: event.clientY},
         lineWidthPicker.lineWidth
       );
     } else {
-      frameServer.frames[frameServer.currentFrameId].paraparaCanvas.drawLine(
+      framesController.frames[framesController.currentFrameId].paraparaCanvas.drawLine(
         beforeMousePosition,
         {x: event.clientX, y: event.clientY},
         colorPicker.color,
