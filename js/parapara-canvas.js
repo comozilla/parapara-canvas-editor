@@ -30,12 +30,7 @@ ParaparaCanvas.prototype.drawLine = function(startPosition, endPosition, strokeC
  */
 ParaparaCanvas.prototype.eraseByLine = function(startPosition, endPosition, lineWidth) {
   this.canvasContext.globalCompositeOperation = "destination-out";
-  this.canvasContext.lineWidth = lineWidth;
-  this.canvasContext.beginPath();
-  this.canvasContext.moveTo(startPosition.x, startPosition.y);
-  this.canvasContext.lineTo(endPosition.x, endPosition.y);
-  this.canvasContext.lineCap = "round";
-  this.canvasContext.stroke();
+  this.drawLine(startPosition, endPosition, "#000", lineWidth);
   this.canvasContext.globalCompositeOperation = "source-over";
 };
 
