@@ -35,6 +35,7 @@ function setListenerForCanvas(frameId) {
 var isMouseDown = false;
 var beforeMousePosition = {};
 function mouseDownCanvas(event) {
+  menu.hideMenu();
   isMouseDown = true;
   beforeMousePosition = {x: event.clientX, y: event.clientY};
 }
