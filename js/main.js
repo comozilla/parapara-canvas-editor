@@ -1,6 +1,6 @@
 var ParaparaCanvas = require("./parapara-canvas");
 var Frame = require("./frame");
-var FrameServer = require("./frame-server");
+var FramesController = require("./frames-controller");
 var drawTools = require("./draw-tools");
 var Menu = require("./menu");
 
@@ -8,7 +8,7 @@ var frameServer;
 var colorPicker, lineWidthPicker;
 var menu;
 document.addEventListener("DOMContentLoaded", function() {
-  frameServer = new FrameServer(document.getElementById("frames"));
+  frameServer = new FramesController(document.getElementById("frames"));
   frameServer.append(0, new Frame(ParaparaCanvas.createWithElement(0, frameServer.element)));
   setListenerForCanvas(0);
   frameServer.setCurrentFrame(0);
