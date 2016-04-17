@@ -1,7 +1,8 @@
-var ParaparaCanvas = require("parapara-canvas");
-var Frame = require("frame");
+var ParaparaCanvas = require("./parapara-canvas");
+var Frame = require("./frame");
+var FrameServer = require("./frame-server");
 
-var frames = [];
+var frameServer = new FrameServer();
 document.addEventListener("DOMContentLoaded", function() {
   
 });
