@@ -1,4 +1,3 @@
-var ParaparaCanvas = require("./parapara-canvas");
 var Frame = require("./frame");
 var FramesController = require("./frames-controller");
 var drawTools = require("./draw-tools");
@@ -9,7 +8,7 @@ var colorPicker, lineWidthPicker;
 var menu;
 document.addEventListener("DOMContentLoaded", function() {
   framesController = new FramesController(document.getElementById("frames"));
-  framesController.append(0, new Frame(new ParaparaCanvas(0, framesController.element)));
+  framesController.append(0, new Frame(0, framesController.element));
   setListenerForCanvas(0);
   framesController.setCurrentFrame(0);
   
@@ -23,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function setListenerForCanvas(frameId) {
-  var pCanvas = framesController.getCanvasElementByFrameId(frameId);
+  var pCanvas = framesController.getFrameById(frameId);
   pCanvas.addEventListener("mousedown", mouseDownCanvas);
   pCanvas.addEventListener("mouseup", mouseUpCanvas);
   pCanvas.addEventListener("mousemove", mouseMoveCanvas);
@@ -47,13 +46,13 @@ function mouseUpCanvas() {
 function mouseMoveCanvas(event) {
   if (isMouseDown) {
     if (colorPicker.color === "white") {
-      framesController.getCurrentFrame().paraparaCanvas.eraseByLine(
+      framesController.getCurrentFrame().eraseByLine(
         previousMousePosition,
         {x: event.clientX, y: event.clientY},
         lineWidthPicker.lineWidth
       );
     } else {
-      framesController.getCurrentFrame().paraparaCanvas.drawLine(
+      framesController.getCurrentFrame().drawLine(
         previousMousePosition,
         {x: event.clientX, y: event.clientY},
         colorPicker.color,

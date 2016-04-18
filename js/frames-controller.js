@@ -26,11 +26,11 @@ FramesController.prototype.setCurrentFrame = function(frameId) {
   if (document.querySelector(".current-canvas") !== null) {
     document.querySelector(".current-canvas").classList.remove("current-canvas");
   }       
-  this.getCurrentFrame().paraparaCanvas.canvasElement.classList.add("current-canvas");
+  this.getCurrentFrame().canvasElement.classList.add("current-canvas");
 };
 
-FramesController.prototype.getCanvasElementByFrameId = function(frameId) {
-  return this.frames[frameId].paraparaCanvas.canvasElement;
+FramesController.prototype.getFrameById = function(frameId) {
+  return this.frames[frameId];
 };
 
 FramesController.prototype.getCurrentFrame = function() {
