@@ -8,7 +8,7 @@ var colorPicker, lineWidthPicker;
 var menu;
 document.addEventListener("DOMContentLoaded", function() {
   framesController = new FramesController(document.getElementById("frames"));
-  framesController.append(0, new Frame(0, framesController.element));
+  framesController.append(0, new Frame(0));
   setListenerForCanvas(0);
   framesController.setCurrentFrame(0);
   
