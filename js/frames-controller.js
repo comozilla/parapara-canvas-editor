@@ -26,7 +26,7 @@ FramesController.prototype.setCurrentFrame = function(frameId) {
   // Todo: ここでUI（display: blockのCanvasの切り替え）もやっていいのか
   if (document.querySelector(".current-canvas") !== null) {
     document.querySelector(".current-canvas").classList.remove("current-canvas");
-  }       
+  }
   this.getCurrentFrame().canvasElement.classList.add("current-canvas");
 };
 
