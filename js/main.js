@@ -9,7 +9,9 @@ var menu;
 document.addEventListener("DOMContentLoaded", function() {
   var firstFrameId = 0;
   framesController = new FramesController(document.getElementById("frames"));
-  framesController.append(firstFrameId, new Frame(firstFrameId));
+  // new Frame() に対する引数は、frameId でなく canvasId を渡すので、変数にしない
+  // Todo: frameId と canvasId の統合
+  framesController.append(firstFrameId, new Frame(0));
   setListenerForCanvas(firstFrameId);
   framesController.setCurrentFrame(firstFrameId);
   
