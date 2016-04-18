@@ -7,10 +7,11 @@ var framesController;
 var colorPicker, lineWidthPicker;
 var menu;
 document.addEventListener("DOMContentLoaded", function() {
+  var firstFrameId = 0;
   framesController = new FramesController(document.getElementById("frames"));
-  framesController.append(0, new Frame(0));
-  setListenerForCanvas(0);
-  framesController.setCurrentFrame(0);
+  framesController.append(firstFrameId, new Frame(firstFrameId));
+  setListenerForCanvas(firstFrameId);
+  framesController.setCurrentFrame(firstFrameId);
   
   colorPicker = new drawTools.ColorPicker(document.getElementById("menu-colors"), "red");
   lineWidthPicker = new drawTools.LineWidthPicker(document.getElementById("menu-line-width"), 10);
