@@ -12,6 +12,7 @@ FramesController.prototype.append = function(id, frame) {
   if (!(frame instanceof Frame)) {
     throw new Error("FrameServerに追加しようとしたFrameは不正です。:" + frame);
   }
+  this.element.appendChild(frame.canvasElement);
   // 今はいいが、あとで splice に変える
   this.frames.push(frame);
 };

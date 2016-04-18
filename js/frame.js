@@ -1,12 +1,11 @@
 // コンストラクタで、
 // HTMLCanvasElementとなる this.canvasElement も生成し、appendChildします。
-function Frame(canvasId, parentNode) {
+function Frame(canvasId) {
   var canvasElem = document.createElement("canvas");
   canvasElem.width = window.innerWidth;
   canvasElem.height = window.innerHeight;
   canvasElem.id = "canvas" + canvasId;
   // + リスナー（mouseMoveなど）
-  parentNode.appendChild(canvasElem);
   this.canvasElement = canvasElem;
   // private メンバにしたいけど・・
   this.canvasContext = this.canvasElement.getContext("2d");
