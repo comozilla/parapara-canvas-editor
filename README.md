@@ -7,19 +7,24 @@
 
 ### モジュールをインストール
 
-```
-npm install
-bower install
+```sh
+$ npm install
+$ bower install
 ```
 
 ### webpack でビルド
 
+```sh
+$ webpack
 ```
-webpack
+
+### Lint(ソースコードのチェック)
+```sh
+$ npm run lint
 ```
 
 ### webpack-dev-server で確認
 
-```
-npm start
+```sh
+$ npm start
 ```
