@@ -119,5 +119,6 @@ sftp-config.json
 
 
 ### others
-bower_components/
-js/bundle*
+bower_components
+js/bundle.js
+js/_main.js
