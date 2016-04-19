@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "lint" : "eslint js/"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
     "webpack": "^1.13.0"
   },
   "devDependencies": {
+    "eslint": "^2.8.0",
     "webpack-dev-server": "^1.14.1"
   }
 }
