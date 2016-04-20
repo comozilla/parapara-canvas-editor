@@ -15,7 +15,12 @@ function Frame(canvasId) {
 /**
  * 線を描きます。
  */
-Frame.prototype.drawLine = function(startPosition, endPosition, strokeColor, lineWidth) {
+Frame.prototype.drawLine = function(
+    startPosition,
+    endPosition,
+    strokeColor,
+    lineWidth) {
+
   this.canvasContext.strokeStyle = strokeColor;
   this.canvasContext.lineWidth = lineWidth;
   this.canvasContext.beginPath();
