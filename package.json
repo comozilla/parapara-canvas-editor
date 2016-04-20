@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server",
-    "lint" : "eslint js/"
+    "lint" : "eslint --ignore-path ./.eslintignore js/"
   },
   "repository": {
     "type": "git",
