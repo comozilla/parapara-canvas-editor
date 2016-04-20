@@ -14,14 +14,21 @@ document.addEventListener("DOMContentLoaded", function() {
   framesController.append(firstFrameId, new Frame(0));
   setListenerForCanvas(firstFrameId);
   framesController.setCurrentFrame(firstFrameId);
-  
-  colorPicker = new drawTools.ColorPicker(document.getElementById("menu-colors"), "red");
-  lineWidthPicker = new drawTools.LineWidthPicker(document.getElementById("menu-line-width"), 10);
+
+  colorPicker = new drawTools.ColorPicker(
+    document.getElementById("menu-colors"),
+    "red");
+
+  lineWidthPicker =
+    new drawTools.LineWidthPicker(document.getElementById("menu-line-width"),
+                                  10);
+
   menu = new Menu();
-  
-  document.getElementById("menu-side-btn").addEventListener("click", function() {
-    menu.toggleMenu();
-  });
+
+  document.getElementById("menu-side-btn")
+    .addEventListener("click", function() {
+      menu.toggleMenu();
+    });
 });
 
 function setListenerForCanvas(frameId) {
@@ -51,7 +58,7 @@ function mouseMoveCanvas(event) {
     if (colorPicker.color === "white") {
       framesController.getCurrentFrame().eraseByLine(
         previousMousePosition,
-        {x: event.clientX, y: event.clientY},
+        { x: event.clientX, y: event.clientY },
         lineWidthPicker.lineWidth
       );
     } else {
