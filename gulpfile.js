@@ -10,7 +10,7 @@ gulp.task("webpack", function(callback) {
   var env = minimist(process.argv.slice(2));
   var options = Object.create(config);
   if (env["min"]) {
-    options.output.filename = "./js/bundle.min.js";
+    options.output.filename = "./js/build/bundle.min.js";
     options.plugins = [new webpack.optimize.UglifyJsPlugin()];
   }
   var compiler = webpack(options, function(err, stats) {
