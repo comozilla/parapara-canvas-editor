@@ -18,8 +18,16 @@ bower install
 webpack
 ```
 
-### webpack-dev-server で確認
+### webpack-dev-server を使ってビルド
 
 ```
-npm start
+npm run build-dev-server
 ```
+
+### チェック
+
+[http://localhost:8080/](http://localhost:8080/)  
+  
+http://localhost:8080/webpack-dev-server/index.html では、  
+なぜか書けないです・・  
+[https://github.com/comozilla/Parapara-Canvas-Editor/issues/18](https://github.com/comozilla/Parapara-Canvas-Editor/issues/18)
