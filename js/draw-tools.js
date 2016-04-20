@@ -23,12 +23,14 @@ function LineWidthPicker(elem, defaultLineWidth) {
     this.lineWidth = event.target.value;
   });
 }
+
 LineWidthPicker.prototype.changeMaxLineWidth = function(maxLineWidth) {
   // TODO
-}
+};
+
 LineWidthPicker.prototype.changeMinLineWidth = function(minLineWidth) {
   // TODO
-}
+};
 
 module.exports = {
   ColorPicker: ColorPicker,
