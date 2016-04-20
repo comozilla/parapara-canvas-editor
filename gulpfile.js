@@ -26,3 +26,11 @@ gulp.task("webpack", function(callback) {
     });
   }
 });
+
+// Gulp コマンド
+// readme.mdに書いてもいいが、開発時はgulpをグローバルにインストールしたくないため、
+// npm run から叩くので、ここに書いておく。
+// gulp webpack -> 普通に1回ビルド
+// 引数:
+//  --min : UglifyJsPluginをかける。出力はbundle.min.jsなので注意
+//  --dev-server : WebpackDevServerを起動する。Watch機能付属
