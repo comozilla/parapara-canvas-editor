@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server"
+    "build": "gulp webpack",
+    "build-min": "gulp webpack --min",
+    "build-dev-server": "gulp webpack --dev-server"
   },
   "repository": {
     "type": "git",
