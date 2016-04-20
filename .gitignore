@@ -19,7 +19,7 @@ tags
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
 
 # Thumbnails
 ._*
@@ -120,5 +120,4 @@ sftp-config.json
 
 ### others
 bower_components
-js/bundle.js
-js/_main.js
+js/build/
