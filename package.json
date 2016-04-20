@@ -7,7 +7,7 @@
     "build": "gulp webpack",
     "build-min": "gulp webpack --min",
     "build-dev-server": "gulp webpack --dev-server",
-    "test1": "mocha test1.js",
+    "test": "mocha",
     "lint" : "eslint --ignore-path ./.eslintignore js/"
   },
   "repository": {
@@ -36,5 +36,8 @@
     "power-assert": "^1.3.1",
     "eslint": "^2.8.0",
     "webpack-dev-server": "^1.14.1"
+  },
+  "directories": {
+    "test": "test/"
   }
 }
