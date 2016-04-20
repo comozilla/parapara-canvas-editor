@@ -28,6 +28,8 @@
         ],
         "no-trailing-spaces": "error",
         "space-infix-ops": 2,
-        "space-unary-ops": 2
+        "space-unary-ops": 2,
+        "keyword-spacing": ["error", {"before": false, "after": true, "overrides": {}}],
+        "eol-last": 2
     }
 }
