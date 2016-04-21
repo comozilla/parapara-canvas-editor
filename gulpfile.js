@@ -13,10 +13,12 @@ gulp.task("webpack", function(callback) {
     options.output.filename = "./js/build/bundle.min.js";
     options.plugins = [new webpack.optimize.UglifyJsPlugin()];
   }
+  if (env["watch"]) {
+    options.watch = true;
+  }
   var compiler = webpack(options, function(err, stats) {
     if(err) throw new gutil.PluginError("webpack", err);
     gutil.log("[webpack]", stats.toString());
-    callback();
   });
   if (env["dev-server"]) {
     // webpack-dev-serverで監視する
