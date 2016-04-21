@@ -1,4 +1,5 @@
 module.exports = {
+  cache: true,
   entry: './js/main.js',
   output: {
     path: __dirname,
