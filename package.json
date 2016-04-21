@@ -7,7 +7,7 @@
     "build": "gulp webpack",
     "build-min": "gulp webpack --min",
     "build-dev-server": "gulp webpack --dev-server",
-    "lint" : "eslint --ignore-path ./.eslintignore js/"
+    "lint" : "eslint --ignore-path ./.eslintignore js/ test/"
   },
   "repository": {
     "type": "git",
