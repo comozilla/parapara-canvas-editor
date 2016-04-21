@@ -1,6 +1,7 @@
 var Frame = require("./frame");
 var FramesController = require("./frames-controller");
-var drawTools = require("./draw-tools");
+var ColorPicker = require("./color-picker");
+var LineWidthPicker = require("./line-width-picker");
 var Menu = require("./menu");
 
 var framesController;
@@ -15,12 +16,12 @@ document.addEventListener("DOMContentLoaded", function() {
   setListenerForCanvas(firstFrameId);
   framesController.setCurrentFrame(firstFrameId);
 
-  colorPicker = new drawTools.ColorPicker(
+  colorPicker = new ColorPicker(
     document.getElementById("menu-colors"),
     "red");
 
   lineWidthPicker =
-    new drawTools.LineWidthPicker(document.getElementById("menu-line-width"),
+    new LineWidthPicker(document.getElementById("menu-line-width"),
                                   10);
 
   menu = new Menu();
