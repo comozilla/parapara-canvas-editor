@@ -6,20 +6,24 @@ var browserSync = require("browser-sync");
 
 var config = require("./webpack.config.js");
 
-gulp.task("webpack", function(callback) {
+gulp.task("webpack", function() {
   var env = minimist(process.argv.slice(2));
   var options = Object.create(config);
+
   if (env["min"]) {
     options.output.filename = "./js/build/bundle.min.js";
     options.plugins = [new webpack.optimize.UglifyJsPlugin()];
   }
+
   if (env["watch"] || env["browser-sync"]) {
     options.watch = true;
   }
-  var compiler = webpack(options, function(err, stats) {
-    if(err) throw new gutil.PluginError("webpack", err);
+
+  webpack(options, function(err, stats) {
+    if (err) throw new gutil.PluginError("webpack", err);
     gutil.log("[webpack]", stats.toString());
   });
+
   if (env["browser-sync"]) {
     browserSync({
       server: {

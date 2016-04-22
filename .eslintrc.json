@@ -31,7 +31,10 @@
         "space-infix-ops": 2,
         "space-unary-ops": 2,
         "keyword-spacing": ["error", {"before": false, "after": true,
-           "overrides": {"else": {"before": true}}}],
+          "overrides": {
+            "else": {"before": true},
+            "throw": {"before": true}
+          }}],
         "eol-last": 2,
         "max-len": ["error", 80, 4, {"ignoreUrls": true}],
         "operator-linebreak": ["error", "after"],
