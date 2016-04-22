@@ -3,6 +3,7 @@ var gutil = require("gulp-util");
 var webpack = require("webpack");
 var WebpackDevServer = require("webpack-dev-server");
 var minimist = require("minimist");
+var browserSync = require("browser-sync");
 
 var config = require("./webpack.config.js");
 
@@ -36,3 +37,15 @@ gulp.task("webpack", function(callback) {
 // 引数:
 //  --min : UglifyJsPluginをかける。出力はbundle.min.jsなので注意
 //  --dev-server : WebpackDevServerを起動する。Watch機能付属
+
+gulp.task("browser-sync", function() {
+  browserSync({
+    server: {
+      baseDir: "./",
+      index: "index.html"
+    }
+  });
+  gulp.watch(["./js/**", "./index.html", "./css/**"], function() {
+    browserSync.reload();
+  });
+});
