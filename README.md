@@ -23,7 +23,7 @@ $ webpack
 $ npm run lint
 ```
 
-### webpack-dev-server を使ってビルド
+### webpack を使ってビルド + browser-syncの監視
 
 ```sh
 $ npm run build-dev-server
@@ -31,8 +31,6 @@ $ npm run build-dev-server
 
 ### チェック
 
-[http://localhost:8080/](http://localhost:8080/)  
-  
-http://localhost:8080/webpack-dev-server/index.html では、  
-なぜか書けないです・・  
-[https://github.com/comozilla/Parapara-Canvas-Editor/issues/18](https://github.com/comozilla/Parapara-Canvas-Editor/issues/18)
+browser-syncを使っています。  
+自動でブラウザが開くと思いますので、確認してください。  
+`js/`、`css/`、`index.html`を変更した際、ライブリロードされます。
