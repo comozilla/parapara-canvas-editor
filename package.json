@@ -8,7 +8,7 @@
     "build-min": "gulp webpack --min",
     "build-watch": "gulp webpack --watch",
     "build-dev-server": "gulp webpack --dev-server",
-    "lint" : "eslint --ignore-path ./.eslintignore js/ test/"
+    "lint": "eslint --ignore-path ./.eslintignore js/ test/"
   },
   "repository": {
     "type": "git",
@@ -31,7 +31,6 @@
     "eslint": "^2.8.0",
     "gulp": "^3.9.1",
     "gulp-util": "^3.0.7",
-    "minimist": "^1.2.0",
-    "webpack-dev-server": "^1.14.1"
+    "minimist": "^1.2.0"
   }
 }
