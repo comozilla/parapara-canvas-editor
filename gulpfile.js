@@ -22,10 +22,14 @@ gulp.task("webpack", function(callback) {
     gutil.log("[webpack]", stats.toString());
   });
   if (env["dev-server"]) {
-    // webpack-dev-serverで監視する
-    new WebpackDevServer(compiler, { }).listen(8080, "localhost", function(err) {
-        if(err) throw new gutil.PluginError("webpack-dev-server", err);
-        gutil.log("[webpack-dev-server]", "http://localhost:8080/webpack-dev-server/index.html");
+    browserSync({
+      server: {
+        baseDir: "./",
+        index: "index.html"
+      }
+    });
+    gulp.watch(["./js/**", "./index.html", "./css/**"], function() {
+      browserSync.reload();
     });
   }
 });
@@ -37,15 +41,3 @@ gulp.task("webpack", function(callback) {
 // 引数:
 //  --min : UglifyJsPluginをかける。出力はbundle.min.jsなので注意
 //  --dev-server : WebpackDevServerを起動する。Watch機能付属
-
-gulp.task("browser-sync", function() {
-  browserSync({
-    server: {
-      baseDir: "./",
-      index: "index.html"
-    }
-  });
-  gulp.watch(["./js/**", "./index.html", "./css/**"], function() {
-    browserSync.reload();
-  });
-});
