@@ -26,7 +26,7 @@ $ npm run lint
 ### webpack を使ってビルド + browser-syncの監視
 
 ```sh
-$ npm run build-dev-server
+$ npm run build:browser-sync
 ```
 
 ### チェック

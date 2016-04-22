@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "gulp webpack",
-    "build-min": "gulp webpack --min",
-    "build-watch": "gulp webpack --watch",
-    "build-dev-server": "gulp webpack --dev-server",
+    "build:min": "gulp webpack --min",
+    "build:watch": "gulp webpack --watch",
+    "build:browser-sync": "gulp webpack --browser-sync",
     "lint": "eslint --ignore-path ./.eslintignore js/ test/"
   },
   "repository": {

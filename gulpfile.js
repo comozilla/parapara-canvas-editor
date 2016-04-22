@@ -20,7 +20,7 @@ gulp.task("webpack", function(callback) {
     if(err) throw new gutil.PluginError("webpack", err);
     gutil.log("[webpack]", stats.toString());
   });
-  if (env["dev-server"]) {
+  if (env["browser-sync"]) {
     browserSync({
       server: {
         baseDir: "./",
@@ -28,6 +28,7 @@ gulp.task("webpack", function(callback) {
       }
     });
     gulp.watch(["./js/**", "./index.html", "./css/**"], function() {
+      //--------------^ 実際にブラウザに関係するのはbuild/以下なのでそれでいいような
       browserSync.reload();
     });
   }
@@ -39,4 +40,4 @@ gulp.task("webpack", function(callback) {
 // gulp webpack -> 普通に1回ビルド
 // 引数:
 //  --min : UglifyJsPluginをかける。出力はbundle.min.jsなので注意
-//  --dev-server : WebpackDevServerを起動する。Watch機能付属
+//  --browser-sync : browser-syncで監視する。--watchもされる。
