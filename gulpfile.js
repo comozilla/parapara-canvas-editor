@@ -13,7 +13,7 @@ gulp.task("webpack", function(callback) {
     options.output.filename = "./js/build/bundle.min.js";
     options.plugins = [new webpack.optimize.UglifyJsPlugin()];
   }
-  if (env["watch"]) {
+  if (env["watch"] || env["browser-sync"]) {
     options.watch = true;
   }
   var compiler = webpack(options, function(err, stats) {
@@ -27,8 +27,8 @@ gulp.task("webpack", function(callback) {
         index: "index.html"
       }
     });
-    gulp.watch(["./js/**", "./index.html", "./css/**"], function() {
-      //--------------^ 実際にブラウザに関係するのはbuild/以下なのでそれでいいような
+    gulp.watch(["./js/build/**", "./index.html", "./css/**"], function() {
+      //--------------^ 実際にブラウザに関係するのはbuild/以下なのでそれでいい
       browserSync.reload();
     });
   }
