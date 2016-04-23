@@ -1,4 +1,3 @@
-//var BowerWebpackPlugin = require("bower-webpack-plugin");
 var webpack = require("webpack");
 module.exports = {
   cache: true,
