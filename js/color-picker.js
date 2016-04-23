@@ -5,20 +5,16 @@ function ColorPicker(elem, defaultColor) {
 }
 
 ColorPicker.prototype.addPalette = function(color) {
-  // 将来的には、ColorPicker.prototype.addPallete とかで
-  // 色を js から増やせたりしたいが、html を弄るので後で。
-  // その時は、追加したNodeにListenerをつけるのを忘れない！
-
   if (!isColor(color)) {
     throw new Error("不正な色が指定されました。:" + color);
   }
 
-  var obj = document.createElement("li");
-  obj.style.backgroundColor = color;
+  var palette = document.createElement("li");
+  palette.style.backgroundColor = color;
 
-  this.element.appendChild(obj);
+  this.element.appendChild(palette);
 
-  obj.addEventListener("click", event => {
+  palette.addEventListener("click", event => {
     this.color = event.target.style.backgroundColor;
   });
 
