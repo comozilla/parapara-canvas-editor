@@ -1,0 +1,22 @@
+{
+  "name": "Parapara-Projection-Mapping",
+  "homepage": "https://github.com/shundroid/Parapara-Projection-Mapping",
+  "authors": [
+    "comozilla"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "client/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "fontawesome#^4.5.0"
+  }
+}
