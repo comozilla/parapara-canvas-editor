@@ -4,6 +4,8 @@ var ColorPicker = require("./color-picker");
 var LineWidthPicker = require("./line-width-picker");
 var Menu = require("./menu");
 
+var stylesheet = require("./../css/style.css");
+
 var framesController;
 var colorPicker, lineWidthPicker;
 var menu;
