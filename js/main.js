@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   lineWidthPicker =
     new LineWidthPicker(document.getElementById("menu-line-width"),
-                                  10);
+        10);
 
   menu = new Menu();
 
