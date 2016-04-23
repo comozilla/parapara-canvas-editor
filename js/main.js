@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   var colorList =
       ["red", "orange","yellow","lightgreen",
-        "green","skyblue","purple","black","white"];
+        "green","skyblue","blue","purple","black","white"];
 
   colorList.forEach(color => {
     colorPicker.addPalette(color);
