@@ -18,10 +18,8 @@ module.exports = {
         }
       },
       { test: /\.css$/, loader: "style-loader!css-loader" },
-      /*
-      下のものは、url-loaderでやると１ファイルにまとまっていいが、
-      font-awesomeが特別な種類のフォントを使っている問題でまとめられないからfile-loaderでやっている
-      */
+      // 下のものは、url-loaderでやると１ファイルにまとまっていいが、
+      // font-awesomeが特別な種類のフォントを使っている問題でまとめられないからfile-loaderでやっている
       { test: /\.(ttf|eot|svg|woff2|woff)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file?name=js/build/[path][name].[ext]" }
     ]
   },
