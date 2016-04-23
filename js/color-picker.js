@@ -2,16 +2,26 @@ function ColorPicker(elem, defaultColor) {
   // このelem には、ul要素が入ってくる（はず）。
   this.element = elem;
   this.color = defaultColor;
-  Array.prototype.forEach.call(this.element.childNodes, childNode => {
-    childNode.addEventListener("click", event => {
-      // アロー関数にしているため、this はインスタンス。
-      this.color = event.target.style.backgroundColor;
-    });
-  });
 }
+
 ColorPicker.prototype.addPalette = function(color) {
-  // 将来的には、ColorPicker.prototype.addPallete とかで
-  // 色を js から増やせたりしたいが、html を弄るので後で。
-  // その時は、追加したNodeにListenerをつけるのを忘れない！
+  if (!isColor(color)){
+    throw new Error("不正な色が指定されました。:" + color);
+  }
+
+  var palette = document.createElement("li");
+  palette.style.backgroundColor = color;
+  this.element.appendChild(palette);
+
+  palette.addEventListener("click", event => {
+    this.color = event.target.style.backgroundColor;
+  });
 };
+
+function isColor(color) {
+  var testElement = document.createElement("span");
+  testElement.style.backgroundColor = color;
+  return testElement.style.backgroundColor !== "";
+}
+
 module.exports = ColorPicker;

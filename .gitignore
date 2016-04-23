@@ -121,3 +121,5 @@ sftp-config.json
 ### others
 bower_components
 js/build/
+
+.idea/

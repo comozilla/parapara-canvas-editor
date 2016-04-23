@@ -23,9 +23,16 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("menu-colors"),
     "red");
 
+  var colorList =
+      ["red", "orange","yellow","lightgreen", "green",
+       "skyblue","blue","purple","black","white"];
+
+  colorList.forEach(color => {
+    colorPicker.addPalette(color);
+  });
+
   lineWidthPicker =
-    new LineWidthPicker(document.getElementById("menu-line-width"),
-                                  10);
+    new LineWidthPicker(document.getElementById("menu-line-width"), 10);
 
   menu = new Menu();
 
