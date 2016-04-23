@@ -9,8 +9,8 @@ function ColorPicker(elem, defaultColor) {
     });
   });
 }
-ColorPicker.prototype.addColorUI = function(color) {
-  // 将来的には、ColorPicker.prototype.addColorUI とかで
+ColorPicker.prototype.addPalette = function(color) {
+  // 将来的には、ColorPicker.prototype.addPallete とかで
   // 色を js から増やせたりしたいが、html を弄るので後で。
   // その時は、追加したNodeにListenerをつけるのを忘れない！
 };
