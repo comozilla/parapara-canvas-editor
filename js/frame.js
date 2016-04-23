@@ -2,6 +2,7 @@
 // HTMLCanvasElementとなる this.canvasElement も生成し、appendChildします。
 function Frame(canvasId) {
   var canvasElem = document.createElement("canvas");
+
   canvasElem.width = window.innerWidth;
   canvasElem.height = window.innerHeight;
   canvasElem.id = "canvas" + canvasId;
