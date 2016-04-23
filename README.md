@@ -12,12 +12,6 @@ $ npm install
 $ bower install
 ```
 
-### webpack でビルド
-
-```sh
-$ webpack
-```
-
 ### Lint(ソースコードのチェック)
 ```sh
 $ npm run lint
