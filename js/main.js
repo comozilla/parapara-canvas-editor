@@ -5,6 +5,7 @@ var LineWidthPicker = require("./line-width-picker");
 var Menu = require("./menu");
 
 var stylesheet = require("./../css/style.css");
+var fontAwesome = require("font-awesome");
 
 var framesController;
 var colorPicker, lineWidthPicker;
