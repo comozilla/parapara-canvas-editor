@@ -16,9 +16,18 @@ document.addEventListener("DOMContentLoaded", function() {
   setListenerForCanvas(firstFrameId);
   framesController.setCurrentFrame(firstFrameId);
 
+
   colorPicker = new ColorPicker(
     document.getElementById("menu-colors"),
     "red");
+
+  var colorList =
+      ["red", "orange","yellow","lightgreen",
+        "green","skyblue","purple","black","white"];
+
+  colorList.forEach(color => {
+    colorPicker.addPalette(color);
+  });
 
   lineWidthPicker =
     new LineWidthPicker(document.getElementById("menu-line-width"),
