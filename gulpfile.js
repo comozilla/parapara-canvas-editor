@@ -20,7 +20,9 @@ gulp.task("webpack", function() {
   }
 
   webpack(options, function(err, stats) {
-    if (err) throw new gutil.PluginError("webpack", err);
+    if (err){
+      throw new gutil.PluginError("webpack", err);
+    }
     gutil.log("[webpack]", stats.toString());
   });
 
@@ -32,7 +34,7 @@ gulp.task("webpack", function() {
       }
     });
     gulp.watch(["./js/build/**", "./index.html", "./css/**"], function() {
-      //--------------^ 実際にブラウザに関係するのはbuild/以下なのでそれでいい
+      // 実際にブラウザに関係するのはbuild/以下なのでそれでいい
       browserSync.reload();
     });
   }
