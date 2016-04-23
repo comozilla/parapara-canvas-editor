@@ -53,6 +53,8 @@
         "no-constant-condition": 2, 
         "no-ex-assign": 2,
         "no-extra-semi": 2,
-        "no-unused-vars": 1
+        "no-unused-vars": 1,
+        "object-curly-spacing": ["error", "always"],
+        "spaced-comment": ["error", "always"]
     }
 }
