@@ -12,7 +12,7 @@ gulp.task("webpack", function() {
 
   if (env["min"]) {
     options.output.filename = "./js/build/bundle.min.js";
-    options.plugins = [new webpack.optimize.UglifyJsPlugin()];
+    options.plugins.push(new webpack.optimize.UglifyJsPlugin());
   }
 
   if (env["watch"] || env["browser-sync"]) {
