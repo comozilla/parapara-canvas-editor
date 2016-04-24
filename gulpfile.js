@@ -34,7 +34,6 @@ gulp.task("webpack", function() {
       }
     });
     gulp.watch(["./js/build/**", "./index.html", "./css/**"], function() {
-      // 実際にブラウザに関係するのはbuild/以下なのでそれでいい
       browserSync.reload();
     });
   }

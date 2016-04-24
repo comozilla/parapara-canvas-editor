@@ -1,5 +1,4 @@
-// コンストラクタで、
-// HTMLCanvasElementとなる this.canvasElement も生成し、appendChildします。
+// HTMLCanvasElementをラップし, canvasRenderingContext2Dに関する操作を提供する
 function Frame(canvasId) {
   var canvasElem = document.createElement("canvas");
 
