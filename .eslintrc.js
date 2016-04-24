@@ -182,6 +182,10 @@ module.exports = {
     "sort-vars": ["off", {
       "ignoreCase": true
     }],
+    "space-before-blocks": ["error", {
+      "functions": "always",
+      "keywords": "always"
+    }],
     "space-infix-ops": "error",
     "space-in-parens": ["error", "never"],
     "space-unary-ops": "error",
