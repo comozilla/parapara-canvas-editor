@@ -16,8 +16,7 @@ var previousMousePosition = {};
 
 document.addEventListener("DOMContentLoaded", function() {
   var firstFrameId = 0;
-  var colorList =
-      ["red", "orange", "yellow", "lightgreen", "green",
+  var colorList = ["red", "orange", "yellow", "lightgreen", "green",
        "skyblue", "blue", "purple", "black", "white"];
 
   framesController = new FramesController(document.getElementById("frames"));
@@ -27,10 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
   setListenerForCanvas(firstFrameId);
   framesController.setCurrentFrame(firstFrameId);
 
-  colorPicker = new ColorPicker(
-    document.getElementById("menu-colors"),
-    "red");
-
+  colorPicker = new ColorPicker(document.getElementById("menu-colors"), "red");
 
   colorList.forEach(color => {
     colorPicker.addPalette(color);
@@ -49,7 +45,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function setListenerForCanvas(frameId) {
   var pCanvas = framesController.getFrameById(frameId);
-
   pCanvas.addEventListener("mousedown", mouseDownCanvas);
   pCanvas.addEventListener("mouseup", mouseUpCanvas);
   pCanvas.addEventListener("mousemove", mouseMoveCanvas);

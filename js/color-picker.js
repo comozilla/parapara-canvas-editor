@@ -7,7 +7,7 @@ function ColorPicker(elem, defaultColor) {
 ColorPicker.prototype.addPalette = function(color) {
   var palette = document.createElement("li");
 
-  if (!isColor(color)){
+  if (!isColor(color)) {
     throw new Error("不正な色が指定されました。:" + color);
   }
 
@@ -21,9 +21,7 @@ ColorPicker.prototype.addPalette = function(color) {
 
 function isColor(color) {
   var testElement = document.createElement("span");
-
   testElement.style.backgroundColor = color;
-
   return testElement.style.backgroundColor !== "";
 }
 
