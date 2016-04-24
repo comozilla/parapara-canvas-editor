@@ -15,11 +15,11 @@ Menu.prototype.hideMenu = function() {
 };
 
 Menu.prototype.toggleOpenMenuButton = function(isVisible) {
-  let sidebtn = document.getElementById("menu-side-btn");
+  var sidebtn = document.getElementById("menu-side-btn");
   if (isVisible) {
     sidebtn.animate(
-      [{transform: "translate(-10px)"}, {transform: "translate(0px)"}],
-      {direction: 'alternate', duration: 100});
+      [{ transform: "translate(-10px)" }, { transform: "translate(0px)" }],
+      { direction: 'alternate', duration: 100 });
   }
   sidebtn.style.display = isVisible ? "block" : "none";
 };
