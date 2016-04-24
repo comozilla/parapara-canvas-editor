@@ -26,7 +26,8 @@ module.exports = {
   resolve: {
     modulesDirectories: ["web_modules", "node_modules", "bower_components"],
     alias: {
-      "font-awesome": "font-awesome/css/font-awesome.css"
+      "font-awesome": "font-awesome/css/font-awesome.css",
+      "web-animations-js": "web-animations-js/web-animations-next.min.js"
     }
   },
   plugins: [new webpack.ResolverPlugin(

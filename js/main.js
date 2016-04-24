@@ -6,6 +6,7 @@ var Menu = require("./menu");
 
 var stylesheet = require("./../css/style.css");
 var fontAwesome = require("font-awesome");
+var webAnimation = require("web-animations-js");
 
 var framesController;
 var colorPicker, lineWidthPicker;
@@ -55,8 +56,10 @@ function setListenerForCanvas(frameId) {
 var isMouseDown = false;
 var previousMousePosition = {};
 function mouseDownCanvas(event) {
+  if (!document.getElementById("menu").classList.contains("menu-open")) {
+    menu.toggleOpenMenuButton(false);
+  }
   menu.hideMenu();
-  menu.toggleOpenMenuButton(false);
   isMouseDown = true;
   previousMousePosition = {x: event.clientX, y: event.clientY};
 }
