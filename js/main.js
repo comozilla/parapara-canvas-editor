@@ -16,7 +16,7 @@ var previousMousePosition = {};
 
 document.addEventListener("DOMContentLoaded", function() {
   var firstFrameId = 0;
-  var colorList = ["red", "orange", "yellow", "lightgreen", "green",
+  var defaultPalleteColors = ["red", "orange", "yellow", "lightgreen", "green",
        "skyblue", "blue", "purple", "black", "white"];
 
   framesController = new FramesController(document.getElementById("frames"));
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   colorPicker = new ColorPicker(document.getElementById("menu-colors"), "red");
 
-  colorList.forEach(color => {
+  defaultPalleteColors.forEach(color => {
     colorPicker.addPalette(color);
   });
 

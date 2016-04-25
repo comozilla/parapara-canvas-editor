@@ -5,12 +5,13 @@ function ColorPicker(elem, defaultColor) {
 }
 
 ColorPicker.prototype.addPalette = function(color) {
-  var palette = document.createElement("li");
+  var palette;
 
   if (!isColor(color)) {
     throw new Error("不正な色が指定されました。:" + color);
   }
 
+  palette = document.createElement("li");
   palette.style.backgroundColor = color;
   this.element.appendChild(palette);
 
