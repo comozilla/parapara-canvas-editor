@@ -1,4 +1,5 @@
 var webpack = require("webpack");
+
 module.exports = {
   cache: true,
   entry: "./js/main.js",
@@ -20,7 +21,10 @@ module.exports = {
       { test: /\.css$/, loader: "style-loader!css-loader" },
       // 下のものは、url-loaderでやると１ファイルにまとまっていいが、
       // font-awesomeが特別な種類のフォントを使っている問題でまとめられないからfile-loaderでやっている
-      { test: /\.(ttf|eot|svg|woff2|woff)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file?name=js/build/[path][name].[ext]" }
+      {
+        test: /\.(ttf|eot|svg|woff2|woff)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: "file?name=js/build/[path][name].[ext]"
+      }
     ]
   },
   resolve: {
@@ -31,6 +35,7 @@ module.exports = {
     }
   },
   plugins: [new webpack.ResolverPlugin(
-    new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
+    new webpack.ResolverPlugin
+      .DirectoryDescriptionFilePlugin("bower.json", ["main"])
   )]
 };

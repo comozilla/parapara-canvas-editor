@@ -9,10 +9,17 @@ var fontAwesome = require("font-awesome");
 var webAnimation = require("web-animations-js");
 
 var framesController;
-var colorPicker, lineWidthPicker;
+var colorPicker;
+var lineWidthPicker;
 var menu;
+var isMouseDown = false;
+var previousMousePosition = {};
+
 document.addEventListener("DOMContentLoaded", function() {
   var firstFrameId = 0;
+  var defaultPalleteColors = ["red", "orange", "yellow", "lightgreen", "green",
+       "skyblue", "blue", "purple", "black", "white"];
+
   framesController = new FramesController(document.getElementById("frames"));
   // new Frame() に対する引数は、frameId でなく canvasId を渡すので、変数にしない
   // Todo: frameId と canvasId の統合
@@ -20,15 +27,9 @@ document.addEventListener("DOMContentLoaded", function() {
   setListenerForCanvas(firstFrameId);
   framesController.setCurrentFrame(firstFrameId);
 
-  colorPicker = new ColorPicker(
-    document.getElementById("menu-colors"),
-    "red");
+  colorPicker = new ColorPicker(document.getElementById("menu-colors"), "red");
 
-  var colorList =
-      ["red", "orange","yellow","lightgreen", "green",
-       "skyblue","blue","purple","black","white"];
-
-  colorList.forEach(color => {
+  defaultPalleteColors.forEach(color => {
     colorPicker.addPalette(color);
   });
 
@@ -53,15 +54,13 @@ function setListenerForCanvas(frameId) {
 // → parapara-canvas.js に取り込むような気もするが、
 //   この情報をWebsocket で送ったり・・となるのであれば、
 //   それを parapara-canvas.js でやっていいの？となる。
-var isMouseDown = false;
-var previousMousePosition = {};
 function mouseDownCanvas(event) {
   if (!document.getElementById("menu").classList.contains("menu-open")) {
     menu.toggleOpenMenuButton(false);
   }
   menu.hideMenu();
   isMouseDown = true;
-  previousMousePosition = {x: event.clientX, y: event.clientY};
+  previousMousePosition = { x: event.clientX, y: event.clientY };
 }
 function mouseUpCanvas() {
   menu.toggleOpenMenuButton(true);
@@ -78,11 +77,11 @@ function mouseMoveCanvas(event) {
     } else {
       framesController.getCurrentFrame().drawLine(
         previousMousePosition,
-        {x: event.clientX, y: event.clientY},
+        { x: event.clientX, y: event.clientY },
         colorPicker.color,
         lineWidthPicker.lineWidth
       );
     }
-    previousMousePosition = {x: event.clientX, y: event.clientY};
+    previousMousePosition = { x: event.clientX, y: event.clientY };
   }
 }
