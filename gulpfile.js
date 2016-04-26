@@ -7,7 +7,8 @@ var browserSync = require("browser-sync");
 var config = require("./webpack.config.js");
 
 gulp.task("webpack", function() {
-  var env = minimist(process.argv.slice(2));
+  const beginNewArgvIndex = 2;
+  var env = minimist(process.argv.slice(beginNewArgvIndex));
   var options = Object.create(config);
 
   if (env["min"]) {

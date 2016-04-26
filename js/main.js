@@ -16,14 +16,16 @@ var isMouseDown = false;
 var previousMousePosition = {};
 
 document.addEventListener("DOMContentLoaded", function() {
-  var firstFrameId = 0;
+  const firstFrameId = 0;
+  const firstCanvasId = 0;
+  const defaultLineWidth = 10;
   var defaultPalleteColors = ["red", "orange", "yellow", "lightgreen", "green",
-       "skyblue", "blue", "purple", "black", "white"];
+    "skyblue", "blue", "purple", "black", "white"];
 
   framesController = new FramesController(document.getElementById("frames"));
   // new Frame() に対する引数は、frameId でなく canvasId を渡すので、変数にしない
   // Todo: frameId と canvasId の統合
-  framesController.append(firstFrameId, new Frame(0));
+  framesController.append(firstFrameId, new Frame(firstCanvasId));
   setListenerForCanvas(firstFrameId);
   framesController.setCurrentFrame(firstFrameId);
 
@@ -33,8 +35,9 @@ document.addEventListener("DOMContentLoaded", function() {
     colorPicker.addPalette(color);
   });
 
-  lineWidthPicker =
-    new LineWidthPicker(document.getElementById("menu-line-width"), 10);
+  lineWidthPicker = new LineWidthPicker(
+    document.getElementById("menu-line-width"),
+    defaultLineWidth);
 
   menu = new Menu();
 

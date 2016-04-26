@@ -23,6 +23,7 @@ ColorPicker.prototype.addPalette = function(color) {
 function isColor(color) {
   var testElement = document.createElement("span");
   testElement.style.backgroundColor = color;
+
   return testElement.style.backgroundColor !== "";
 }
 
