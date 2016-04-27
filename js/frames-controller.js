@@ -1,12 +1,10 @@
 const Frame = require("./frame");
 
-const defaultCurrentFrameId = 0;
-
 // frame の追加・削除と、DOM上でのCanvasの追加・削除を連動させる
 function FramesController(elem) {
   this.element = elem;
   this.frames = [];
-  this.currentFrameId = defaultCurrentFrameId;
+  this.currentFrameId = 0;
 }
 
 // パラメータ id は、将来的にどこにframeをappendするかで必要。
