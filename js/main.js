@@ -4,9 +4,10 @@ const ColorPicker = require("./color-picker");
 const LineWidthPicker = require("./line-width-picker");
 const Menu = require("./menu");
 
-const stylesheet = require("./../css/style.css");
-const fontAwesome = require("font-awesome");
-const webAnimation = require("web-animations-js");
+// webpack
+require("./../css/style.css");
+require("font-awesome");
+require("web-animations-js");
 
 let framesController;
 let colorPicker;
