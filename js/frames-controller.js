@@ -1,4 +1,4 @@
-var Frame = require("./frame");
+const Frame = require("./frame");
 
 const defaultCurrentFrameId = 0;
 

@@ -15,7 +15,7 @@ Menu.prototype.hideMenu = function() {
 };
 
 Menu.prototype.toggleOpenMenuButton = function(isVisible) {
-  var sidebtn = document.getElementById("menu-side-btn");
+  const sidebtn = document.getElementById("menu-side-btn");
   if (isVisible) {
     const animateDuration = 100;
     sidebtn.animate(

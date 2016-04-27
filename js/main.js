@@ -1,26 +1,26 @@
-var Frame = require("./frame");
-var FramesController = require("./frames-controller");
-var ColorPicker = require("./color-picker");
-var LineWidthPicker = require("./line-width-picker");
-var Menu = require("./menu");
+const Frame = require("./frame");
+const FramesController = require("./frames-controller");
+const ColorPicker = require("./color-picker");
+const LineWidthPicker = require("./line-width-picker");
+const Menu = require("./menu");
 
-var stylesheet = require("./../css/style.css");
-var fontAwesome = require("font-awesome");
-var webAnimation = require("web-animations-js");
+const stylesheet = require("./../css/style.css");
+const fontAwesome = require("font-awesome");
+const webAnimation = require("web-animations-js");
 
-var framesController;
-var colorPicker;
-var lineWidthPicker;
-var menu;
-var isMouseDown = false;
-var previousMousePosition = {};
+let framesController;
+let colorPicker;
+let lineWidthPicker;
+let menu;
+let isMouseDown = false;
+let previousMousePosition = {};
 
 document.addEventListener("DOMContentLoaded", function() {
   const firstFrameId = 0;
   const firstCanvasId = 0;
   const defaultLineWidth = 10;
-  var defaultPalleteColors = ["red", "orange", "yellow", "lightgreen", "green",
-    "skyblue", "blue", "purple", "black", "white"];
+  const defaultPalleteColors = ["red", "orange", "yellow", "lightgreen",
+    "green", "skyblue", "blue", "purple", "black", "white"];
 
   framesController = new FramesController(document.getElementById("frames"));
   // new Frame() に対する引数は、frameId でなく canvasId を渡すので、変数にしない
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function setListenerForCanvas(frameId) {
-  var pCanvas = framesController.getFrameById(frameId);
+  let pCanvas = framesController.getFrameById(frameId);
   pCanvas.addEventListener("mousedown", mouseDownCanvas);
   pCanvas.addEventListener("mouseup", mouseUpCanvas);
   pCanvas.addEventListener("mousemove", mouseMoveCanvas);

@@ -1,3 +1,4 @@
+// gulp では let は使えないらしい
 var gulp = require("gulp");
 var gutil = require("gulp-util");
 var webpack = require("webpack");
