@@ -1,16 +1,18 @@
-// gulp では let は使えないらしい
-var gulp = require("gulp");
-var gutil = require("gulp-util");
-var webpack = require("webpack");
-var minimist = require("minimist");
-var browserSync = require("browser-sync");
+"use strict";
 
-var config = require("./webpack.config.js");
+// gulp では let は使えないらしい
+const gulp = require("gulp");
+const gutil = require("gulp-util");
+const webpack = require("webpack");
+const minimist = require("minimist");
+const browserSync = require("browser-sync");
+
+const config = require("./webpack.config.js");
 
 gulp.task("webpack", function() {
   const beginNewArgvIndex = 2;
-  var env = minimist(process.argv.slice(beginNewArgvIndex));
-  var options = Object.create(config);
+  const env = minimist(process.argv.slice(beginNewArgvIndex));
+  let options = Object.create(config);
 
   if (env["min"]) {
     options.output.filename = "./js/build/bundle.min.js";
