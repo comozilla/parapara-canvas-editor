@@ -1,6 +1,6 @@
 // HTMLCanvasElementをラップし, canvasRenderingContext2Dに関する操作を提供する
 function Frame(canvasId) {
-  var canvasElem = document.createElement("canvas");
+  const canvasElem = document.createElement("canvas");
 
   canvasElem.width = window.innerWidth;
   canvasElem.height = window.innerHeight;

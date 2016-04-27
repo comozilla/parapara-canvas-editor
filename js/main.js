@@ -1,29 +1,32 @@
-var Frame = require("./frame");
-var FramesController = require("./frames-controller");
-var ColorPicker = require("./color-picker");
-var LineWidthPicker = require("./line-width-picker");
-var Menu = require("./menu");
+const Frame = require("./frame");
+const FramesController = require("./frames-controller");
+const ColorPicker = require("./color-picker");
+const LineWidthPicker = require("./line-width-picker");
+const Menu = require("./menu");
 
-var stylesheet = require("./../css/style.css");
-var fontAwesome = require("font-awesome");
-var webAnimation = require("web-animations-js");
+// webpack
+require("./../css/style.css");
+require("font-awesome");
+require("web-animations-js");
 
-var framesController;
-var colorPicker;
-var lineWidthPicker;
-var menu;
-var isMouseDown = false;
-var previousMousePosition = {};
+let framesController;
+let colorPicker;
+let lineWidthPicker;
+let menu;
+let isMouseDown = false;
+let previousMousePosition = {};
 
 document.addEventListener("DOMContentLoaded", function() {
-  var firstFrameId = 0;
-  var defaultPalleteColors = ["red", "orange", "yellow", "lightgreen", "green",
-       "skyblue", "blue", "purple", "black", "white"];
+  const firstFrameId = 0;
+  const firstCanvasId = 0;
+  const defaultLineWidth = 10;
+  const defaultPalleteColors = ["red", "orange", "yellow", "lightgreen",
+    "green", "skyblue", "blue", "purple", "black", "white"];
 
   framesController = new FramesController(document.getElementById("frames"));
   // new Frame() に対する引数は、frameId でなく canvasId を渡すので、変数にしない
   // Todo: frameId と canvasId の統合
-  framesController.append(firstFrameId, new Frame(0));
+  framesController.append(firstFrameId, new Frame(firstCanvasId));
   setListenerForCanvas(firstFrameId);
   framesController.setCurrentFrame(firstFrameId);
 
@@ -33,8 +36,9 @@ document.addEventListener("DOMContentLoaded", function() {
     colorPicker.addPalette(color);
   });
 
-  lineWidthPicker =
-    new LineWidthPicker(document.getElementById("menu-line-width"), 10);
+  lineWidthPicker = new LineWidthPicker(
+    document.getElementById("menu-line-width"),
+    defaultLineWidth);
 
   menu = new Menu();
 
@@ -45,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function setListenerForCanvas(frameId) {
-  var pCanvas = framesController.getFrameById(frameId);
+  let pCanvas = framesController.getFrameById(frameId);
   pCanvas.addEventListener("mousedown", mouseDownCanvas);
   pCanvas.addEventListener("mouseup", mouseUpCanvas);
   pCanvas.addEventListener("mousemove", mouseMoveCanvas);
