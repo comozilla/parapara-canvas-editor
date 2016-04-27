@@ -159,6 +159,7 @@ module.exports = {
     "no-useless-call": "error",
     "no-useless-concat": "error",
     "no-useless-escape": "error",
+    "no-var": "error",
     "no-void": "error",
     "no-warning-comments": "off",
     "no-whitespace-before-property": "error",
