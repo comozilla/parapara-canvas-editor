@@ -56,9 +56,9 @@ FrameUI.prototype.moveDown = function() {
 };
 
 FrameUI.prototype.setCurrentFrame = function(frame) {
-  if (this.elem.querySelector(".thumbnail-selected") !== null) {
-    this.elem.querySelector(".thumbnail-selected").
-      classList.remove("thumbnail-selected");
+  let selectedFrame = this.elem.querySelector(".thumbnail-selected");
+  if (selectedFrame) {
+    selectedFrame.classList.remove("thumbnail-selected");
   }
   frame.classList.add("thumbnail-selected");
 };
