@@ -110,7 +110,7 @@ html, body {
   border-radius: 20px;
   position: relative;
 }
-#menu-thumbnails .thumbnail.selected {
+#menu-thumbnails .thumbnail-selected {
   border-color: #00F;
 }
 #menu-thumbnails .frame-add {

@@ -57,9 +57,9 @@ FrameUI.prototype.moveDown = function() {
 
 FrameUI.prototype.setCurrentFrame = function(frame) {
   for (let i = 0; i < this.elem.children.length; i++) {
-    this.elem.children[i].classList.remove("selected");
+    this.elem.children[i].classList.remove("thumbnail-selected");
   }
-  frame.classList.add("selected");
+  frame.classList.add("thumbnail-selected");
 };
 
 module.exports = FrameUI;
