@@ -118,6 +118,7 @@ html, body {
   height: 120px;
   line-height: 120px;
   border-radius: 20px;
+  border-style: none;
   background-color: #6666ff;
   color: white;
   font-size: 2rem;
