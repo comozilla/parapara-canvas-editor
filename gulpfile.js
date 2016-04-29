@@ -1,18 +1,21 @@
-var gulp = require("gulp");
-var gutil = require("gulp-util");
-var webpack = require("webpack");
-var minimist = require("minimist");
-var browserSync = require("browser-sync");
+"use strict";
 
-var config = require("./webpack.config.js");
+// gulp では let は使えないらしい
+const gulp = require("gulp");
+const gutil = require("gulp-util");
+const webpack = require("webpack");
+const minimist = require("minimist");
+const browserSync = require("browser-sync");
+
+const config = require("./webpack.config.js");
 
 gulp.task("webpack", function() {
-  var env = minimist(process.argv.slice(2));
-  var options = Object.create(config);
+  const env = minimist(process.argv.slice(2));
+  let options = Object.create(config);
 
   if (env["min"]) {
     options.output.filename = "./js/build/bundle.min.js";
-    options.plugins = [new webpack.optimize.UglifyJsPlugin()];
+    options.plugins.push(new webpack.optimize.UglifyJsPlugin());
   }
 
   if (env["watch"] || env["browser-sync"]) {
@@ -20,7 +23,9 @@ gulp.task("webpack", function() {
   }
 
   webpack(options, function(err, stats) {
-    if (err) throw new gutil.PluginError("webpack", err);
+    if (err) {
+      throw new gutil.PluginError("webpack", err);
+    }
     gutil.log("[webpack]", stats.toString());
   });
 
@@ -32,7 +37,6 @@ gulp.task("webpack", function() {
       }
     });
     gulp.watch(["./js/build/**", "./index.html", "./css/**"], function() {
-      //--------------^ 実際にブラウザに関係するのはbuild/以下なのでそれでいい
       browserSync.reload();
     });
   }

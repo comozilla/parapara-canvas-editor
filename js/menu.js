@@ -15,8 +15,12 @@ Menu.prototype.hideMenu = function() {
 };
 
 Menu.prototype.toggleOpenMenuButton = function(isVisible) {
-  document.getElementById("menu-side-btn").style.display =
-    isVisible ? "block" : "none";
+  const sidebtn = document.getElementById("menu-side-btn");
+  if (isVisible) {
+    sidebtn.animate(
+      [{ transform: "translate(-10px)" }, { transform: "translate(0px)" }],
+      { direction: "alternate", duration: 100 });
+  }
+  sidebtn.style.display = isVisible ? "block" : "none";
 };
 module.exports = Menu;
-

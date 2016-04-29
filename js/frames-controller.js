@@ -1,4 +1,4 @@
-var Frame = require("./frame");
+const Frame = require("./frame");
 
 // frame の追加・削除と、DOM上でのCanvasの追加・削除を連動させる
 function FramesController(elem) {
