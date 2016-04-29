@@ -56,8 +56,9 @@ FrameUI.prototype.moveDown = function() {
 };
 
 FrameUI.prototype.setCurrentFrame = function(frame) {
-  for (let i = 0; i < this.elem.children.length; i++) {
-    this.elem.children[i].classList.remove("thumbnail-selected");
+  if (this.elem.querySelector(".thumbnail-selected") !== null) {
+    this.elem.querySelector(".thumbnail-selected").
+      classList.remove("thumbnail-selected");
   }
   frame.classList.add("thumbnail-selected");
 };
