@@ -1,28 +1,48 @@
-var Frame = require("./frame");
-var FramesController = require("./frames-controller");
-var ColorPicker = require("./color-picker");
-var LineWidthPicker = require("./line-width-picker");
-var Menu = require("./menu");
+const Frame = require("./frame");
+const FramesController = require("./frames-controller");
+const FrameUI = require("./frame-ui");
+const ColorPicker = require("./color-picker");
+const LineWidthPicker = require("./line-width-picker");
+const Menu = require("./menu");
 
-var framesController;
-var colorPicker, lineWidthPicker;
-var menu;
+// webpack
+require("./../css/style.css");
+require("font-awesome");
+require("web-animations-js");
+
+let framesController;
+let frameUI;
+let colorPicker;
+let lineWidthPicker;
+let menu;
+let isMouseDown = false;
+let previousMousePosition = {};
+
 document.addEventListener("DOMContentLoaded", function() {
-  var firstFrameId = 0;
+  const firstFrameId = 0;
+  const firstCanvasId = 0;
+  const defaultLineWidth = 10;
+  const defaultPalleteColors = ["red", "orange", "yellow", "lightgreen",
+    "green", "skyblue", "blue", "purple", "black", "white"];
+
   framesController = new FramesController(document.getElementById("frames"));
   // new Frame() に対する引数は、frameId でなく canvasId を渡すので、変数にしない
   // Todo: frameId と canvasId の統合
-  framesController.append(firstFrameId, new Frame(0));
+  framesController.append(firstFrameId, new Frame(firstCanvasId));
   setListenerForCanvas(firstFrameId);
   framesController.setCurrentFrame(firstFrameId);
 
-  colorPicker = new ColorPicker(
-    document.getElementById("menu-colors"),
-    "red");
+  frameUI = new FrameUI(document.getElementById("thumbnails"));
 
-  lineWidthPicker =
-    new LineWidthPicker(document.getElementById("menu-line-width"),
-                                  10);
+  colorPicker = new ColorPicker(document.getElementById("menu-colors"), "red");
+
+  defaultPalleteColors.forEach(color => {
+    colorPicker.addPalette(color);
+  });
+
+  lineWidthPicker = new LineWidthPicker(
+    document.getElementById("menu-line-width"),
+    defaultLineWidth);
 
   menu = new Menu();
 
@@ -33,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function setListenerForCanvas(frameId) {
-  var pCanvas = framesController.getFrameById(frameId);
+  let pCanvas = framesController.getFrameById(frameId);
   pCanvas.addEventListener("mousedown", mouseDownCanvas);
   pCanvas.addEventListener("mouseup", mouseUpCanvas);
   pCanvas.addEventListener("mousemove", mouseMoveCanvas);
@@ -42,13 +62,13 @@ function setListenerForCanvas(frameId) {
 // → parapara-canvas.js に取り込むような気もするが、
 //   この情報をWebsocket で送ったり・・となるのであれば、
 //   それを parapara-canvas.js でやっていいの？となる。
-var isMouseDown = false;
-var previousMousePosition = {};
 function mouseDownCanvas(event) {
+  if (!document.getElementById("menu").classList.contains("menu-open")) {
+    menu.toggleOpenMenuButton(false);
+  }
   menu.hideMenu();
-  menu.toggleOpenMenuButton(false);
   isMouseDown = true;
-  previousMousePosition = {x: event.clientX, y: event.clientY};
+  previousMousePosition = { x: event.clientX, y: event.clientY };
 }
 function mouseUpCanvas() {
   menu.toggleOpenMenuButton(true);
@@ -65,11 +85,11 @@ function mouseMoveCanvas(event) {
     } else {
       framesController.getCurrentFrame().drawLine(
         previousMousePosition,
-        {x: event.clientX, y: event.clientY},
+        { x: event.clientX, y: event.clientY },
         colorPicker.color,
         lineWidthPicker.lineWidth
       );
     }
-    previousMousePosition = {x: event.clientX, y: event.clientY};
+    previousMousePosition = { x: event.clientX, y: event.clientY };
   }
 }
