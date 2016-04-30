@@ -1,10 +1,10 @@
-function ColorPicker(elem, defaultColor) {
+function ColorPickerPanel(elem, defaultColor) {
   // このelem には、ul要素が入ってくる（はず）。
   this.element = elem;
   this.color = defaultColor;
 }
 
-ColorPicker.prototype.addPalette = function(color) {
+ColorPickerPanel.prototype.addPalette = function(color) {
   let palette;
 
   if (!isColor(color)) {
@@ -27,4 +27,4 @@ function isColor(color) {
   return testElement.style.backgroundColor !== "";
 }
 
-module.exports = ColorPicker;
+module.exports = ColorPickerPanel;
