@@ -1,6 +1,5 @@
 const Frame = require("./frame");
 const FramesController = require("./frames-controller");
-const SequencePanel = require("./sequence-panel");
 const DrawingConfiguration = require("./drawing-configuration");
 const Menu = require("./menu");
 
@@ -10,7 +9,6 @@ require("font-awesome");
 require("web-animations-js");
 
 let framesController;
-let sequencePanel;
 let drawingConfiguration;
 let menu;
 let isMouseDown = false;
@@ -27,8 +25,6 @@ document.addEventListener("DOMContentLoaded", function() {
   framesController.append(firstFrameId, new Frame(firstCanvasId));
   setListenerForCanvas(firstFrameId);
   framesController.setCurrentFrame(firstFrameId);
-
-  sequencePanel = new SequencePanel(document.getElementById("thumbnails"));
 
   drawingConfiguration = new DrawingConfiguration();
 
