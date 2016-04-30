@@ -1,3 +1,5 @@
+const stateList = require("./state-list");
+
 // HTMLCanvasElementをラップし, canvasRenderingContext2Dに関する操作を提供する
 function Frame(canvasId, config) {
   const canvasElem = document.createElement("canvas");
@@ -5,9 +7,11 @@ function Frame(canvasId, config) {
   canvasElem.width = window.innerWidth;
   canvasElem.height = window.innerHeight;
   canvasElem.id = "canvas" + canvasId;
-  canvasElem.addEventListener("mousedown", event => void this.mouseDownCanvas(event));
-  canvasElem.addEventListener("mouseup", () => void this.mouseUpCanvas());
-  canvasElem.addEventListener("mousemove", event => void this.mouseMoveCanvas(event));
+  canvasElem.addEventListener("mousedown",
+    event => { this.mouseDownCanvas(event); });
+  canvasElem.addEventListener("mouseup", () => { this.mouseUpCanvas(); });
+  canvasElem.addEventListener("mousemove",
+    event => { this.mouseMoveCanvas(event); });
   // + リスナー（mouseMoveなど）
   this.canvasElement = canvasElem;
   // private メンバにしたいけど・・
@@ -21,10 +25,12 @@ let previousMousePosition;
 Frame.prototype.mouseDownCanvas = function(event) {
   isMouseDown = true;
   previousMousePosition = { x: event.clientX, y: event.clientY };
-}
+  stateList.frameState.setState("drawing");
+};
 Frame.prototype.mouseUpCanvas = function() {
   isMouseDown = false;
-}
+  stateList.frameState.setState("idling");
+};
 Frame.prototype.mouseMoveCanvas = function(event) {
   if (isMouseDown) {
     if (this.config.colorPickerPanel.color === "white") {
@@ -43,7 +49,7 @@ Frame.prototype.mouseMoveCanvas = function(event) {
     }
     previousMousePosition = { x: event.clientX, y: event.clientY };
   }
-}
+};
 
 /**
  * 線を描きます。

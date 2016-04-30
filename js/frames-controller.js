@@ -13,7 +13,7 @@ FramesController.prototype.append = function(id, frameId) {
   if (typeof frameId !== "number") {
     throw new Error("FrameServerに追加しようとしたFrameの、FrameIdは不正です。:" + frameId);
   }
-  var frame = new Frame(frameId, this.config);
+  const frame = new Frame(frameId, this.config);
   this.element.appendChild(frame.canvasElement);
   // 今はいいが、あとで splice に変える
   this.frames.push(frame);

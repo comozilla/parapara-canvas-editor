@@ -18,7 +18,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
   drawingConfiguration = new DrawingConfiguration();
 
-  framesController = new FramesController(document.getElementById("frames"), drawingConfiguration);
+  framesController = new FramesController(
+    document.getElementById("frames"),
+    drawingConfiguration);
   // new Frame() に対する引数は、frameId でなく canvasId を渡すので、変数にしない
   // Todo: frameId と canvasId の統合
   framesController.append(firstFrameId, firstCanvasId);
@@ -31,23 +33,4 @@ document.addEventListener("DOMContentLoaded", function() {
       menu.toggleMenu();
     });
 });
-
-function setListenerForCanvas(frameId) {
-  let pCanvas = framesController.getFrameById(frameId);
-  pCanvas.addEventListener("mousedown", mouseDownCanvas);
-  pCanvas.addEventListener("mouseup", mouseUpCanvas);
-}
-// TODO: これらは、ここで、いいのか。
-// → parapara-canvas.js に取り込むような気もするが、
-//   この情報をWebsocket で送ったり・・となるのであれば、
-//   それを parapara-canvas.js でやっていいの？となる。
-function mouseDownCanvas(event) {
-  if (!document.getElementById("menu").classList.contains("menu-open")) {
-    menu.toggleOpenMenuButton(false);
-  }
-  menu.hideMenu();
-}
-function mouseUpCanvas() {
-  menu.toggleOpenMenuButton(true);
-}
 
