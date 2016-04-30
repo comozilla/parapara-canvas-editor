@@ -27,4 +27,4 @@ function isColor(color) {
   return testElement.style.backgroundColor !== "";
 }
 
-module.exports = ColorPickerPanel;
+export default ColorPickerPanel;

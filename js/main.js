@@ -1,11 +1,11 @@
-const FramesController = require("./frames-controller");
-const DrawingConfiguration = require("./drawing-configuration");
-const Menu = require("./menu");
+import FramesController from "./frames-controller";
+import DrawingConfiguration from "./drawing-configuration";
+import Menu from "./menu";
 
 // webpack
-require("./../css/style.css");
-require("font-awesome");
-require("web-animations-js");
+import "./../css/style.css";
+import "font-awesome";
+import "web-animations-js";
 
 let framesController;
 let drawingConfiguration;

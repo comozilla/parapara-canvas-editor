@@ -14,5 +14,5 @@ State.prototype.set = function(nextState) {
   });
 };
 
-module.exports = State;
+export default State;
 

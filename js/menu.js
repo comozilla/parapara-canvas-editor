@@ -1,4 +1,4 @@
-const stateList = require("./state-list");
+import stateList from "./state-list";
 
 function Menu() {
   stateList.frameState.subscribe((newState) => {
@@ -27,4 +27,4 @@ Menu.prototype.toggleOpenMenuButton = function(isVisible) {
   }
   sidebtn.style.display = isVisible ? "block" : "none";
 };
-module.exports = Menu;
+export default Menu;

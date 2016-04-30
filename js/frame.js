@@ -1,4 +1,4 @@
-const stateList = require("./state-list");
+import stateList from "./state-list";
 
 // HTMLCanvasElementをラップし, canvasRenderingContext2Dに関する操作を提供する
 function Frame(canvasId, config) {
@@ -81,4 +81,4 @@ Frame.prototype.eraseByLine = function(startPosition, endPosition, lineWidth) {
 Frame.prototype.addEventListener = function(eventName, listener) {
   this.canvasElement.addEventListener(eventName, listener);
 };
-module.exports = Frame;
+export default Frame;

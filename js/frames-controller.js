@@ -1,4 +1,4 @@
-const Frame = require("./frame");
+import Frame from "./frame";
 
 // frame の追加・削除と、DOM上でのCanvasの追加・削除を連動させる
 function FramesController(elem, config) {
@@ -40,4 +40,4 @@ FramesController.prototype.getFrameById = function(frameId) {
 FramesController.prototype.getCurrentFrame = function() {
   return this.frames[this.currentFrameId];
 };
-module.exports = FramesController;
+export default FramesController;

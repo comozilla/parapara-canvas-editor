@@ -1,6 +1,6 @@
-const ColorPickerPanel = require("./color-picker-panel");
-const LineWidthPickerPanel = require("./line-width-picker-panel");
-const SequencePanel = require("./sequence-panel");
+import ColorPickerPanel from "./color-picker-panel";
+import LineWidthPickerPanel from "./line-width-picker-panel";
+import SequencePanel from "./sequence-panel";
 
 function DrawingConfiguration() {
   const defaultPalleteColors = ["red", "orange", "yellow", "lightgreen",
@@ -17,4 +17,4 @@ function DrawingConfiguration() {
   this.sequencePanel = new SequencePanel(document.getElementById("thumbnails"));
 }
 
-module.exports = DrawingConfiguration;
+export default DrawingConfiguration;

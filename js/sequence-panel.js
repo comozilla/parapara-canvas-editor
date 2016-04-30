@@ -63,4 +63,4 @@ SequencePanel.prototype.setCurrentFrame = function(frame) {
   frame.classList.add("thumbnail-selected");
 };
 
-module.exports = SequencePanel;
+export default SequencePanel;
