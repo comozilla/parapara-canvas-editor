@@ -101,15 +101,28 @@ html, body {
   padding-right: 10px;
   margin: 15px;
 }
-#menu-thumbnails li {
-  list-style-type: none;
+#menu-thumbnails .thumbnail {
   width: 100%;
   height: 120px;
   margin: 20px 0px;
   background-color: white;
-  border: solid 2px #00F;
+  border: solid 2px #000;
   border-radius: 20px;
   position: relative;
+}
+#menu-thumbnails .thumbnail-selected {
+  border-color: #00F;
+}
+#menu-thumbnails .frame-add {
+  width: 100%;
+  height: 120px;
+  line-height: 120px;
+  border-radius: 20px;
+  border-style: none;
+  background-color: #6666ff;
+  color: white;
+  font-size: 2rem;
+  text-align: center;
 }
 #menu-thumbnails .frame-delete {
   width: 30px;
@@ -131,15 +144,6 @@ html, body {
   left: 10px;
   bottom: 0;
   font-size: 2rem;
-}
-#menu-thumbnails .frame-add {
-  position: absolute;
-  width: 100%;
-  height: 15px;
-  bottom: -20px;
-  background-color: #66f;
-  color: white;
-  text-align: center;
 }
 
 #btn-play {

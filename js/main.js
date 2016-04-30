@@ -1,5 +1,6 @@
 const Frame = require("./frame");
 const FramesController = require("./frames-controller");
+const FrameUI = require("./frame-ui");
 const ColorPicker = require("./color-picker");
 const LineWidthPicker = require("./line-width-picker");
 const Menu = require("./menu");
@@ -10,6 +11,7 @@ require("font-awesome");
 require("web-animations-js");
 
 let framesController;
+let frameUI;
 let colorPicker;
 let lineWidthPicker;
 let menu;
@@ -29,6 +31,8 @@ document.addEventListener("DOMContentLoaded", function() {
   framesController.append(firstFrameId, new Frame(firstCanvasId));
   setListenerForCanvas(firstFrameId);
   framesController.setCurrentFrame(firstFrameId);
+
+  frameUI = new FrameUI(document.getElementById("thumbnails"));
 
   colorPicker = new ColorPicker(document.getElementById("menu-colors"), "red");
 
