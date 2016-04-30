@@ -1,21 +1,17 @@
 function State(defaultValue) {
   this.state = defaultValue;
-  this.listeners = [];
+  this.observers = [];
 }
 
-State.prototype.subscribe = function(listener) {
-  this.listeners.push(listener);
+State.prototype.subscribe = function(observer) {
+  this.observers.push(observer);
 };
 
-State.prototype.setState = function(newState) {
+State.prototype.set = function(newState) {
   this.state = newState;
-  this.listeners.forEach(listener => {
-    listener(newState);
+  this.observers.forEach(observer => {
+    observer(newState);
   });
-};
-
-State.prototype.getState = function() {
-  return this.state;
 };
 
 module.exports = State;

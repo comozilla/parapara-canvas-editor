@@ -25,11 +25,11 @@ let previousMousePosition;
 Frame.prototype.mouseDownCanvas = function(event) {
   isMouseDown = true;
   previousMousePosition = { x: event.clientX, y: event.clientY };
-  stateList.frameState.setState("drawing");
+  stateList.frameState.set("drawing");
 };
 Frame.prototype.mouseUpCanvas = function() {
   isMouseDown = false;
-  stateList.frameState.setState("idling");
+  stateList.frameState.set("idling");
 };
 Frame.prototype.mouseMoveCanvas = function(event) {
   if (isMouseDown) {
