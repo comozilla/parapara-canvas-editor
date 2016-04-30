@@ -14,7 +14,6 @@ let menu;
 document.addEventListener("DOMContentLoaded", function() {
   const firstFrameId = 0;
   const firstCanvasId = 0;
-  const defaultLineWidth = 10;
 
   drawingConfiguration = new DrawingConfiguration();
 
