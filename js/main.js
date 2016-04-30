@@ -64,18 +64,18 @@ function mouseUpCanvas() {
 }
 function mouseMoveCanvas(event) {
   if (isMouseDown) {
-    if (drawingConfiguration.colorPicker.color === "white") {
+    if (drawingConfiguration.colorPickerPanel.color === "white") {
       framesController.getCurrentFrame().eraseByLine(
         previousMousePosition,
         { x: event.clientX, y: event.clientY },
-        drawingConfiguration.lineWidthPicker.lineWidth
+        drawingConfiguration.lineWidthPickerPanel.lineWidth
       );
     } else {
       framesController.getCurrentFrame().drawLine(
         previousMousePosition,
         { x: event.clientX, y: event.clientY },
-        drawingConfiguration.colorPicker.color,
-        drawingConfiguration.lineWidthPicker.lineWidth
+        drawingConfiguration.colorPickerPanel.color,
+        drawingConfiguration.lineWidthPickerPanel.lineWidth
       );
     }
     previousMousePosition = { x: event.clientX, y: event.clientY };
