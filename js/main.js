@@ -1,8 +1,7 @@
 const Frame = require("./frame");
 const FramesController = require("./frames-controller");
 const FrameUI = require("./frame-ui");
-const ColorPicker = require("./color-picker");
-const LineWidthPicker = require("./line-width-picker");
+const DrawingConfiguration = require("./drawing-configuration");
 const Menu = require("./menu");
 
 // webpack
@@ -12,8 +11,7 @@ require("web-animations-js");
 
 let framesController;
 let frameUI;
-let colorPicker;
-let lineWidthPicker;
+let drawingConfiguration;
 let menu;
 let isMouseDown = false;
 let previousMousePosition = {};
@@ -22,8 +20,6 @@ document.addEventListener("DOMContentLoaded", function() {
   const firstFrameId = 0;
   const firstCanvasId = 0;
   const defaultLineWidth = 10;
-  const defaultPalleteColors = ["red", "orange", "yellow", "lightgreen",
-    "green", "skyblue", "blue", "purple", "black", "white"];
 
   framesController = new FramesController(document.getElementById("frames"));
   // new Frame() に対する引数は、frameId でなく canvasId を渡すので、変数にしない
@@ -34,15 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   frameUI = new FrameUI(document.getElementById("thumbnails"));
 
-  colorPicker = new ColorPicker(document.getElementById("menu-colors"), "red");
-
-  defaultPalleteColors.forEach(color => {
-    colorPicker.addPalette(color);
-  });
-
-  lineWidthPicker = new LineWidthPicker(
-    document.getElementById("menu-line-width"),
-    defaultLineWidth);
+  drawingConfiguration = new DrawingConfiguration();
 
   menu = new Menu();
 
@@ -76,18 +64,18 @@ function mouseUpCanvas() {
 }
 function mouseMoveCanvas(event) {
   if (isMouseDown) {
-    if (colorPicker.color === "white") {
+    if (drawingConfiguration.colorPicker.color === "white") {
       framesController.getCurrentFrame().eraseByLine(
         previousMousePosition,
         { x: event.clientX, y: event.clientY },
-        lineWidthPicker.lineWidth
+        drawingConfiguration.lineWidthPicker.lineWidth
       );
     } else {
       framesController.getCurrentFrame().drawLine(
         previousMousePosition,
         { x: event.clientX, y: event.clientY },
-        colorPicker.color,
-        lineWidthPicker.lineWidth
+        drawingConfiguration.colorPicker.color,
+        drawingConfiguration.lineWidthPicker.lineWidth
       );
     }
     previousMousePosition = { x: event.clientX, y: event.clientY };
