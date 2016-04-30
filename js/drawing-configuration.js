@@ -5,6 +5,7 @@ const SequencePanel = require("./sequence-panel");
 function DrawingConfiguration() {
   const defaultPalleteColors = ["red", "orange", "yellow", "lightgreen",
     "green", "skyblue", "blue", "purple", "black", "white"];
+
   this.colorPickerPanel =
     new ColorPickerPanel(document.getElementById("menu-colors"), "red");
   defaultPalleteColors
