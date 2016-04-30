@@ -1,17 +1,19 @@
 const Frame = require("./frame");
 
 // frame の追加・削除と、DOM上でのCanvasの追加・削除を連動させる
-function FramesController(elem) {
+function FramesController(elem, config) {
   this.element = elem;
   this.frames = [];
   this.currentFrameId = 0;
+  this.config = config;
 }
 
 // パラメータ id は、将来的にどこにframeをappendするかで必要。
-FramesController.prototype.append = function(id, frame) {
-  if (!(frame instanceof Frame)) {
-    throw new Error("FrameServerに追加しようとしたFrameは不正です。:" + frame);
+FramesController.prototype.append = function(id, frameId) {
+  if (typeof frameId !== "number") {
+    throw new Error("FrameServerに追加しようとしたFrameの、FrameIdは不正です。:" + frameId);
   }
+  var frame = new Frame(frameId, this.config);
   this.element.appendChild(frame.canvasElement);
   // 今はいいが、あとで splice に変える
   this.frames.push(frame);

@@ -1,4 +1,3 @@
-const Frame = require("./frame");
 const FramesController = require("./frames-controller");
 const DrawingConfiguration = require("./drawing-configuration");
 const Menu = require("./menu");
@@ -11,22 +10,19 @@ require("web-animations-js");
 let framesController;
 let drawingConfiguration;
 let menu;
-let isMouseDown = false;
-let previousMousePosition = {};
 
 document.addEventListener("DOMContentLoaded", function() {
   const firstFrameId = 0;
   const firstCanvasId = 0;
   const defaultLineWidth = 10;
 
-  framesController = new FramesController(document.getElementById("frames"));
+  drawingConfiguration = new DrawingConfiguration();
+
+  framesController = new FramesController(document.getElementById("frames"), drawingConfiguration);
   // new Frame() に対する引数は、frameId でなく canvasId を渡すので、変数にしない
   // Todo: frameId と canvasId の統合
-  framesController.append(firstFrameId, new Frame(firstCanvasId));
-  setListenerForCanvas(firstFrameId);
+  framesController.append(firstFrameId, firstCanvasId);
   framesController.setCurrentFrame(firstFrameId);
-
-  drawingConfiguration = new DrawingConfiguration();
 
   menu = new Menu();
 
@@ -40,7 +36,6 @@ function setListenerForCanvas(frameId) {
   let pCanvas = framesController.getFrameById(frameId);
   pCanvas.addEventListener("mousedown", mouseDownCanvas);
   pCanvas.addEventListener("mouseup", mouseUpCanvas);
-  pCanvas.addEventListener("mousemove", mouseMoveCanvas);
 }
 // TODO: これらは、ここで、いいのか。
 // → parapara-canvas.js に取り込むような気もするが、
@@ -51,29 +46,8 @@ function mouseDownCanvas(event) {
     menu.toggleOpenMenuButton(false);
   }
   menu.hideMenu();
-  isMouseDown = true;
-  previousMousePosition = { x: event.clientX, y: event.clientY };
 }
 function mouseUpCanvas() {
   menu.toggleOpenMenuButton(true);
-  isMouseDown = false;
 }
-function mouseMoveCanvas(event) {
-  if (isMouseDown) {
-    if (drawingConfiguration.colorPickerPanel.color === "white") {
-      framesController.getCurrentFrame().eraseByLine(
-        previousMousePosition,
-        { x: event.clientX, y: event.clientY },
-        drawingConfiguration.lineWidthPickerPanel.lineWidth
-      );
-    } else {
-      framesController.getCurrentFrame().drawLine(
-        previousMousePosition,
-        { x: event.clientX, y: event.clientY },
-        drawingConfiguration.colorPickerPanel.color,
-        drawingConfiguration.lineWidthPickerPanel.lineWidth
-      );
-    }
-    previousMousePosition = { x: event.clientX, y: event.clientY };
-  }
-}
+

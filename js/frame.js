@@ -1,15 +1,48 @@
 // HTMLCanvasElementをラップし, canvasRenderingContext2Dに関する操作を提供する
-function Frame(canvasId) {
+function Frame(canvasId, config) {
   const canvasElem = document.createElement("canvas");
 
   canvasElem.width = window.innerWidth;
   canvasElem.height = window.innerHeight;
   canvasElem.id = "canvas" + canvasId;
+  canvasElem.addEventListener("mousedown", event => void this.mouseDownCanvas(event));
+  canvasElem.addEventListener("mouseup", () => void this.mouseUpCanvas());
+  canvasElem.addEventListener("mousemove", event => void this.mouseMoveCanvas(event));
   // + リスナー（mouseMoveなど）
   this.canvasElement = canvasElem;
   // private メンバにしたいけど・・
   this.canvasContext = this.canvasElement.getContext("2d");
   this.thumbnail = null;
+  this.config = config;
+}
+
+let isMouseDown = false;
+let previousMousePosition;
+Frame.prototype.mouseDownCanvas = function(event) {
+  isMouseDown = true;
+  previousMousePosition = { x: event.clientX, y: event.clientY };
+}
+Frame.prototype.mouseUpCanvas = function() {
+  isMouseDown = false;
+}
+Frame.prototype.mouseMoveCanvas = function(event) {
+  if (isMouseDown) {
+    if (this.config.colorPickerPanel.color === "white") {
+      this.eraseByLine(
+        previousMousePosition,
+        { x: event.clientX, y: event.clientY },
+        this.config.lineWidthPickerPanel.lineWidth
+      );
+    } else {
+      this.drawLine(
+        previousMousePosition,
+        { x: event.clientX, y: event.clientY },
+        this.config.colorPickerPanel.color,
+        this.config.lineWidthPickerPanel.lineWidth
+      );
+    }
+    previousMousePosition = { x: event.clientX, y: event.clientY };
+  }
 }
 
 /**
