@@ -1,4 +1,4 @@
-function FrameUI(elem) {
+function SequencePanel(elem) {
   this.elem = elem;
 }
 
@@ -35,7 +35,7 @@ function getFrameTemplate() {
   return frame;
 }
 
-FrameUI.prototype.append = function() {
+SequencePanel.prototype.append = function() {
   let newFrame = getFrameTemplate();
   this.elem.appendChild(newFrame);
   newFrame.addEventListener("click", () => {
@@ -43,19 +43,19 @@ FrameUI.prototype.append = function() {
   });
 };
 
-FrameUI.prototype.remove = function(frame) {
+SequencePanel.prototype.remove = function(frame) {
   this.elem.removeChild(frame);
 };
 
-FrameUI.prototype.moveUp = function() {
+SequencePanel.prototype.moveUp = function() {
   // TODO
 };
 
-FrameUI.prototype.moveDown = function() {
+SequencePanel.prototype.moveDown = function() {
   // TODO
 };
 
-FrameUI.prototype.setCurrentFrame = function(frame) {
+SequencePanel.prototype.setCurrentFrame = function(frame) {
   const selectedFrame = this.elem.querySelector(".thumbnail-selected");
   if (selectedFrame) {
     selectedFrame.classList.remove("thumbnail-selected");
@@ -63,4 +63,4 @@ FrameUI.prototype.setCurrentFrame = function(frame) {
   frame.classList.add("thumbnail-selected");
 };
 
-module.exports = FrameUI;
+module.exports = SequencePanel;
