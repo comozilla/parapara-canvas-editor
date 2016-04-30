@@ -56,7 +56,7 @@ FrameUI.prototype.moveDown = function() {
 };
 
 FrameUI.prototype.setCurrentFrame = function(frame) {
-  let selectedFrame = this.elem.querySelector(".thumbnail-selected");
+  const selectedFrame = this.elem.querySelector(".thumbnail-selected");
   if (selectedFrame) {
     selectedFrame.classList.remove("thumbnail-selected");
   }
