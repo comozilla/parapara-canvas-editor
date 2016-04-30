@@ -1,4 +1,4 @@
-function LineWidthPicker(elem, defaultLineWidth) {
+function LineWidthPickerPanel(elem, defaultLineWidth) {
   // このelem には、input[type="range"] 要素が入ってくる（はず）。
   this.element = elem;
   this.lineWidth = defaultLineWidth;
@@ -8,12 +8,12 @@ function LineWidthPicker(elem, defaultLineWidth) {
   });
 }
 
-LineWidthPicker.prototype.changeMaxLineWidth = function(maxLineWidth) {
+LineWidthPickerPanel.prototype.changeMaxLineWidth = function(maxLineWidth) {
   // TODO
 };
 
-LineWidthPicker.prototype.changeMinLineWidth = function(minLineWidth) {
+LineWidthPickerPanel.prototype.changeMinLineWidth = function(minLineWidth) {
   // TODO
 };
 
-module.exports = LineWidthPicker;
+module.exports = LineWidthPickerPanel;
