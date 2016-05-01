@@ -47,7 +47,7 @@ PaintManager.prototype.mouseUpCanvas = function() {
 };
 PaintManager.prototype.mouseMoveCanvas = function(event) {
   if (isMouseDown) {
-    if (this.config.colorPickerPanel.color === "white") {
+    if (this.config.color === "white") {
       this.eraseByLine(
         previousMousePosition,
         { x: event.clientX, y: event.clientY },
@@ -57,7 +57,7 @@ PaintManager.prototype.mouseMoveCanvas = function(event) {
       this.drawLine(
         previousMousePosition,
         { x: event.clientX, y: event.clientY },
-        this.config.colorPickerPanel.color,
+        this.config.color,
         this.config.lineWidthPickerPanel.lineWidth
       );
     }

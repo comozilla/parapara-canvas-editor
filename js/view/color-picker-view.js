@@ -1,10 +1,10 @@
-function ColorPickerPanel(elem, defaultColor) {
+function ColorPickerView(elem, drawingConfig) {
   // このelem には、ul要素が入ってくる（はず）。
   this.element = elem;
-  this.color = defaultColor;
+  this.config = drawingConfig;
 }
 
-ColorPickerPanel.prototype.addPalette = function(color) {
+ColorPickerView.prototype.addPalette = function(color) {
   let palette;
 
   if (!isColor(color)) {
@@ -16,8 +16,13 @@ ColorPickerPanel.prototype.addPalette = function(color) {
   this.element.appendChild(palette);
 
   palette.addEventListener("click", event => {
-    this.color = event.target.style.backgroundColor;
+    this.config.color = event.target.style.backgroundColor;
+    this.config.eventPublisher.publish("color", this.config.color);
   });
+};
+
+ColorPickerView.prototype.clearPalette = function() {
+  this.element.innerHTML = "";
 };
 
 function isColor(color) {
@@ -27,4 +32,4 @@ function isColor(color) {
   return testElement.style.backgroundColor !== "";
 }
 
-module.exports = ColorPickerPanel;
+module.exports = ColorPickerView;

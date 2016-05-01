@@ -8,6 +8,7 @@ Publisher.prototype.subscribe = function(type, observer) {
 };
 
 Publisher.prototype.publish = function(type, nextData) {
+  console.log(type);
   this.observers.forEach(observer => {
     observer(nextData);
   });
