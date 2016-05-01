@@ -76,11 +76,13 @@ PaintManager.prototype.eraseByLine = function(startPosition, endPosition, lineWi
 };
 
 PaintManager.prototype.getImageData = function() {
-
+  return this.context.getImageData(0, 0, this.element.width, this.element.height);
 };
 
-PaintManager.prototype.setImageData = function(image) {
-
+PaintManager.prototype.setImageData = function(imageData) {
+  this.context.clearRect(0, 0,
+    this.element.width, this.element.height); //クリアする必要があるのか
+  this.context.putImageData(imageData, 0, 0);
 };
 
 module.exports = PaintManager;
