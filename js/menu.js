@@ -1,8 +1,7 @@
-const stateList = require("./state-list");
-
-function Menu() {
-  stateList.frameState.subscribe((newState) => {
+function Menu(eventPublisher) {
+  eventPublisher.subscribe("drawState", (newState) => {
     this.toggleOpenMenuButton(newState === "idling");
+    this.hideMenu();
   });
 }
 

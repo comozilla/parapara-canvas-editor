@@ -1,6 +1,7 @@
 const FramesController = require("./frames-controller");
 const DrawingConfiguration = require("./drawing-configuration");
 const Menu = require("./menu");
+const PaintManager = require("./paint-manager");
 
 // webpack
 require("./../css/style.css");
@@ -9,27 +10,28 @@ require("web-animations-js");
 
 let framesController;
 let drawingConfiguration;
-let menu;
+let paintManager;
+let menu; // todo: あとで動かす
 
 document.addEventListener("DOMContentLoaded", function() {
   const firstFrameId = 0;
-  const firstCanvasId = 0;
-
   drawingConfiguration = new DrawingConfiguration();
 
-  framesController = new FramesController(
-    document.getElementById("frames"),
-    drawingConfiguration);
-  // new Frame() に対する引数は、frameId でなく canvasId を渡すので、変数にしない
-  // Todo: frameId と canvasId の統合
-  framesController.append(firstFrameId, firstCanvasId);
-  framesController.setCurrentFrame(firstFrameId);
+  framesController = new FramesController();
+  framesController.append(firstFrameId);
 
-  menu = new Menu();
+  paintManager = new PaintManager(
+    document.getElementById("canvas"),
+    drawingConfiguration,
+    framesController);
+
+  menu = new Menu(paintManager.eventPublisher);
 
   document.getElementById("menu-side-btn")
     .addEventListener("click", function() {
       menu.toggleMenu();
     });
+
+  framesController.setCurrentFrame(firstFrameId);
 });
 
