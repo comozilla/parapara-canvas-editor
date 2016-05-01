@@ -10,7 +10,7 @@ State.prototype.subscribe = function(observer) {
 State.prototype.set = function(nextState) {
   this.state = nextState;
   this.observers.forEach(observer => {
-    observer(newState);
+    observer(nextState);
   });
 };
 
