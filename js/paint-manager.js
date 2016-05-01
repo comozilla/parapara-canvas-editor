@@ -51,14 +51,14 @@ PaintManager.prototype.mouseMoveCanvas = function(event) {
       this.eraseByLine(
         previousMousePosition,
         { x: event.clientX, y: event.clientY },
-        this.config.lineWidthPickerPanel.lineWidth
+        this.config.lineWidth
       );
     } else {
       this.drawLine(
         previousMousePosition,
         { x: event.clientX, y: event.clientY },
         this.config.color,
-        this.config.lineWidthPickerPanel.lineWidth
+        this.config.lineWidth
       );
     }
     previousMousePosition = { x: event.clientX, y: event.clientY };
