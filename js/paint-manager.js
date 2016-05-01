@@ -1,9 +1,7 @@
-const Publisher = require("./publisher");
+const eventPublisher = require("./publisher");
 
 // HTMLCanvasElementをラップし, canvasRenderingContext2Dに関する操作を提供する
 function PaintManager(element, drawConfig, framesController) {
-  this.eventPublisher = new Publisher();
-
   this.element = element;
   this.element.width = window.innerWidth;
   this.element.height = window.innerHeight;
@@ -18,7 +16,7 @@ function PaintManager(element, drawConfig, framesController) {
   this.drawState = "idling";
   this.config = drawConfig;
 
-  framesController.eventPublisher.subscribe(
+  eventPublisher.subscribe(
       "currentFrameId", (nextCurrentFrame) => {
     // 今のCanvasを今のFrameに書き込む
         framesController.getCurrentFrame().imageData = this.getImageData();
@@ -38,12 +36,12 @@ PaintManager.prototype.mouseDownCanvas = function(event) {
   isMouseDown = true;
   previousMousePosition = { x: event.clientX, y: event.clientY };
   this.drawState = "drawing";
-  this.eventPublisher.publish("drawState", "drawing");
+  eventPublisher.publish("drawState", "drawing");
 };
 PaintManager.prototype.mouseUpCanvas = function() {
   isMouseDown = false;
   this.drawState = "idling";
-  this.eventPublisher.publish("drawState", "idling");
+  eventPublisher.publish("drawState", "idling");
 };
 PaintManager.prototype.mouseMoveCanvas = function(event) {
   if (isMouseDown) {

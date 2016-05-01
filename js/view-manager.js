@@ -1,10 +1,11 @@
 const ColorPickerView = require("./view/color-picker-view");
 const LineWidthPickerView = require("./view/line-width-picker-view");
 const MenuView = require("./view/menu-view");
+const eventPublisher = require("./publisher");
 
 function ViewManager(drawingConfig, paintManager) {
   this.colorPicker = new ColorPickerView(document.getElementById("menu-colors"), drawingConfig);
-  drawingConfig.eventPublisher.subscribe("defaultPalleteColors", (colors) => {
+  eventPublisher.subscribe("defaultPalleteColors", (colors) => {
     this.colorPicker.clearPalette();
     colors.forEach(color => {
       this.colorPicker.addPalette(color);

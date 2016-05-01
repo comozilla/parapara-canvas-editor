@@ -1,3 +1,5 @@
+const eventPublisher = require("./../publisher");
+
 function ColorPickerView(elem, drawingConfig) {
   // このelem には、ul要素が入ってくる（はず）。
   this.element = elem;
@@ -17,7 +19,7 @@ ColorPickerView.prototype.addPalette = function(color) {
 
   palette.addEventListener("click", event => {
     this.config.color = event.target.style.backgroundColor;
-    this.config.eventPublisher.publish("color", this.config.color);
+    eventPublisher.publish("color", this.config.color);
   });
 };
 

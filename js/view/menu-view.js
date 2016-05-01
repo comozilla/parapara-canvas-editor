@@ -1,4 +1,6 @@
-function MenuView(eventPublisher) {
+const eventPublisher = require("./../publisher");
+
+function MenuView() {
   eventPublisher.subscribe("drawState", (newState) => {
     this.toggleOpenMenuButton(newState === "idling");
     this.hideMenu();
