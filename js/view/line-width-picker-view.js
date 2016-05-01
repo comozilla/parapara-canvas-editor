@@ -6,7 +6,8 @@ function LineWidthPickerPanel(elem, drawingConfig) {
     this.element.value = lineWidth;
   });
   this.element.addEventListener("change", event => {
-    this.config.eventPublisher.publish("lineWidth", event.target.value);
+    this.config.lineWidth = event.target.value;
+    this.config.eventPublisher.publish("lineWidth", this.config.lineWidth);
   });
 }
 
