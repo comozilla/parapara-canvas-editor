@@ -1,6 +1,7 @@
 function Menu(eventPublisher) {
   eventPublisher.subscribe("drawState", (newState) => {
     this.toggleOpenMenuButton(newState === "idling");
+    this.hideMenu();
   });
 }
 
