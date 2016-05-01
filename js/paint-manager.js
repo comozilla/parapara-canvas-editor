@@ -75,11 +75,11 @@ PaintManager.prototype.eraseByLine = function(startPosition, endPosition, lineWi
   this.context.globalCompositeOperation = "source-over";
 };
 
-PaintManager.prototype.getImage = function() {
+PaintManager.prototype.getImageData = function() {
 
 };
 
-PaintManager.prototype.setImage = function(image) {
+PaintManager.prototype.setImageData = function(image) {
 
 };
 

@@ -8,10 +8,10 @@ State.prototype.subscribe = function(observer) {
 };
 
 State.prototype.set = function(nextState) {
-  this.state = nextState;
   this.observers.forEach(observer => {
     observer(nextState);
   });
+  this.state = nextState;
 };
 
 module.exports = State;
