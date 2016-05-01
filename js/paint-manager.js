@@ -4,6 +4,13 @@ function PaintManager(element, drawConfig) {
   this.element = element;
   this.element.width = window.innerWidth;
   this.element.height = window.innerHeight;
+
+  this.element.addEventListener("mousedown",
+    event => { this.mouseDownCanvas(event); });
+  this.element.addEventListener("mouseup", () => { this.mouseUpCanvas(); });
+  this.element.addEventListener("mousemove",
+    event => { this.mouseMoveCanvas(event); });
+
   this.context = this.element.getContext("2d");
   this.drawState = new State("idling");
   this.config = drawConfig;
