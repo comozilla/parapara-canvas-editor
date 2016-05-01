@@ -1,7 +1,5 @@
-const stateList = require("./state-list");
-
-function Menu() {
-  stateList.frameState.subscribe((newState) => {
+function Menu(drawState) {
+  drawState.subscribe((newState) => {
     this.toggleOpenMenuButton(newState === "idling");
   });
 }

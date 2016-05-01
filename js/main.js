@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("canvas"),
     drawingConfiguration);
 
-  menu = new Menu();
+  menu = new Menu(paintManager.drawState);
 
   document.getElementById("menu-side-btn")
     .addEventListener("click", function() {

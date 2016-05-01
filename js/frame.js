@@ -1,4 +1,3 @@
-const stateList = require("./state-list");
 function Frame() {
 
 }
