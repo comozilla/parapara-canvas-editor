@@ -1,17 +1,16 @@
-function Publisher(defaultData) {
-  this.data = defaultData;
+// Publisherは、データを保存せず、外部へ変更を知らせる機能に絞る。
+function Publisher() {
   this.observers = [];
 }
 
-Publisher.prototype.subscribe = function(observer) {
+Publisher.prototype.subscribe = function(type, observer) {
   this.observers.push(observer);
 };
 
-Publisher.prototype.publish = function(nextData) {
+Publisher.prototype.publish = function(type, nextData) {
   this.observers.forEach(observer => {
     observer(nextData);
   });
-  this.data = nextData;
 };
 
 module.exports = Publisher;

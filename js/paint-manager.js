@@ -2,6 +2,8 @@ const Publisher = require("./publisher");
 
 // HTMLCanvasElementをラップし, canvasRenderingContext2Dに関する操作を提供する
 function PaintManager(element, drawConfig, framesController) {
+  this.eventPublisher = new Publisher();
+
   this.element = element;
   this.element.width = window.innerWidth;
   this.element.height = window.innerHeight;
@@ -13,20 +15,21 @@ function PaintManager(element, drawConfig, framesController) {
     event => { this.mouseMoveCanvas(event); });
 
   this.context = this.element.getContext("2d");
-  this.drawState = new Publisher("idling");
+  this.drawState = "idling";
   this.config = drawConfig;
 
-  framesController.currentFrameId.subscribe((nextCurrentFrame) => {
+  framesController.eventPublisher.subscribe(
+      "currentFrameId", (nextCurrentFrame) => {
     // 今のCanvasを今のFrameに書き込む
-    framesController.getCurrentFrame().imageData = this.getImageData();
+        framesController.getCurrentFrame().imageData = this.getImageData();
 
     // 次のFrameをCanvasに反映させる
-    let nextImageData =
+        let nextImageData =
       framesController.getFrameById(nextCurrentFrame).imageData;
-    if (nextImageData !== null) {
+        if (nextImageData !== null) {
       this.setImageData(nextImageData);
     }
-  });
+      });
 }
 
 let isMouseDown = false;
@@ -34,11 +37,13 @@ let previousMousePosition;
 PaintManager.prototype.mouseDownCanvas = function(event) {
   isMouseDown = true;
   previousMousePosition = { x: event.clientX, y: event.clientY };
-  this.drawState.publish("drawing");
+  this.drawState = "drawing";
+  this.eventPublisher.publish("drawState", "drawing");
 };
 PaintManager.prototype.mouseUpCanvas = function() {
   isMouseDown = false;
-  this.drawState.publish("idling");
+  this.drawState = "idling";
+  this.eventPublisher.publish("drawState", "idling");
 };
 PaintManager.prototype.mouseMoveCanvas = function(event) {
   if (isMouseDown) {

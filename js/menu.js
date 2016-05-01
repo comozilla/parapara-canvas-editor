@@ -1,5 +1,5 @@
-function Menu(drawState) {
-  drawState.subscribe((newState) => {
+function Menu(eventPublisher) {
+  eventPublisher.subscribe("drawState", (newState) => {
     this.toggleOpenMenuButton(newState === "idling");
   });
 }

@@ -3,7 +3,8 @@ const Publisher = require("./publisher");
 // frame の追加・削除、currentFrameの切り替えをModel上で行う
 function FramesController() {
   this.frames = [];
-  this.currentFrameId = new Publisher(0);
+  this.eventPublisher = new Publisher();
+  this.currentFrameId = 0;
 }
 
 // パラメータ id : どこの後ろに追加するのか（今は実装していない）
@@ -18,7 +19,8 @@ FramesController.prototype.remove = function() {
 };
 
 FramesController.prototype.setCurrentFrame = function(frameId) {
-  this.currentFrameId.publish(frameId);
+  this.currentFrameId = frameId;
+  this.eventPublisher.publish("currentFrameId", frameId);
 };
 
 FramesController.prototype.getFrameById = function(frameId) {
@@ -26,6 +28,6 @@ FramesController.prototype.getFrameById = function(frameId) {
 };
 
 FramesController.prototype.getCurrentFrame = function() {
-  return this.frames[this.currentFrameId.data];
+  return this.frames[this.currentFrameId];
 };
 module.exports = FramesController;
