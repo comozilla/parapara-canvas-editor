@@ -1,4 +1,3 @@
-const LineWidthPickerPanel = require("./line-width-picker-panel");
 const SequencePanel = require("./sequence-panel");
 const Publisher = require("./publisher");
 
@@ -8,9 +7,6 @@ function DrawingConfiguration() {
   this.defaultPalleteColors = [];
   this.color = "";
   this.lineWidth = 0;
-
-  this.lineWidthPickerPanel =
-    new LineWidthPickerPanel(document.getElementById("menu-line-width"), 10);
 
   this.sequencePanel = new SequencePanel(document.getElementById("thumbnails"));
 }

@@ -1,10 +1,12 @@
-function LineWidthPickerPanel(elem, defaultLineWidth) {
+function LineWidthPickerPanel(elem, drawingConfig) {
   // このelem には、input[type="range"] 要素が入ってくる（はず）。
   this.element = elem;
-  this.lineWidth = defaultLineWidth;
-  this.element.value = this.lineWidth;
+  this.config = drawingConfig;
+  this.config.eventPublisher.subscribe("lineWidth", (lineWidth) => {
+    this.element.value = lineWidth;
+  });
   this.element.addEventListener("change", event => {
-    this.lineWidth = event.target.value;
+    this.config.eventPublisher.publish("lineWidth", event.target.value);
   });
 }
 
