@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
     drawingConfiguration,
     framesController);
 
-  viewManager = new ViewManager(drawingConfiguration, paintManager);
+  viewManager = new ViewManager(drawingConfiguration);
 
   drawingConfiguration.setDefaultValues();
 

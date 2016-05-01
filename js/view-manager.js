@@ -3,7 +3,7 @@ const LineWidthPickerView = require("./view/line-width-picker-view");
 const MenuView = require("./view/menu-view");
 const eventPublisher = require("./publisher");
 
-function ViewManager(drawingConfig, paintManager) {
+function ViewManager(drawingConfig) {
   this.colorPicker = new ColorPickerView(document.getElementById("menu-colors"), drawingConfig);
   eventPublisher.subscribe("defaultPalleteColors", (colors) => {
     this.colorPicker.clearPalette();
@@ -15,7 +15,7 @@ function ViewManager(drawingConfig, paintManager) {
   this.lineWidthPicker = new LineWidthPickerView(
       document.getElementById("menu-line-width"), drawingConfig);
 
-  this.menu = new MenuView(paintManager.eventPublisher);
+  this.menu = new MenuView();
 }
 
 module.exports = ViewManager;
