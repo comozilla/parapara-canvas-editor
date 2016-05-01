@@ -1,5 +1,6 @@
 const State = require("./state");
 
+// HTMLCanvasElementをラップし, canvasRenderingContext2Dに関する操作を提供する
 function PaintManager(element, drawConfig) {
   this.element = element;
   this.element.width = window.innerWidth;
