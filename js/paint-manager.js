@@ -69,19 +69,23 @@ PaintManager.prototype.drawLine = function(
 /**
  * 線で消します。消した部分は透明になります。
  */
-PaintManager.prototype.eraseByLine = function(startPosition, endPosition, lineWidth) {
+PaintManager.prototype.eraseByLine = function(
+    startPosition,
+    endPosition,
+    lineWidth) {
   this.context.globalCompositeOperation = "destination-out";
   this.drawLine(startPosition, endPosition, "#000", lineWidth);
   this.context.globalCompositeOperation = "source-over";
 };
 
 PaintManager.prototype.getImageData = function() {
-  return this.context.getImageData(0, 0, this.element.width, this.element.height);
+  return this.context.getImageData(0, 0,
+    this.element.width, this.element.height);
 };
 
 PaintManager.prototype.setImageData = function(imageData) {
   this.context.clearRect(0, 0,
-    this.element.width, this.element.height); //クリアする必要があるのか
+    this.element.width, this.element.height); // クリアする必要があるのか
   this.context.putImageData(imageData, 0, 0);
 };
 

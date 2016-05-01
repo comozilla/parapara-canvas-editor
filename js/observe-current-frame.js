@@ -6,7 +6,8 @@ function ObserveCurrentFrame(paintManager, framesController) {
     framesController.getCurrentFrame().imageData = paintManager.getImageData();
 
     // 次のFrameをCanvasに反映させる
-    let nextImageData = framesController.getFrameById(nextCurrentFrame).imageData;
+    let nextImageData =
+      framesController.getFrameById(nextCurrentFrame).imageData;
     if (nextImageData !== null) {
       paintManager.setImageData(nextImageData);
     }
