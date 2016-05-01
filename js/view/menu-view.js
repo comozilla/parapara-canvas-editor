@@ -1,23 +1,28 @@
-function Menu(eventPublisher) {
+function MenuView(eventPublisher) {
   eventPublisher.subscribe("drawState", (newState) => {
     this.toggleOpenMenuButton(newState === "idling");
     this.hideMenu();
   });
+
+  document.getElementById("menu-side-btn")
+    .addEventListener("click", () => {
+      this.toggleMenu();
+    });
 }
 
-Menu.prototype.toggleMenu = function() {
+MenuView.prototype.toggleMenu = function() {
   document.getElementById("menu").classList.toggle("menu-open");
 };
 
-Menu.prototype.openMenu = function() {
+MenuView.prototype.openMenu = function() {
   document.getElementById("menu").classList.add("menu-open");
 };
 
-Menu.prototype.hideMenu = function() {
+MenuView.prototype.hideMenu = function() {
   document.getElementById("menu").classList.remove("menu-open");
 };
 
-Menu.prototype.toggleOpenMenuButton = function(isVisible) {
+MenuView.prototype.toggleOpenMenuButton = function(isVisible) {
   const sidebtn = document.getElementById("menu-side-btn");
   if (isVisible) {
     sidebtn.animate(
@@ -26,4 +31,4 @@ Menu.prototype.toggleOpenMenuButton = function(isVisible) {
   }
   sidebtn.style.display = isVisible ? "block" : "none";
 };
-module.exports = Menu;
+module.exports = MenuView;
