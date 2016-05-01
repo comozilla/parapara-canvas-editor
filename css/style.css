@@ -157,9 +157,4 @@ html, body {
   border-radius: 3vh;
   font-size: 2rem;
 }
-canvas {
-  display: none;
-}
-.current-canvas {
-  display: block;
-}
+
