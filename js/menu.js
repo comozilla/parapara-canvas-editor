@@ -16,14 +16,11 @@ Menu.prototype.openMenu = function() {
 Menu.prototype.hideMenu = function() {
   document.getElementById("menu").classList.remove("menu-open");
 };
-
 Menu.prototype.toggleOpenMenuButton = function(isVisible) {
   const sidebtn = document.getElementById("menu-side-btn");
-  if (isVisible) {
-    sidebtn.animate(
-      [{ transform: "translate(-10px)" }, { transform: "translate(0px)" }],
-      { direction: "alternate", duration: 100 });
-  }
-  sidebtn.style.display = isVisible ? "block" : "none";
+  const direction = isVisible ? "alternate" : "alternate-reverse";
+  sidebtn.animate(
+    [{ transform: "translate(-30px)" }, { transform: "translate(0px)" }],
+    { direction: direction, duration: 100, fill: "both" });
 };
 module.exports = Menu;

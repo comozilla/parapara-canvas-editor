@@ -47,6 +47,7 @@ html, body {
   border: medium none;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
+  width: 30px;
 }
 #menu-line-width {
   width: 100%;
