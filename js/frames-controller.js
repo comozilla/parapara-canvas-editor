@@ -1,9 +1,9 @@
 const Frame = require("./frame");
-const State = require("./state");
+const Publisher = require("./publisher");
 // frame の追加・削除、currentFrameの切り替えをModel上で行う
 function FramesController() {
   this.frames = [];
-  this.currentFrameId = new State(0);
+  this.currentFrameId = new Publisher(0);
 }
 
 // パラメータ id : どこの後ろに追加するのか（今は実装していない）
@@ -18,7 +18,7 @@ FramesController.prototype.remove = function() {
 };
 
 FramesController.prototype.setCurrentFrame = function(frameId) {
-  this.currentFrameId.set(frameId);
+  this.currentFrameId.publish(frameId);
 };
 
 FramesController.prototype.getFrameById = function(frameId) {
@@ -26,6 +26,6 @@ FramesController.prototype.getFrameById = function(frameId) {
 };
 
 FramesController.prototype.getCurrentFrame = function() {
-  return this.frames[this.currentFrameId.state];
+  return this.frames[this.currentFrameId.data];
 };
 module.exports = FramesController;
