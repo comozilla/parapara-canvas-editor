@@ -1,7 +1,7 @@
 const ColorPickerView = require("./view/color-picker-view");
 const LineWidthPickerView = require("./view/line-width-picker-view");
 
-function ViewConfiguration(drawingConfig) {
+function ViewManager(drawingConfig) {
   this.colorPicker = new ColorPickerView(document.getElementById("menu-colors"), drawingConfig);
   drawingConfig.eventPublisher.subscribe("defaultPalleteColors", (colors) => {
     this.colorPicker.clearPalette();
@@ -13,4 +13,4 @@ function ViewConfiguration(drawingConfig) {
       document.getElementById("menu-line-width"), drawingConfig);
 }
 
-module.exports = ViewConfiguration;
+module.exports = ViewManager;

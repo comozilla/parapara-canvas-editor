@@ -1,6 +1,6 @@
 const FramesController = require("./frames-controller");
 const DrawingConfiguration = require("./drawing-configuration");
-const ViewConfiguration = require("./view-configuration");
+const ViewManager = require("./view-manager");
 const Menu = require("./menu");
 const PaintManager = require("./paint-manager");
 
@@ -11,14 +11,14 @@ require("web-animations-js");
 
 let framesController;
 let drawingConfiguration;
-let viewConfiguration;
+let viewManager;
 let paintManager;
 let menu; // todo: あとで動かす
 
 document.addEventListener("DOMContentLoaded", function() {
   const firstFrameId = 0;
   drawingConfiguration = new DrawingConfiguration();
-  viewConfiguration = new ViewConfiguration(drawingConfiguration);
+  viewManager = new ViewManager(drawingConfiguration);
 
   drawingConfiguration.setDefaultValues();
 

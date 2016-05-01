@@ -12,7 +12,7 @@ function DrawingConfiguration() {
 }
 
 // これをコンストラクタに入れないのは、
-// ViewConfiguration（など）で、subscribeした後に、
+// ViewManager（など）で、subscribeした後に、
 // publishをしたいため。
 DrawingConfiguration.prototype.setDefaultValues = function() {
   this.defaultPalleteColors = ["red", "orange", "yellow", "lightgreen",
