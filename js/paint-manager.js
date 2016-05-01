@@ -1,7 +1,7 @@
 const Publisher = require("./publisher");
 
 // HTMLCanvasElementをラップし, canvasRenderingContext2Dに関する操作を提供する
-function PaintManager(element, drawConfig) {
+function PaintManager(element, drawConfig, framesController) {
   this.element = element;
   this.element.width = window.innerWidth;
   this.element.height = window.innerHeight;
@@ -15,6 +15,18 @@ function PaintManager(element, drawConfig) {
   this.context = this.element.getContext("2d");
   this.drawState = new Publisher("idling");
   this.config = drawConfig;
+
+  framesController.currentFrameId.subscribe((nextCurrentFrame) => {
+    // 今のCanvasを今のFrameに書き込む
+    framesController.getCurrentFrame().imageData = this.getImageData();
+
+    // 次のFrameをCanvasに反映させる
+    let nextImageData =
+      framesController.getFrameById(nextCurrentFrame).imageData;
+    if (nextImageData !== null) {
+      this.setImageData(nextImageData);
+    }
+  });
 }
 
 let isMouseDown = false;

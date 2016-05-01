@@ -2,7 +2,6 @@ const FramesController = require("./frames-controller");
 const DrawingConfiguration = require("./drawing-configuration");
 const Menu = require("./menu");
 const PaintManager = require("./paint-manager");
-const ObserveCurrentFrame = require("./observe-current-frame");
 
 // webpack
 require("./../css/style.css");
@@ -13,7 +12,6 @@ let framesController;
 let drawingConfiguration;
 let paintManager;
 let menu; // todo: あとで動かす
-let observeCurrentFrame; // todo: ここでいいのか
 
 document.addEventListener("DOMContentLoaded", function() {
   const firstFrameId = 0;
@@ -24,9 +22,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
   paintManager = new PaintManager(
     document.getElementById("canvas"),
-    drawingConfiguration);
-
-  observeCurrentFrame = new ObserveCurrentFrame(paintManager, framesController);
+    drawingConfiguration,
+    framesController);
 
   menu = new Menu(paintManager.drawState);
 
