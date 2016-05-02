@@ -5,14 +5,15 @@ const SequenceView = require("./view/sequence-view");
 const eventPublisher = require("./publisher");
 
 function ViewManager() {
-  this.colorPicker = new ColorPickerView(document.getElementById("menu-colors"));
+  this.colorPicker =
+    new ColorPickerView(document.getElementById("menu-colors"));
   eventPublisher.subscribe("defaultPalleteColors", (colors) => {
     this.colorPicker.clearPalette();
     colors.forEach(color => {
       this.colorPicker.addPalette(color);
     });
   });
-  
+
   this.lineWidthPicker = new LineWidthPickerView(
       document.getElementById("menu-line-width"));
 

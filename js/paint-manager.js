@@ -25,8 +25,8 @@ function PaintManager(element, drawConfig, framesController) {
         let nextImageData =
       framesController.getFrameById(nextCurrentFrame).imageData;
         if (nextImageData !== null) {
-      this.setImageData(nextImageData);
-    }
+          this.setImageData(nextImageData);
+        }
       });
 }
 

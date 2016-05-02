@@ -14,8 +14,8 @@ DrawingConfiguration.prototype.setDefaultValues = function() {
   eventPublisher.subscribe("defaultPalleteColors", (defaultPalleteColors) => {
     this.defaultPalleteColors = defaultPalleteColors;
   });
-  eventPublisher.publish("defaultPalleteColors", ["red", "orange", "yellow", "lightgreen",
-    "green", "skyblue", "blue", "purple", "black", "white"]);
+  eventPublisher.publish("defaultPalleteColors", ["red", "orange", "yellow",
+    "lightgreen", "green", "skyblue", "blue", "purple", "black", "white"]);
 
   this.color = "";
   eventPublisher.subscribe("color", (color) => {
