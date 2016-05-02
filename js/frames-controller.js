@@ -26,8 +26,11 @@ FramesController.prototype.remove = function() {
 };
 
 FramesController.prototype.setCurrentFrame = function(frameId) {
+  var nextImageData;
+
   eventPublisher.publish("currentFrameId", frameId);
-  var nextImageData = this.getCurrentFrame().imageData;
+
+  nextImageData = this.getCurrentFrame().imageData;
   // 初めて作るFrame（nextImageDataがnull）の時は、
   // 前のFrameの内容をそのままコピーするため、imageDataをpublishする必要はない。
   if (nextImageData !== null) {

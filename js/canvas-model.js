@@ -12,8 +12,8 @@ function CanvasModel(element) {
 
   eventPublisher.subscribe(
       "currentFrameId", (nextCurrentFrame) => {
-    eventPublisher.publish("imageData", this.getImageData());
-  });
+        eventPublisher.publish("imageData", this.getImageData());
+      });
 
   // この imageDataというものだが、
   // Modelのように見せているが、実際は存在せず、
