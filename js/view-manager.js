@@ -15,7 +15,7 @@ function ViewManager() {
   });
 
   this.lineWidthPicker = new LineWidthPickerView(
-      document.getElementById("menu-line-width"));
+    document.getElementById("menu-line-width"));
 
   this.sequenceEditor = new SequenceView(document.getElementById("thumbnails"));
 
