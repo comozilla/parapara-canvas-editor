@@ -16,7 +16,7 @@ function ViewManager() {
   this.lineWidthPicker = new LineWidthPickerView(
       document.getElementById("menu-line-width"));
 
-  this.sequence = new SequenceView(document.getElementById("thumbnails"));
+  this.sequenceEditor = new SequenceView(document.getElementById("thumbnails"));
 
   this.menu = new MenuView();
 }
