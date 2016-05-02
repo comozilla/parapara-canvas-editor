@@ -10,10 +10,9 @@ function CanvasModel(element) {
     this.drawState = drawState;
   });
 
-  eventPublisher.subscribe(
-      "currentFrameId", (nextCurrentFrame) => {
-        eventPublisher.publish("imageData", this.getImageData());
-      });
+  eventPublisher.subscribe("currentFrameId", (nextCurrentFrame) => {
+    eventPublisher.publish("imageData", this.getImageData());
+  });
 
   // この imageDataというものだが、
   // Modelのように見せているが、実際は存在せず、
