@@ -23,8 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
   framesController = new FramesController();
   framesController.append(firstFrameId);
 
-  canvasModel =
-    new CanvasModel(document.getElementById("canvas"), framesController);
+  canvasModel = new CanvasModel(document.getElementById("canvas"));
   paintManager = new PaintManager(document.getElementById("canvas"));
 
   viewManager = new ViewManager();

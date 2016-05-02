@@ -1,7 +1,7 @@
 const eventPublisher = require("./publisher");
 
 // HTMLCanvasElementをラップし, canvasRenderingContext2Dに関する操作を提供する
-function CanvasModel(element, framesController) {
+function CanvasModel(element) {
   this.element = element;
 
   this.context = this.element.getContext("2d");
@@ -12,27 +12,25 @@ function CanvasModel(element, framesController) {
 
   eventPublisher.subscribe(
       "currentFrameId", (nextCurrentFrame) => {
-    // 今のCanvasを今のFrameに書き込む
-    framesController.getCurrentFrame().imageData = this.getImageData();
+    eventPublisher.publish("imageData", this.getImageData());
+  });
 
-    // 次のFrameをCanvasに反映させる
-    let nextImageData =
-    framesController.getFrameById(nextCurrentFrame).imageData;
-    if (nextImageData !== null) {
-      this.setImageData(nextImageData);
-    }
+  // この imageDataというものだが、
+  // Modelのように見せているが、実際は存在せず、
+  // Viewを変換したものである。
+  // このようにするのは、
+  // imageDataはcurrentFrameの変更時にしかupdateしないためである。
+  eventPublisher.subscribe("imageData", (imageData) => {
+    this.context.clearRect(0, 0,
+      this.element.width, this.element.height); // クリアする必要があるのか
+    this.context.putImageData(imageData, 0, 0);
   });
 }
 
+// 外からはアクセスしないでください。
 CanvasModel.prototype.getImageData = function() {
   return this.context.getImageData(0, 0,
     this.element.width, this.element.height);
-};
-
-CanvasModel.prototype.setImageData = function(imageData) {
-  this.context.clearRect(0, 0,
-    this.element.width, this.element.height); // クリアする必要があるのか
-  this.context.putImageData(imageData, 0, 0);
 };
 
 module.exports = CanvasModel;
