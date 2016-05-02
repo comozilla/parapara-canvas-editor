@@ -1,5 +1,6 @@
 const FramesController = require("./frames-controller");
 const DrawingConfiguration = require("./drawing-configuration");
+const CanvasModel = require("./canvas-model");
 const ViewManager = require("./view-manager");
 const PaintManager = require("./paint-manager");
 
@@ -10,6 +11,7 @@ require("web-animations-js");
 
 let framesController;
 let drawingConfiguration;
+let canvasModel;
 let viewManager;
 let paintManager;
 
@@ -21,10 +23,9 @@ document.addEventListener("DOMContentLoaded", function() {
   framesController = new FramesController();
   framesController.append(firstFrameId);
 
-  paintManager = new PaintManager(
-    document.getElementById("canvas"),
-    drawingConfiguration,
-    framesController);
+  canvasModel =
+    new CanvasModel(document.getElementById("canvas"), framesController);
+  paintManager = new PaintManager(document.getElementById("canvas"));
 
   viewManager = new ViewManager();
 
