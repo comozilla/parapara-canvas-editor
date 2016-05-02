@@ -32,9 +32,25 @@ html, body {
   cursor: pointer;
   border-radius: 3vw;
   transition: transform 0.25s cubic-bezier(.18,.89,1,1.7) 0s;
+  text-align: center;
+  line-height: 3vw;
 }
 #menu-colors li:hover {
   transform: scale(1.2);
+}
+#menu-colors .selected-palette:before {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\F00C";
+  text-shadow:
+		-1px -1px white,
+		1px -1px white,
+		-1px 1px white,
+		1px 1px white;
 }
 #menu-side-btn {
   position: absolute;
