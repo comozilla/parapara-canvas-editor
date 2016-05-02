@@ -3,6 +3,16 @@ const eventPublisher = require("./../publisher");
 function ColorPickerView(elem) {
   // このelem には、ul要素が入ってくる（はず）。
   this.element = elem;
+  eventPublisher.subscribe("color", (color) => {
+    var selectedPalette = this.element.querySelector(".selected-palette");
+    if (selectedPalette !== null) {
+      selectedPalette.classList.remove("selected-palette");
+    }
+    var nextPalette = this.element.querySelector("[data-color=\"" + color + "\"]");
+    if (nextPalette !== null) {
+      nextPalette.classList.add("selected-palette");
+    }
+  });
 }
 
 ColorPickerView.prototype.addPalette = function(color) {
@@ -13,6 +23,7 @@ ColorPickerView.prototype.addPalette = function(color) {
   }
 
   palette = document.createElement("li");
+  palette.dataset.color = color;
   palette.style.backgroundColor = color;
   this.element.appendChild(palette);
 
