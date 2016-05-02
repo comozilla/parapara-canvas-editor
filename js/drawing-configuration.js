@@ -1,12 +1,9 @@
-const SequencePanel = require("./sequence-panel");
 const eventPublisher = require("./publisher");
 
 function DrawingConfiguration() {
   this.defaultPalleteColors = [];
   this.color = "";
   this.lineWidth = 0;
-
-  this.sequencePanel = new SequencePanel(document.getElementById("thumbnails"));
 }
 
 // これをコンストラクタに入れないのは、
