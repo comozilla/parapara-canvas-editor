@@ -1,15 +1,13 @@
 const eventPublisher = require("./../publisher");
 
-function LineWidthPickerPanel(elem, drawingConfig) {
+function LineWidthPickerPanel(elem) {
   // このelem には、input[type="range"] 要素が入ってくる（はず）。
   this.element = elem;
-  this.config = drawingConfig;
   eventPublisher.subscribe("lineWidth", (lineWidth) => {
     this.element.value = lineWidth;
   });
   this.element.addEventListener("change", event => {
-    this.config.lineWidth = event.target.value;
-    eventPublisher.publish("lineWidth", this.config.lineWidth);
+    eventPublisher.publish("lineWidth", event.target.value);
   });
 }
 

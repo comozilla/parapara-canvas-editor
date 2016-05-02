@@ -4,8 +4,8 @@ const MenuView = require("./view/menu-view");
 const SequenceView = require("./view/sequence-view");
 const eventPublisher = require("./publisher");
 
-function ViewManager(drawingConfig) {
-  this.colorPicker = new ColorPickerView(document.getElementById("menu-colors"), drawingConfig);
+function ViewManager() {
+  this.colorPicker = new ColorPickerView(document.getElementById("menu-colors"));
   eventPublisher.subscribe("defaultPalleteColors", (colors) => {
     this.colorPicker.clearPalette();
     colors.forEach(color => {
@@ -14,7 +14,7 @@ function ViewManager(drawingConfig) {
   });
   
   this.lineWidthPicker = new LineWidthPickerView(
-      document.getElementById("menu-line-width"), drawingConfig);
+      document.getElementById("menu-line-width"));
 
   this.sequence = new SequenceView(document.getElementById("thumbnails"));
 
