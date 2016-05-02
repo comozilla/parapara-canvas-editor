@@ -1,7 +1,7 @@
 const eventPublisher = require("./publisher");
 
 // HTMLCanvasElementをラップし, canvasRenderingContext2Dに関する操作を提供する
-function PaintManager(element, drawConfig, framesController) {
+function PaintManager(element) {
   this.element = element;
   this.element.width = window.innerWidth;
   this.element.height = window.innerHeight;
@@ -13,21 +13,16 @@ function PaintManager(element, drawConfig, framesController) {
     event => { this.mouseMoveCanvas(event); });
 
   this.context = this.element.getContext("2d");
-  this.drawState = "idling";
-  this.config = drawConfig;
 
-  eventPublisher.subscribe(
-      "currentFrameId", (nextCurrentFrame) => {
-    // 今のCanvasを今のFrameに書き込む
-        framesController.getCurrentFrame().imageData = this.getImageData();
+  this.color = "";
+  eventPublisher.subscribe("color", (color) => {
+    this.color = color;
+  });
 
-    // 次のFrameをCanvasに反映させる
-        let nextImageData =
-      framesController.getFrameById(nextCurrentFrame).imageData;
-        if (nextImageData !== null) {
-          this.setImageData(nextImageData);
-        }
-      });
+  this.lineWidth = 0;
+  eventPublisher.subscribe("lineWidth", (lineWidth) => {
+    this.lineWidth = lineWidth;
+  });
 }
 
 let isMouseDown = false;
@@ -35,28 +30,26 @@ let previousMousePosition;
 PaintManager.prototype.mouseDownCanvas = function(event) {
   isMouseDown = true;
   previousMousePosition = { x: event.clientX, y: event.clientY };
-  this.drawState = "drawing";
   eventPublisher.publish("drawState", "drawing");
 };
 PaintManager.prototype.mouseUpCanvas = function() {
   isMouseDown = false;
-  this.drawState = "idling";
   eventPublisher.publish("drawState", "idling");
 };
 PaintManager.prototype.mouseMoveCanvas = function(event) {
   if (isMouseDown) {
-    if (this.config.color === "white") {
+    if (this.color === "white") {
       this.eraseByLine(
         previousMousePosition,
         { x: event.clientX, y: event.clientY },
-        this.config.lineWidth
+        this.lineWidth
       );
     } else {
       this.drawLine(
         previousMousePosition,
         { x: event.clientX, y: event.clientY },
-        this.config.color,
-        this.config.lineWidth
+        this.color,
+        this.lineWidth
       );
     }
     previousMousePosition = { x: event.clientX, y: event.clientY };
@@ -91,17 +84,6 @@ PaintManager.prototype.eraseByLine = function(
   this.context.globalCompositeOperation = "destination-out";
   this.drawLine(startPosition, endPosition, "#000", lineWidth);
   this.context.globalCompositeOperation = "source-over";
-};
-
-PaintManager.prototype.getImageData = function() {
-  return this.context.getImageData(0, 0,
-    this.element.width, this.element.height);
-};
-
-PaintManager.prototype.setImageData = function(imageData) {
-  this.context.clearRect(0, 0,
-    this.element.width, this.element.height); // クリアする必要があるのか
-  this.context.putImageData(imageData, 0, 0);
 };
 
 module.exports = PaintManager;

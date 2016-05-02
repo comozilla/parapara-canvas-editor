@@ -4,6 +4,14 @@ const eventPublisher = require("./publisher");
 function FramesController() {
   this.frames = [];
   this.currentFrameId = 0;
+  eventPublisher.subscribe("currentFrameId", (frameId) => {
+    this.currentFrameId = frameId;
+  });
+
+  eventPublisher.subscribe("imageData", (imageData) => {
+    // この時の currentFrame は、変更される前を示す。
+    this.getCurrentFrame().imageData = imageData;
+  });
 }
 
 // パラメータ id : どこの後ろに追加するのか（今は実装していない）
@@ -18,8 +26,16 @@ FramesController.prototype.remove = function() {
 };
 
 FramesController.prototype.setCurrentFrame = function(frameId) {
-  this.currentFrameId = frameId;
+  var nextImageData;
+
   eventPublisher.publish("currentFrameId", frameId);
+
+  nextImageData = this.getCurrentFrame().imageData;
+  // 初めて作るFrame（nextImageDataがnull）の時は、
+  // 前のFrameの内容をそのままコピーするため、imageDataをpublishする必要はない。
+  if (nextImageData !== null) {
+    eventPublisher.publish("imageData", nextImageData);
+  }
 };
 
 FramesController.prototype.getFrameById = function(frameId) {
