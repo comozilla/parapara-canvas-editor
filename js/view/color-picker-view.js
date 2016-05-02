@@ -1,9 +1,8 @@
 const eventPublisher = require("./../publisher");
 
-function ColorPickerView(elem, drawingConfig) {
+function ColorPickerView(elem) {
   // このelem には、ul要素が入ってくる（はず）。
   this.element = elem;
-  this.config = drawingConfig;
 }
 
 ColorPickerView.prototype.addPalette = function(color) {
@@ -18,8 +17,7 @@ ColorPickerView.prototype.addPalette = function(color) {
   this.element.appendChild(palette);
 
   palette.addEventListener("click", event => {
-    this.config.color = event.target.style.backgroundColor;
-    eventPublisher.publish("color", this.config.color);
+    eventPublisher.publish("color", event.target.style.backgroundColor);
   });
 };
 

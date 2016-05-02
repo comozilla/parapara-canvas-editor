@@ -1,26 +1,32 @@
-const SequencePanel = require("./sequence-panel");
 const eventPublisher = require("./publisher");
 
 function DrawingConfiguration() {
   this.defaultPalleteColors = [];
   this.color = "";
   this.lineWidth = 0;
-
-  this.sequencePanel = new SequencePanel(document.getElementById("thumbnails"));
 }
 
 // これをコンストラクタに入れないのは、
 // ViewManager（など）で、subscribeした後に、
 // publishをしたいため。
 DrawingConfiguration.prototype.setDefaultValues = function() {
-  this.defaultPalleteColors = ["red", "orange", "yellow", "lightgreen",
-    "green", "skyblue", "blue", "purple", "black", "white"];
-  eventPublisher.publish("defaultPalleteColors", this.defaultPalleteColors);
+  this.defaultPalleteColors = [];
+  eventPublisher.subscribe("defaultPalleteColors", (defaultPalleteColors) => {
+    this.defaultPalleteColors = defaultPalleteColors;
+  });
+  eventPublisher.publish("defaultPalleteColors", ["red", "orange", "yellow",
+    "lightgreen", "green", "skyblue", "blue", "purple", "black", "white"]);
 
-  this.color = "red";
-  eventPublisher.publish("color", this.color);
+  this.color = "";
+  eventPublisher.subscribe("color", (color) => {
+    this.color = color;
+  });
+  eventPublisher.publish("color", "red");
 
-  this.lineWidth = 10;
-  eventPublisher.publish("lineWidth", this.lineWidth);
+  this.lineWidth = 0;
+  eventPublisher.subscribe("lineWidth", (lineWidth) => {
+    this.lineWidth = lineWidth;
+  });
+  eventPublisher.publish("lineWidth", 10);
 };
 module.exports = DrawingConfiguration;
