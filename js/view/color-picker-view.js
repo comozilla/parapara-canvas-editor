@@ -5,10 +5,11 @@ function ColorPickerView(elem) {
   this.element = elem;
   eventPublisher.subscribe("color", (color) => {
     var selectedPalette = this.element.querySelector(".selected-palette");
+    var nextPalette;
     if (selectedPalette !== null) {
       selectedPalette.classList.remove("selected-palette");
     }
-    var nextPalette = this.element.querySelector("[data-color=\"" + color + "\"]");
+    nextPalette = this.element.querySelector("[data-color=\"" + color + "\"]");
     if (nextPalette !== null) {
       nextPalette.classList.add("selected-palette");
     }
