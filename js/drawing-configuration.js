@@ -1,4 +1,4 @@
-const eventPublisher = require("./publisher");
+import eventPublisher from "./publisher";
 
 function DrawingConfiguration() {
   this.defaultPalleteColors = [];
@@ -29,4 +29,4 @@ DrawingConfiguration.prototype.setDefaultValues = function() {
   });
   eventPublisher.publish("lineWidth", 10);
 };
-module.exports = DrawingConfiguration;
+export default DrawingConfiguration;

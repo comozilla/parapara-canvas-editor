@@ -99,4 +99,4 @@ SequencePanel.prototype.setCurrentFrame = function(frameIndex) {
   }
 };
 
-module.exports = SequencePanel;
+export default SequencePanel;

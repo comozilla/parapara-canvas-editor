@@ -1,4 +1,4 @@
-const eventPublisher = require("./../publisher");
+import eventPublisher from "./../publisher";
 
 function MenuView() {
   eventPublisher.subscribe("drawState", (newState) => {
@@ -30,4 +30,4 @@ MenuView.prototype.toggleOpenMenuButton = function(isVisible) {
     [{ transform: "translate(-30px)" }, { transform: "translate(0px)" }],
     { direction: direction, duration: 100, fill: "both" });
 };
-module.exports = MenuView;
+export default MenuView;

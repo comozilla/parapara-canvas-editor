@@ -32,5 +32,5 @@ Publisher.prototype.publish = function(type, nextData) {
   console.log(":end " + type);
 };
 
-module.exports = new Publisher();
+export default new Publisher();
 

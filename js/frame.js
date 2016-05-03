@@ -2,4 +2,4 @@ function Frame() {
   this.imageData = null;
 }
 
-module.exports = Frame;
+export default Frame;

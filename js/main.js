@@ -1,13 +1,13 @@
-const FramesController = require("./frames-controller");
-const DrawingConfiguration = require("./drawing-configuration");
-const CanvasModel = require("./canvas-model");
-const ViewManager = require("./view-manager");
-const PaintManager = require("./paint-manager");
+import FramesController from "./frames-controller";
+import DrawingConfiguration from "./drawing-configuration";
+import CanvasModel from "./canvas-model";
+import ViewManager from "./view-manager";
+import PaintManager from "./paint-manager";
 
 // webpack
-require("./../css/style.css");
-require("font-awesome");
-require("web-animations-js");
+import "./../css/style.css";
+import "font-awesome";
+import "web-animations-js";
 
 let framesController;
 let drawingConfiguration;

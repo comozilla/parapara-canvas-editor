@@ -1,4 +1,4 @@
-const eventPublisher = require("./publisher");
+import eventPublisher from "./publisher";
 
 // HTMLCanvasElementをラップし, canvasRenderingContext2Dに関する操作を提供する
 function CanvasModel(element) {
@@ -39,4 +39,4 @@ CanvasModel.prototype.getImageData = function() {
     this.element.width, this.element.height);
 };
 
-module.exports = CanvasModel;
+export default CanvasModel;

@@ -1,5 +1,5 @@
-const Frame = require("./frame");
-const eventPublisher = require("./publisher");
+import Frame from "./frame";
+import eventPublisher from "./publisher";
 // frame の追加・削除、currentFrameの切り替えをModel上で行う
 function FramesController() {
   this.frames = [];
@@ -72,4 +72,4 @@ FramesController.prototype.getFrameById = function(frameId) {
 FramesController.prototype.getCurrentFrame = function() {
   return this.frames[this.currentFrameId];
 };
-module.exports = FramesController;
+export default FramesController;

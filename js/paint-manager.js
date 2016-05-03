@@ -1,4 +1,4 @@
-const eventPublisher = require("./publisher");
+import eventPublisher from "./publisher";
 
 // HTMLCanvasElementをラップし, canvasRenderingContext2Dに関する操作を提供する
 function PaintManager(element) {
@@ -86,4 +86,4 @@ PaintManager.prototype.eraseByLine = function(
   this.context.globalCompositeOperation = "source-over";
 };
 
-module.exports = PaintManager;
+export default PaintManager;

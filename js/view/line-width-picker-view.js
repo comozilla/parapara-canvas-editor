@@ -1,4 +1,4 @@
-const eventPublisher = require("./../publisher");
+import eventPublisher from "./../publisher";
 
 function LineWidthPickerPanel(elem) {
   // このelem には、input[type="range"] 要素が入ってくる（はず）。
@@ -19,4 +19,4 @@ LineWidthPickerPanel.prototype.changeMinLineWidth = function(minLineWidth) {
   // TODO
 };
 
-module.exports = LineWidthPickerPanel;
+export default LineWidthPickerPanel;
