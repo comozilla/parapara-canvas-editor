@@ -128,7 +128,7 @@ html, body {
   position: relative;
 }
 #menu-thumbnails .thumbnail-selected {
-  border-color: #00F;
+  border-color: cyan;
 }
 #menu-thumbnails .frame-add {
   width: 100%;
