@@ -4,8 +4,8 @@ function ColorPickerView(elem) {
   // このelem には、ul要素が入ってくる（はず）。
   this.element = elem;
   eventPublisher.subscribe("color", (color) => {
-    var selectedPalette = this.element.querySelector(".selected-palette");
-    var nextPalette;
+    let selectedPalette = this.element.querySelector(".selected-palette");
+    let nextPalette;
     if (selectedPalette !== null) {
       selectedPalette.classList.remove("selected-palette");
     }

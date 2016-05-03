@@ -2,13 +2,15 @@ import eventPublisher from "./publisher";
 
 // HTMLCanvasElementをラップし, canvasRenderingContext2Dに関する操作を提供する
 function CanvasModel(element) {
+  let changeDrawState;
+
   this.element = element;
 
   this.context = this.element.getContext("2d");
   this.drawState = "idling";
 
   // TODO: PaintManagerにうつす
-  var changeDrawState = (drawState) => {
+  changeDrawState = (drawState) => {
     this.drawState = drawState;
   };
   eventPublisher.subscribe("drawState", changeDrawState);

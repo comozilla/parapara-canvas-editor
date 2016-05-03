@@ -11,9 +11,10 @@ function DrawingConfiguration() {
 // publishをしたいため。
 DrawingConfiguration.prototype.setDefaultValues = function() {
   this.defaultPalleteColors = [];
-  eventPublisher.subscribe("defaultPalleteColors:after", (defaultPalleteColors) => {
-    this.defaultPalleteColors = defaultPalleteColors;
-  });
+  eventPublisher.subscribe("defaultPalleteColors:after",
+      (defaultPalleteColors) => {
+        this.defaultPalleteColors = defaultPalleteColors;
+      });
   eventPublisher.publish("defaultPalleteColors", ["red", "orange", "yellow",
     "lightgreen", "green", "skyblue", "blue", "purple", "black", "white"]);
 

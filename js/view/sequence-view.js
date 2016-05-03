@@ -1,7 +1,6 @@
 import eventPublisher from "./../publisher";
 
 function SequencePanel(elem) {
-  console.log(eventPublisher);
   this.elem = elem;
   this.maxFrameId = 0;
   this.currentFrameId = 0;
@@ -11,7 +10,8 @@ function SequencePanel(elem) {
   });
   eventPublisher.subscribe("frames", (frames) => {
     this.clear();
-    for (this.maxFrameId = 0; this.maxFrameId < frames.length; this.maxFrameId++) {
+    for (this.maxFrameId = 0;
+        this.maxFrameId < frames.length; this.maxFrameId++) {
       this.append(this.maxFrameId);
     }
     this.maxFrameId--; // 1つ多くなってしまうから
@@ -38,7 +38,10 @@ function SequencePanel(elem) {
   </div>
 </div>
 */
-function getFrameTemplate(frameId, mousedownFrameCallback, mousedownRemoveCallback) {
+function getFrameTemplate(
+    frameId,
+    mousedownFrameCallback,
+    mousedownRemoveCallback) {
   let frame = document.createElement("div");
   let frameDeleteBtn = document.createElement("button");
   let frameUpBtn = document.createElement("button");
