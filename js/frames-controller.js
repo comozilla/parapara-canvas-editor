@@ -4,26 +4,40 @@ const eventPublisher = require("./publisher");
 function FramesController() {
   this.frames = [];
   this.currentFrameId = 0;
-  eventPublisher.subscribe("currentFrameId:after", (frameId) => {
+  var changeCurrentFrameIdAfter = (frameId) => {
     let nextImageData;
 
     this.currentFrameId = frameId;
-    
+
     nextImageData = this.getCurrentFrame().imageData;
     eventPublisher.publish("imageData", nextImageData);
-  });
+  };
+  eventPublisher.subscribe("currentFrameId:after", changeCurrentFrameIdAfter);
 
-  eventPublisher.subscribe("imageData", (imageData) => {
+  var changeImageData = (imageData) => {
     // この時の currentFrame は、変更される前を示す。
     this.getCurrentFrame().imageData = imageData;
-  });
+  };
+  eventPublisher.subscribe("imageData", changeImageData);
 
-  eventPublisher.subscribe("appendFrame", (nextFrameId) => {
+  var callAppendFrame = (nextFrameId) => {
     this.append(nextFrameId);
-  });
-  eventPublisher.subscribe("removeFrame", (frameId) => {
+  };
+  eventPublisher.subscribe("appendFrame", callAppendFrame);
+
+  var callRemoveFrame = (frameId) => {
     this.remove(frameId);
-  });
+  };
+  eventPublisher.subscribe("removeFrame", callRemoveFrame);
+}
+
+function changeCurrentFrameIdAfter(frameId) {
+  let nextImageData;
+
+  this.currentFrameId = frameId;
+  
+  nextImageData = this.getCurrentFrame().imageData;
+  eventPublisher.publish("imageData", nextImageData);
 }
 
 // パラメータ id : どこの後ろに追加するのか（今は実装していない）
