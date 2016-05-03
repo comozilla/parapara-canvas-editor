@@ -69,7 +69,7 @@ SequencePanel.prototype.append = function(frameId) {
       eventPublisher.publish("currentFrameId", frameId);
       this.setCurrentFrame(newFrame);
     }
-  }, (event) => {
+  }, () => {
     this.framesController.remove(frameId);
   });
   this.elem.appendChild(newFrame);
