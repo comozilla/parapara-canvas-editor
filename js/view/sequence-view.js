@@ -1,5 +1,8 @@
 function SequencePanel(elem) {
   this.elem = elem;
+  document.getElementById("sequence-add-btn").addEventListener("click", () => {
+    this.append();
+  });
 }
 
 /* フレームの構造
