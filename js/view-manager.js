@@ -4,7 +4,7 @@ import MenuView from "./view/menu-view";
 import SequenceView from "./view/sequence-view";
 import eventPublisher from "./publisher";
 
-function ViewManager() {
+function ViewManager(framesController) {
   this.colorPicker =
     new ColorPickerView(document.getElementById("menu-colors"));
   eventPublisher.subscribe("defaultPalleteColors", (colors) => {
@@ -17,7 +17,8 @@ function ViewManager() {
   this.lineWidthPicker = new LineWidthPickerView(
     document.getElementById("menu-line-width"));
 
-  this.sequenceEditor = new SequenceView(document.getElementById("thumbnails"));
+  this.sequenceEditor =
+    new SequenceView(document.getElementById("thumbnails"), framesController);
 
   this.menu = new MenuView();
 }

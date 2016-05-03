@@ -5,8 +5,6 @@ import CanvasModel from "./canvas-model";
 // frame の追加・削除、currentFrameの切り替えをModel上で行う
 function FramesController(canvas) {
   let updateImageDataToNextData;
-  let callAppendFrame;
-  let callRemoveFrame;
   this.frames = [];
   this.currentFrameId = 0;
   this.canvasModel = new CanvasModel(canvas);
@@ -20,17 +18,6 @@ function FramesController(canvas) {
     this.canvasModel.setImageData(this.getCurrentFrame().imageData);
   };
   eventPublisher.subscribe("currentFrameId", updateImageDataToNextData);
-
-  callAppendFrame = (nextFrameId) => {
-    this.append(nextFrameId);
-  };
-  eventPublisher.subscribe("appendFrame", callAppendFrame);
-
-  callRemoveFrame = (frameId) => {
-    this.remove(frameId);
-  };
-  eventPublisher.subscribe("removeFrame", callRemoveFrame);
-
 }
 
 // パラメータ id : どこの後ろに追加するのか（今は実装していない）

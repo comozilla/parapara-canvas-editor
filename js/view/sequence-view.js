@@ -1,9 +1,10 @@
 import eventPublisher from "./../publisher";
 
-function SequencePanel(elem) {
+function SequencePanel(elem, framesController) {
   this.elem = elem;
   this.maxFrameId = 0;
   this.currentFrameId = 0;
+  this.framesController = framesController;
   eventPublisher.subscribe("currentFrameId", (currentFrameId) => {
     this.currentFrameId = currentFrameId;
     this.setCurrentFrame(currentFrameId);
@@ -18,9 +19,7 @@ function SequencePanel(elem) {
     this.setCurrentFrame(this.currentFrameId);
   });
   document.getElementById("sequence-add-btn").addEventListener("click", () => {
-    // eventPublisher 本来の使い方なのかわからない。
-    // 本当は、このクラスでframesControllerのインスタンスを持っておくのがいいのかもしれない。
-    eventPublisher.publish("appendFrame", ++this.maxFrameId);
+    this.framesController.append(++this.maxFrameId);
   });
 }
 
@@ -71,7 +70,7 @@ SequencePanel.prototype.append = function(frameId) {
       this.setCurrentFrame(newFrame);
     }
   }, (event) => {
-    eventPublisher.publish("removeFrame", frameId);
+    this.framesController.remove(frameId);
   });
   this.elem.appendChild(newFrame);
 };
