@@ -1,7 +1,7 @@
 const ColorPickerView = require("./view/color-picker-view");
-const LineWidthPickerView = require("./view/line-width-picker-view");
+import LineWidthPickerView from "./view/line-width-picker-view";
 const MenuView = require("./view/menu-view");
-const SequenceView = require("./view/sequence-view");
+import SequenceView from "./view/sequence-view";
 const eventPublisher = require("./publisher");
 
 function ViewManager() {

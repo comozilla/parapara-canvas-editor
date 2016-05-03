@@ -19,4 +19,4 @@ LineWidthPickerPanel.prototype.changeMinLineWidth = function(minLineWidth) {
   // TODO
 };
 
-module.exports = LineWidthPickerPanel;
+export default LineWidthPickerPanel;

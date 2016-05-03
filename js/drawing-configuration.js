@@ -29,4 +29,4 @@ DrawingConfiguration.prototype.setDefaultValues = function() {
   });
   eventPublisher.publish("lineWidth", 10);
 };
-module.exports = DrawingConfiguration;
+export default DrawingConfiguration;
