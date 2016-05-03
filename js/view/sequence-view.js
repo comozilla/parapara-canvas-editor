@@ -39,9 +39,9 @@ function SequencePanel(elem) {
 */
 function getFrameTemplate(frameId) {
   let frame = document.createElement("div");
-  let frameDeleteBtn = document.createElement("div");
-  let frameUpBtn = document.createElement("div");
-  let frameDownBtn = document.createElement("div");
+  let frameDeleteBtn = document.createElement("button");
+  let frameUpBtn = document.createElement("button");
+  let frameDownBtn = document.createElement("button");
   frame.dataset.frameIndex = frameId;
   frame.classList.add("thumbnail");
   frameDeleteBtn.classList.add("frame-delete");
@@ -61,9 +61,12 @@ SequencePanel.prototype.append = function(frameId) {
   let newFrame = getFrameTemplate(frameId);
   this.elem.appendChild(newFrame);
   
-  newFrame.addEventListener("mousedown", () => {
-    eventPublisher.publish("currentFrameId", frameId);
-    this.setCurrentFrame(newFrame);
+  newFrame.addEventListener("mousedown", (event) => {
+    // 子要素のmousedownによる発生を防ぐ
+    if (event.target.classList.contains("thumbnail")) {
+      eventPublisher.publish("currentFrameId", frameId);
+      this.setCurrentFrame(newFrame);
+    }
   });
 };
 
