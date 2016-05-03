@@ -12,6 +12,10 @@ function FramesController() {
     // この時の currentFrame は、変更される前を示す。
     this.getCurrentFrame().imageData = imageData;
   });
+
+  eventPublisher.subscribe("appendFrame", (nextFrameId) => {
+    this.append(nextFrameId - 1);
+  });
 }
 
 // パラメータ id : どこの後ろに追加するのか（今は実装していない）
@@ -19,6 +23,7 @@ FramesController.prototype.append = function(id) {
   const frame = new Frame();
   // 今はいいが、あとで splice に変える
   this.frames.push(frame);
+  eventPublisher.publish("frames", this.frames);
 };
 
 FramesController.prototype.remove = function() {

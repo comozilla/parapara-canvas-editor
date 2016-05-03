@@ -20,17 +20,15 @@ document.addEventListener("DOMContentLoaded", function() {
   const canvas = document.getElementById("canvas");
 
   drawingConfiguration = new DrawingConfiguration();
-
-  framesController = new FramesController();
-  framesController.append(firstFrameId);
+  viewManager = new ViewManager();
 
   canvasModel = new CanvasModel(canvas);
   paintManager = new PaintManager(canvas);
 
-  viewManager = new ViewManager();
-
   drawingConfiguration.setDefaultValues();
 
+  framesController = new FramesController();
+  framesController.append(firstFrameId);
   framesController.setCurrentFrame(firstFrameId);
 });
 

@@ -1,7 +1,25 @@
+const eventPublisher = require("./../publisher");
+
 function SequencePanel(elem) {
   this.elem = elem;
+  this.maxFrameId = 0;
+  this.currentFrameId = 0;
+  eventPublisher.subscribe("currentFrameId", (currentFrameId) => {
+    this.currentFrameId = currentFrameId;
+    this.setCurrentFrame(currentFrameId);
+  });
+  eventPublisher.subscribe("frames", (frames) => {
+    this.clear();
+    for (this.maxFrameId = 0; this.maxFrameId < frames.length; this.maxFrameId++) {
+      this.append(this.maxFrameId);
+    }
+    this.setCurrentFrame(this.currentFrameId);
+  });
   document.getElementById("sequence-add-btn").addEventListener("click", () => {
-    this.append();
+    this.append(this.maxFrameId);
+    // eventPublisher 本来の使い方なのかわからない。
+    // 本当は、このクラスでframesControllerのインスタンスを持っておくのがいいのかもしれない。
+    eventPublisher.publish("appendFrame", this.maxFrameId++);
   });
 }
 
@@ -19,11 +37,12 @@ function SequencePanel(elem) {
   </div>
 </div>
 */
-function getFrameTemplate() {
+function getFrameTemplate(frameId) {
   let frame = document.createElement("div");
   let frameDeleteBtn = document.createElement("div");
   let frameUpBtn = document.createElement("div");
   let frameDownBtn = document.createElement("div");
+  frame.dataset.frameIndex = frameId;
   frame.classList.add("thumbnail");
   frameDeleteBtn.classList.add("frame-delete");
   frameUpBtn.classList.add("frame-up");
@@ -38,12 +57,18 @@ function getFrameTemplate() {
   return frame;
 }
 
-SequencePanel.prototype.append = function() {
-  let newFrame = getFrameTemplate();
+SequencePanel.prototype.append = function(frameId) {
+  let newFrame = getFrameTemplate(frameId);
   this.elem.appendChild(newFrame);
+  
   newFrame.addEventListener("click", () => {
+    eventPublisher.publish("currentFrameId", frameId);
     this.setCurrentFrame(newFrame);
   });
+};
+
+SequencePanel.prototype.clear = function() {
+  this.elem.innerHTML = "";
 };
 
 SequencePanel.prototype.remove = function(frame) {
@@ -58,12 +83,15 @@ SequencePanel.prototype.moveDown = function() {
   // TODO
 };
 
-SequencePanel.prototype.setCurrentFrame = function(frame) {
-  const selectedFrame = this.elem.querySelector(".thumbnail-selected");
-  if (selectedFrame) {
-    selectedFrame.classList.remove("thumbnail-selected");
+SequencePanel.prototype.setCurrentFrame = function(frameIndex) {
+  let frame = this.elem.querySelector(`[data-frame-index="${frameIndex}"]`);
+  if (frame !== null) {
+    const selectedFrame = this.elem.querySelector(".thumbnail-selected");
+    if (selectedFrame) {
+      selectedFrame.classList.remove("thumbnail-selected");
+    }
+    frame.classList.add("thumbnail-selected");
   }
-  frame.classList.add("thumbnail-selected");
 };
 
 module.exports = SequencePanel;
