@@ -17,14 +17,15 @@ let paintManager;
 
 document.addEventListener("DOMContentLoaded", function() {
   const firstFrameId = 0;
+  const canvas = document.getElementById("canvas");
 
   drawingConfiguration = new DrawingConfiguration();
 
   framesController = new FramesController();
   framesController.append(firstFrameId);
 
-  canvasModel = new CanvasModel(document.getElementById("canvas"));
-  paintManager = new PaintManager(document.getElementById("canvas"));
+  canvasModel = new CanvasModel(canvas);
+  paintManager = new PaintManager(canvas);
 
   viewManager = new ViewManager();
 
