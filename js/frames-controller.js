@@ -29,6 +29,7 @@ function FramesController() {
     this.remove(frameId);
   };
   eventPublisher.subscribe("removeFrame", callRemoveFrame);
+  
 }
 
 function changeCurrentFrameIdAfter(frameId) {
@@ -53,9 +54,11 @@ FramesController.prototype.remove = function(id) {
   if (this.currentFrameId > id) {
     nextCurrentFrameId--;
   }
-  eventPublisher.publish("currentFrameId", nextCurrentFrameId);
+  eventPublisher.publish("currentFrameId", this.currentFrameId);
   this.frames.splice(id, 1);
   eventPublisher.publish("frames", this.frames);
+  //this.currentFrameId = nextCurrentFrameId;
+  eventPublisher.publish("currentFrameId", nextCurrentFrameId);
 };
 
 FramesController.prototype.setCurrentFrame = function(frameId) {
