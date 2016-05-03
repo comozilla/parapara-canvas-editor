@@ -1,26 +1,33 @@
-function Menu(eventPublisher) {
+const eventPublisher = require("./../publisher");
+
+function MenuView() {
   eventPublisher.subscribe("drawState", (newState) => {
     this.toggleOpenMenuButton(newState === "idling");
     this.hideMenu();
   });
+
+  document.getElementById("menu-side-btn")
+    .addEventListener("click", () => {
+      this.toggleMenu();
+    });
 }
 
-Menu.prototype.toggleMenu = function() {
+MenuView.prototype.toggleMenu = function() {
   document.getElementById("menu").classList.toggle("menu-open");
 };
 
-Menu.prototype.openMenu = function() {
+MenuView.prototype.openMenu = function() {
   document.getElementById("menu").classList.add("menu-open");
 };
 
-Menu.prototype.hideMenu = function() {
+MenuView.prototype.hideMenu = function() {
   document.getElementById("menu").classList.remove("menu-open");
 };
-Menu.prototype.toggleOpenMenuButton = function(isVisible) {
+MenuView.prototype.toggleOpenMenuButton = function(isVisible) {
   const sidebtn = document.getElementById("menu-side-btn");
   const direction = isVisible ? "alternate" : "alternate-reverse";
   sidebtn.animate(
     [{ transform: "translate(-30px)" }, { transform: "translate(0px)" }],
     { direction: direction, duration: 100, fill: "both" });
 };
-module.exports = Menu;
+module.exports = MenuView;

@@ -19,5 +19,5 @@ Publisher.prototype.publish = function(type, nextData) {
   });
 };
 
-module.exports = Publisher;
+module.exports = new Publisher();
 
