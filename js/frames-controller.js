@@ -1,5 +1,5 @@
 import Frame from "./frame";
-const eventPublisher = require("./publisher");
+import eventPublisher from "./publisher";
 // frame の追加・削除、currentFrameの切り替えをModel上で行う
 function FramesController() {
   this.frames = [];

@@ -1,4 +1,4 @@
-const eventPublisher = require("./publisher");
+import eventPublisher from "./publisher";
 
 function DrawingConfiguration() {
   this.defaultPalleteColors = [];

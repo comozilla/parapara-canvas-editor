@@ -1,8 +1,8 @@
 import FramesController from "./frames-controller";
 import DrawingConfiguration from "./drawing-configuration";
-const CanvasModel = require("./canvas-model");
-const ViewManager = require("./view-manager");
-const PaintManager = require("./paint-manager");
+import CanvasModel from "./canvas-model";
+import ViewManager from "./view-manager";
+import PaintManager from "./paint-manager";
 
 // webpack
 import "./../css/style.css";

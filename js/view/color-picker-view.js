@@ -1,4 +1,4 @@
-const eventPublisher = require("./../publisher");
+import eventPublisher from "./../publisher";
 
 function ColorPickerView(elem) {
   // このelem には、ul要素が入ってくる（はず）。
@@ -44,4 +44,4 @@ function isColor(color) {
   return testElement.style.backgroundColor !== "";
 }
 
-module.exports = ColorPickerView;
+export default ColorPickerView;

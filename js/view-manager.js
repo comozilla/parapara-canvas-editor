@@ -1,8 +1,8 @@
-const ColorPickerView = require("./view/color-picker-view");
+import ColorPickerView from "./view/color-picker-view";
 import LineWidthPickerView from "./view/line-width-picker-view";
-const MenuView = require("./view/menu-view");
+import MenuView from "./view/menu-view";
 import SequenceView from "./view/sequence-view";
-const eventPublisher = require("./publisher");
+import eventPublisher from "./publisher";
 
 function ViewManager() {
   this.colorPicker =
@@ -22,4 +22,4 @@ function ViewManager() {
   this.menu = new MenuView();
 }
 
-module.exports = ViewManager;
+export default ViewManager;
