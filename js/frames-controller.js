@@ -4,8 +4,17 @@ const eventPublisher = require("./publisher");
 function FramesController() {
   this.frames = [];
   this.currentFrameId = 0;
-  eventPublisher.subscribe("currentFrameId", (frameId) => {
+  eventPublisher.subscribe("currentFrameId:after", (frameId) => {
+    let nextImageData;
+
     this.currentFrameId = frameId;
+    
+    nextImageData = this.getCurrentFrame().imageData;
+    // 初めて作るFrame（nextImageDataがnull）の時は、
+    // 前のFrameの内容をそのままコピーするため、imageDataをpublishする必要はない。
+    if (nextImageData !== null) {
+      eventPublisher.publish("imageData", nextImageData);
+    }
   });
 
   eventPublisher.subscribe("imageData", (imageData) => {
@@ -31,16 +40,7 @@ FramesController.prototype.remove = function() {
 };
 
 FramesController.prototype.setCurrentFrame = function(frameId) {
-  var nextImageData;
-
   eventPublisher.publish("currentFrameId", frameId);
-
-  nextImageData = this.getCurrentFrame().imageData;
-  // 初めて作るFrame（nextImageDataがnull）の時は、
-  // 前のFrameの内容をそのままコピーするため、imageDataをpublishする必要はない。
-  if (nextImageData !== null) {
-    eventPublisher.publish("imageData", nextImageData);
-  }
 };
 
 FramesController.prototype.getFrameById = function(frameId) {
