@@ -2,6 +2,8 @@ import eventPublisher from "./publisher";
 
 // HTMLCanvasElementをラップし, canvasRenderingContext2Dに関する操作を提供する
 function PaintManager(element) {
+  let changeDrawState;
+
   this.element = element;
   this.element.width = window.innerWidth;
   this.element.height = window.innerHeight;
@@ -13,7 +15,14 @@ function PaintManager(element) {
     event => { this.mouseMoveCanvas(event); });
 
   this.context = this.element.getContext("2d");
+  this.drawState = "idling";
+  // TODO: PaintManagerにうつす
+  changeDrawState = (drawState) => {
+    this.drawState = drawState;
+  };
+  eventPublisher.subscribe("drawState", changeDrawState);
 
+  // drawingConfiguration から、コピーしておく。
   this.color = "";
   eventPublisher.subscribe("color", (color) => {
     this.color = color;
