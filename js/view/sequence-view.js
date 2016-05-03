@@ -13,13 +13,13 @@ function SequencePanel(elem) {
     for (this.maxFrameId = 0; this.maxFrameId < frames.length; this.maxFrameId++) {
       this.append(this.maxFrameId);
     }
+    this.maxFrameId--; // 1つ多くなってしまうから
     this.setCurrentFrame(this.currentFrameId);
   });
   document.getElementById("sequence-add-btn").addEventListener("click", () => {
-    this.append(this.maxFrameId);
     // eventPublisher 本来の使い方なのかわからない。
     // 本当は、このクラスでframesControllerのインスタンスを持っておくのがいいのかもしれない。
-    eventPublisher.publish("appendFrame", this.maxFrameId++);
+    eventPublisher.publish("appendFrame", ++this.maxFrameId);
   });
 }
 
@@ -37,17 +37,19 @@ function SequencePanel(elem) {
   </div>
 </div>
 */
-function getFrameTemplate(frameId) {
+function getFrameTemplate(frameId, mousedownFrameCallback, mousedownRemoveCallback) {
   let frame = document.createElement("div");
   let frameDeleteBtn = document.createElement("button");
   let frameUpBtn = document.createElement("button");
   let frameDownBtn = document.createElement("button");
   frame.dataset.frameIndex = frameId;
   frame.classList.add("thumbnail");
+  frame.addEventListener("mousedown", mousedownFrameCallback);
   frameDeleteBtn.classList.add("frame-delete");
   frameUpBtn.classList.add("frame-up");
   frameDownBtn.classList.add("frame-down");
   frameDeleteBtn.innerHTML = "<i class=\"fa fa-times\"></i>";
+  frameDeleteBtn.addEventListener("mousedown", mousedownRemoveCallback);
   frameUpBtn.innerHTML = "<i class=\"fa fa-sort-asc\"></i>";
   frameDownBtn.innerHTML = "<i class=\"fa fa-sort-desc\"></i>";
   frame.appendChild(frameDeleteBtn);
@@ -58,16 +60,16 @@ function getFrameTemplate(frameId) {
 }
 
 SequencePanel.prototype.append = function(frameId) {
-  let newFrame = getFrameTemplate(frameId);
-  this.elem.appendChild(newFrame);
-  
-  newFrame.addEventListener("mousedown", (event) => {
+  let newFrame = getFrameTemplate(frameId, (event) => {
     // 子要素のmousedownによる発生を防ぐ
     if (event.target.classList.contains("thumbnail")) {
       eventPublisher.publish("currentFrameId", frameId);
       this.setCurrentFrame(newFrame);
     }
+  }, (event) => {
+    eventPublisher.publish("removeFrame", frameId);
   });
+  this.elem.appendChild(newFrame);
 };
 
 SequencePanel.prototype.clear = function() {

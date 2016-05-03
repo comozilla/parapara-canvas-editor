@@ -21,8 +21,10 @@ function CanvasModel(element) {
   // imageDataはcurrentFrameの変更時にしかupdateしないためである。
   eventPublisher.subscribe("imageData", (imageData) => {
     this.context.clearRect(0, 0,
-      this.element.width, this.element.height); // クリアする必要があるのか
-    this.context.putImageData(imageData, 0, 0);
+      this.element.width, this.element.height);
+    if (imageData !== null) {
+      this.context.putImageData(imageData, 0, 0);
+    }
   });
 }
 

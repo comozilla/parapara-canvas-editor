@@ -10,11 +10,7 @@ function FramesController() {
     this.currentFrameId = frameId;
     
     nextImageData = this.getCurrentFrame().imageData;
-    // 初めて作るFrame（nextImageDataがnull）の時は、
-    // 前のFrameの内容をそのままコピーするため、imageDataをpublishする必要はない。
-    if (nextImageData !== null) {
-      eventPublisher.publish("imageData", nextImageData);
-    }
+    eventPublisher.publish("imageData", nextImageData);
   });
 
   eventPublisher.subscribe("imageData", (imageData) => {
@@ -23,7 +19,10 @@ function FramesController() {
   });
 
   eventPublisher.subscribe("appendFrame", (nextFrameId) => {
-    this.append(nextFrameId - 1);
+    this.append(nextFrameId);
+  });
+  eventPublisher.subscribe("removeFrame", (frameId) => {
+    this.remove(frameId);
   });
 }
 
@@ -35,8 +34,14 @@ FramesController.prototype.append = function(id) {
   eventPublisher.publish("frames", this.frames);
 };
 
-FramesController.prototype.remove = function() {
-
+FramesController.prototype.remove = function(id) {
+  let nextCurrentFrameId = this.currentFrameId;
+  if (this.currentFrameId > id) {
+    nextCurrentFrameId--;
+  }
+  eventPublisher.publish("currentFrameId", nextCurrentFrameId);
+  this.frames.splice(id, 1);
+  eventPublisher.publish("frames", this.frames);
 };
 
 FramesController.prototype.setCurrentFrame = function(frameId) {
