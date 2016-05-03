@@ -1,6 +1,7 @@
-const eventPublisher = require("./../publisher");
+import eventPublisher from "./../publisher";
 
 function SequencePanel(elem) {
+  console.log(eventPublisher);
   this.elem = elem;
   this.maxFrameId = 0;
   this.currentFrameId = 0;

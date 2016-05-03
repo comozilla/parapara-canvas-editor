@@ -1,6 +1,5 @@
 import FramesController from "./frames-controller";
 import DrawingConfiguration from "./drawing-configuration";
-import CanvasModel from "./canvas-model";
 import ViewManager from "./view-manager";
 import PaintManager from "./paint-manager";
 
@@ -11,7 +10,6 @@ import "web-animations-js";
 
 let framesController;
 let drawingConfiguration;
-let canvasModel;
 let viewManager;
 let paintManager;
 
@@ -22,12 +20,11 @@ document.addEventListener("DOMContentLoaded", function() {
   drawingConfiguration = new DrawingConfiguration();
   viewManager = new ViewManager();
 
-  canvasModel = new CanvasModel(canvas);
   paintManager = new PaintManager(canvas);
 
   drawingConfiguration.setDefaultValues();
 
-  framesController = new FramesController();
+  framesController = new FramesController(canvas);
   framesController.append(firstFrameId);
   framesController.setCurrentFrame(firstFrameId);
 });
