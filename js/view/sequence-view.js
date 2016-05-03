@@ -61,7 +61,7 @@ SequencePanel.prototype.append = function(frameId) {
   let newFrame = getFrameTemplate(frameId);
   this.elem.appendChild(newFrame);
   
-  newFrame.addEventListener("click", () => {
+  newFrame.addEventListener("mousedown", () => {
     eventPublisher.publish("currentFrameId", frameId);
     this.setCurrentFrame(newFrame);
   });

@@ -11,20 +11,20 @@ function DrawingConfiguration() {
 // publishをしたいため。
 DrawingConfiguration.prototype.setDefaultValues = function() {
   this.defaultPalleteColors = [];
-  eventPublisher.subscribe("defaultPalleteColors", (defaultPalleteColors) => {
+  eventPublisher.subscribe("defaultPalleteColors:after", (defaultPalleteColors) => {
     this.defaultPalleteColors = defaultPalleteColors;
   });
   eventPublisher.publish("defaultPalleteColors", ["red", "orange", "yellow",
     "lightgreen", "green", "skyblue", "blue", "purple", "black", "white"]);
 
   this.color = "";
-  eventPublisher.subscribe("color", (color) => {
+  eventPublisher.subscribe("color:after", (color) => {
     this.color = color;
   });
   eventPublisher.publish("color", "red");
 
   this.lineWidth = 0;
-  eventPublisher.subscribe("lineWidth", (lineWidth) => {
+  eventPublisher.subscribe("lineWidth:after", (lineWidth) => {
     this.lineWidth = lineWidth;
   });
   eventPublisher.publish("lineWidth", 10);
