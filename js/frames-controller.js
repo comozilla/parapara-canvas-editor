@@ -4,7 +4,7 @@ const eventPublisher = require("./publisher");
 function FramesController() {
   this.frames = [];
   this.currentFrameId = 0;
-  var changeCurrentFrameIdAfter = (frameId) => {
+  var updateImageDataToNextData = (frameId) => {
     let nextImageData;
 
     this.currentFrameId = frameId;
@@ -12,7 +12,7 @@ function FramesController() {
     nextImageData = this.getCurrentFrame().imageData;
     eventPublisher.publish("imageData", nextImageData);
   };
-  eventPublisher.subscribe("currentFrameId:after", changeCurrentFrameIdAfter);
+  eventPublisher.subscribe("currentFrameId:after", updateImageDataToNextData);
 
   var changeImageData = (imageData) => {
     // この時の currentFrame は、変更される前を示す。

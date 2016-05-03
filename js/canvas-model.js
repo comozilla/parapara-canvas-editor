@@ -12,24 +12,25 @@ function CanvasModel(element) {
   };
   eventPublisher.subscribe("drawState", changeDrawState);
 
-  var changeCurrentFrameId = (nextCurrentFrame) => {
+  var updateImageData = (nextCurrentFrame) => {
     eventPublisher.publish("imageData", this.getImageData());
   };
-  eventPublisher.subscribe("currentFrameId", changeCurrentFrameId);
+  eventPublisher.subscribe("currentFrameId", updateImageData);
 
   // この imageDataというものだが、
   // Modelのように見せているが、実際は存在せず、
   // Viewを変換したものである。
   // このようにするのは、
   // imageDataはcurrentFrameの変更時にしかupdateしないためである。
-  var changeImageData = (imageData) => {
+  var changeCanvasByImageData = (imageData) => {
     this.context.clearRect(0, 0,
       this.element.width, this.element.height);
     if (imageData !== null) {
       this.context.putImageData(imageData, 0, 0);
     }
   };
-  eventPublisher.subscribe("imageData", changeImageData);
+  eventPublisher.subscribe("imageData", changeCanvasByImageData);
+  
 }
 
 // 外からはアクセスしないでください。
