@@ -128,7 +128,7 @@ html, body {
   position: relative;
 }
 #menu-thumbnails .thumbnail-selected {
-  border-color: #00F;
+  border-color: cyan;
 }
 #menu-thumbnails .frame-add {
   width: 100%;
@@ -142,25 +142,34 @@ html, body {
   text-align: center;
 }
 #menu-thumbnails .frame-delete {
-  width: 30px;
-  height: 30px;
   position: absolute;
   right: 0px;
   background-color: transparent;
   font-size: 2rem;
   color: #00F;
+  cursor: pointer;
+  border: none;
+  padding: 0 5px 0 0;
 }
 #menu-thumbnails .frame-up {
   position: absolute;
   left: 10px;
   top: 0px;
   font-size: 2rem;
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  cursor: pointer;
 }
 #menu-thumbnails .frame-down {
   position: absolute;
   left: 10px;
   bottom: 0;
   font-size: 2rem;
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  cursor: pointer;
 }
 
 #btn-play {

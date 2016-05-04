@@ -11,12 +11,20 @@ Publisher.prototype.subscribe = function(type, observer) {
 };
 
 Publisher.prototype.publish = function(type, nextData) {
+  if (type.indexOf(":") !== -1) {
+    throw new Error("publishのtypeに「:」を含むことはできません。");
+  }
   if (typeof this.observers[type] === "undefined") {
     this.observers[type] = [];
   }
   this.observers[type].forEach(observer => {
     observer(nextData);
   });
+  if (typeof this.observers[type + ":after"] !== "undefined") {
+    this.observers[type + ":after"].forEach(observer => {
+      observer(nextData);
+    });
+  }
 };
 
 export default new Publisher();
