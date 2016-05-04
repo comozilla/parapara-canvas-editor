@@ -25,7 +25,7 @@ function MenuView() {
       if (this.isCollapsibleButtonPauseMode) {
         eventPublisher.publish("isPlaying", false);
       } else {
-      this.toggleMenu(this.isOpen);
+        this.toggleMenu(this.isOpen);
         this.isOpen = !this.isOpen;
         this.toggleMenu(this.isOpen);
       }
@@ -57,5 +57,5 @@ MenuView.prototype.updateCollapsibleButtonMode = function() {
   } else {
     collapsibleButton.innerHTML = "<i class=\"fa fa-cog\"></i>";
   }
-}
+};
 export default MenuView;
