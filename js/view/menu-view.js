@@ -2,6 +2,8 @@ import eventPublisher from "./../publisher";
 
 function MenuView() {
   this.isOpen = false;
+  this.isCollapsibleButtonPauseMode = false;
+  this.updateCollapsibleButtonMode();
   eventPublisher.subscribe("drawState", (newState) => {
     this.setCollapsibleButtonVisible(newState === "idling");
     if (this.isOpen) {
@@ -11,14 +13,22 @@ function MenuView() {
   });
 
   eventPublisher.subscribe("isPlaying", (isPlaying) => {
+    this.isCollapsibleButtonPauseMode = isPlaying;
+    this.updateCollapsibleButtonMode();
     if (isPlaying) {
+      this.isOpen = false;
       this.toggleMenu(false);
     }
   });
   document.getElementById("menu-collapsible-btn")
     .addEventListener("click", () => {
-      this.isOpen = !this.isOpen;
+      if (this.isCollapsibleButtonPauseMode) {
+        eventPublisher.publish("isPlaying", false);
+      } else {
       this.toggleMenu(this.isOpen);
+        this.isOpen = !this.isOpen;
+        this.toggleMenu(this.isOpen);
+      }
     });
 }
 
@@ -39,4 +49,13 @@ MenuView.prototype.setCollapsibleButtonVisible = function(visible) {
     [{ transform: "translate(-30px)" }, { transform: "translate(0px)" }],
     { direction: direction, duration: 100, fill: "both" });
 };
+
+MenuView.prototype.updateCollapsibleButtonMode = function() {
+  const collapsibleButton = document.getElementById("menu-collapsible-btn");
+  if (this.isCollapsibleButtonPauseMode) {
+    collapsibleButton.innerHTML = "<i class=\"fa fa-pause\"></i>";
+  } else {
+    collapsibleButton.innerHTML = "<i class=\"fa fa-cog\"></i>";
+  }
+}
 export default MenuView;

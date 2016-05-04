@@ -12,9 +12,14 @@ function Player(framesController) {
   this.isPlaying = false;
   this.playInterval = playInterval;
   this.framesController = framesController;
+  this.changeFrameId = -1;
   eventPublisher.subscribe("isPlaying", (isPlaying) => {
     this.isPlaying = isPlaying;
-    this.changeFrame(0);
+    if (this.isPlaying) {
+      this.changeFrame(0);
+    } else {
+      clearTimeout(this.changeFrameId);
+    }
   });
 }
 
@@ -26,7 +31,7 @@ Player.prototype.changeFrame = function(currentFrameId) {
   } else {
     nextCurrentFrameId = currentFrameId + 1;
   }
-  setTimeout(() => {
+  this.changeFrameId = setTimeout(() => {
     this.changeFrame(nextCurrentFrameId);
   }, this.playInterval);
 };
