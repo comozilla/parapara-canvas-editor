@@ -16,7 +16,8 @@ function PaintManager(element) {
 
   this.context = this.element.getContext("2d");
   this.drawState = "idling";
-  // TODO: PaintManagerにうつす
+  this.isLock = false;
+
   changeDrawState = (drawState) => {
     this.drawState = drawState;
   };
@@ -32,36 +33,46 @@ function PaintManager(element) {
   eventPublisher.subscribe("lineWidth", (lineWidth) => {
     this.lineWidth = lineWidth;
   });
+
+  eventPublisher.subscribe("isPlaying", (isPlaying) => {
+    this.isLock = isPlaying;
+  });
 }
 
 let isMouseDown = false;
 let previousMousePosition;
 PaintManager.prototype.mouseDownCanvas = function(event) {
-  isMouseDown = true;
-  previousMousePosition = { x: event.clientX, y: event.clientY };
-  eventPublisher.publish("drawState", "drawing");
+  if (!this.isLock) {
+    isMouseDown = true;
+    previousMousePosition = { x: event.clientX, y: event.clientY };
+    eventPublisher.publish("drawState", "drawing");
+  }
 };
 PaintManager.prototype.mouseUpCanvas = function() {
-  isMouseDown = false;
-  eventPublisher.publish("drawState", "idling");
+  if (!this.isLock) {
+    isMouseDown = false;
+    eventPublisher.publish("drawState", "idling");
+  }
 };
 PaintManager.prototype.mouseMoveCanvas = function(event) {
-  if (isMouseDown) {
-    if (this.color === "white") {
-      this.eraseByLine(
-        previousMousePosition,
-        { x: event.clientX, y: event.clientY },
-        this.lineWidth
-      );
-    } else {
-      this.drawLine(
-        previousMousePosition,
-        { x: event.clientX, y: event.clientY },
-        this.color,
-        this.lineWidth
-      );
+  if (!this.isLock) {
+    if (isMouseDown) {
+      if (this.color === "white") {
+        this.eraseByLine(
+            previousMousePosition,
+            { x: event.clientX, y: event.clientY },
+            this.lineWidth
+            );
+      } else {
+        this.drawLine(
+            previousMousePosition,
+            { x: event.clientX, y: event.clientY },
+            this.color,
+            this.lineWidth
+            );
+      }
+      previousMousePosition = { x: event.clientX, y: event.clientY };
     }
-    previousMousePosition = { x: event.clientX, y: event.clientY };
   }
 };
 

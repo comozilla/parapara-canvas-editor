@@ -10,6 +10,11 @@ function MenuView() {
     }
   });
 
+  eventPublisher.subscribe("isPlaying", (isPlaying) => {
+    if (isPlaying) {
+      this.toggleMenu(false);
+    }
+  });
   document.getElementById("menu-collapsible-btn")
     .addEventListener("click", () => {
       this.isOpen = !this.isOpen;
