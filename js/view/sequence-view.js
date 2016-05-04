@@ -70,7 +70,10 @@ SequencePanel.prototype.append = function(frameId) {
       this.setCurrentFrame(newFrame);
     }
   }, () => {
-    this.framesController.remove(frameId);
+    // フレーム数が１つの時は、エラーになるため削除しない。
+    if (this.maxFrameId > 0) {
+      this.framesController.remove(frameId);
+    }
   });
   this.elem.appendChild(newFrame);
 };
@@ -80,7 +83,6 @@ SequencePanel.prototype.clear = function() {
 };
 
 SequencePanel.prototype.remove = function(frame) {
-  this.elem.removeChild(frame);
 };
 
 SequencePanel.prototype.moveUp = function() {

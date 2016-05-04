@@ -29,6 +29,9 @@ FramesController.prototype.append = function(id) {
 };
 
 FramesController.prototype.remove = function(id) {
+  if (this.frames.length <= 1) {
+    throw new Error("残りフレーム数が1なので、削除することができません。");
+  }
   let nextCurrentFrameId = this.currentFrameId;
   if (this.currentFrameId >= this.frames.length - 1) {
     nextCurrentFrameId--;
