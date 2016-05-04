@@ -6,19 +6,16 @@ html, body {
 }
 #menu {
   position: fixed;
-  left: -20%;
+  left: 0px;
   top: 0px;
   width: 20%;
   height: 100%;
-  transition: left 0.25s ease-in-out 0s;
+  transform: translate(-20vw);
   background-color: rgba(255, 255, 0, 0.5);
   padding: 5px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-}
-#menu.menu-open {
-  left: 0px;
 }
 #menu-colors {
   display: flex;
@@ -54,7 +51,7 @@ html, body {
 		-1px 1px white,
 		1px 1px white;
 }
-#menu-side-btn {
+#menu-collapsible-btn {
   position: absolute;
   left: 100%;
   top: 40%;

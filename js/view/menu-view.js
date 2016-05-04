@@ -1,32 +1,36 @@
 import eventPublisher from "./../publisher";
 
 function MenuView() {
+  this.isOpen = false;
   eventPublisher.subscribe("drawState", (newState) => {
-    this.toggleOpenMenuButton(newState === "idling");
-    this.hideMenu();
+    this.setCollapsibleButtonVisible(newState === "idling");
+    if (this.isOpen) {
+      this.isOpen = false;
+      this.toggleMenu(false);
+    }
   });
 
-  document.getElementById("menu-side-btn")
+  document.getElementById("menu-collapsible-btn")
     .addEventListener("click", () => {
-      this.toggleMenu();
+      this.isOpen = !this.isOpen;
+      this.toggleMenu(this.isOpen);
     });
 }
 
-MenuView.prototype.toggleMenu = function() {
-  document.getElementById("menu").classList.toggle("menu-open");
+MenuView.prototype.toggleMenu = function(isOpen) {
+  const menu = document.getElementById("menu");
+  const direction = isOpen ? "alternate" : "alternate-reverse";
+  menu.animate(
+      [{ transform: "translate(-20vw)" }, { transform: "translate(0px)" }],
+      { direction: direction, duration: 250, fill: "both", easing: "ease-in-out"
+    });
 };
 
-MenuView.prototype.openMenu = function() {
-  document.getElementById("menu").classList.add("menu-open");
-};
-
-MenuView.prototype.hideMenu = function() {
-  document.getElementById("menu").classList.remove("menu-open");
-};
-MenuView.prototype.toggleOpenMenuButton = function(isVisible) {
-  const sidebtn = document.getElementById("menu-side-btn");
-  const direction = isVisible ? "alternate" : "alternate-reverse";
-  sidebtn.animate(
+// collapsibleButton : メニューの右側にあるボタン
+MenuView.prototype.setCollapsibleButtonVisible = function(visible) {
+  const collapsibleButton = document.getElementById("menu-collapsible-btn");
+  const direction = visible ? "alternate" : "alternate-reverse";
+  collapsibleButton.animate(
     [{ transform: "translate(-30px)" }, { transform: "translate(0px)" }],
     { direction: direction, duration: 100, fill: "both" });
 };
