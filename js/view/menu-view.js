@@ -3,7 +3,7 @@ import eventPublisher from "./../publisher";
 function MenuView() {
   this.isOpen = false;
   eventPublisher.subscribe("drawState", (newState) => {
-    this.toggleCollapsibleButton(newState === "idling");
+    this.setCollapsibleButtonVisible(newState === "idling");
     if (this.isOpen) {
       this.isOpen = false;
       this.toggleMenu(false);
@@ -27,9 +27,9 @@ MenuView.prototype.toggleMenu = function(isOpen) {
 };
 
 // collapsibleButton : メニューの右側にあるボタン
-MenuView.prototype.toggleCollapsibleButton = function(isVisible) {
+MenuView.prototype.setCollapsibleButtonVisible = function(visible) {
   const collapsibleButton = document.getElementById("menu-collapsible-btn");
-  const direction = isVisible ? "alternate" : "alternate-reverse";
+  const direction = visible ? "alternate" : "alternate-reverse";
   collapsibleButton.animate(
     [{ transform: "translate(-30px)" }, { transform: "translate(0px)" }],
     { direction: direction, duration: 100, fill: "both" });
