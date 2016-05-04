@@ -51,7 +51,7 @@ html, body {
 		-1px 1px white,
 		1px 1px white;
 }
-#menu-side-btn {
+#menu-collapsible-btn {
   position: absolute;
   left: 100%;
   top: 40%;
