@@ -17,9 +17,9 @@ MenuView.prototype.toggleMenu = function() {
   this.isOpenMenu = !this.isOpenMenu;
   const menu = document.getElementById("menu");
   const direction = this.isOpenMenu ? "alternate" : "alternate-reverse";
-  menu.animate([{ transform: "translate(-20vw)" }, { transform: "translate(0px)" }], {
-    direction: direction, duration: 250, fill: "both", easing: "ease-in-out"
-  });
+  menu.animate([
+    { transform: "translate(-20vw)" }, { transform: "translate(0px)" }], {
+      direction: direction, duration: 250, fill: "both", easing: "ease-in-out" });
 };
 
 MenuView.prototype.toggleOpenMenuButton = function(isVisible) {
