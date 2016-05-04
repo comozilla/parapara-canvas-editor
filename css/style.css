@@ -17,9 +17,6 @@ html, body {
   display: flex;
   flex-direction: column;
 }
-#menu.menu-open {
-  left: 0px;
-}
 #menu-colors {
   display: flex;
   padding: 0;

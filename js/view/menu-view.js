@@ -1,6 +1,7 @@
 import eventPublisher from "./../publisher";
 
 function MenuView() {
+  this.isOpenMenu = false;
   eventPublisher.subscribe("drawState", (newState) => {
     this.toggleOpenMenuButton(newState === "idling");
     this.hideMenu();
@@ -13,16 +14,14 @@ function MenuView() {
 }
 
 MenuView.prototype.toggleMenu = function() {
-  document.getElementById("menu").classList.toggle("menu-open");
+  this.isOpenMenu = !this.isOpenMenu;
+  const menu = document.getElementById("menu");
+  const direction = this.isOpenMenu ? "alternate" : "alternate-reverse";
+  menu.animate([{ left: "-20%" }, { left: "0px" }], {
+    direction: direction, duration: 250, fill: "both", easing: "ease-in-out"
+  });
 };
 
-MenuView.prototype.openMenu = function() {
-  document.getElementById("menu").classList.add("menu-open");
-};
-
-MenuView.prototype.hideMenu = function() {
-  document.getElementById("menu").classList.remove("menu-open");
-};
 MenuView.prototype.toggleOpenMenuButton = function(isVisible) {
   const sidebtn = document.getElementById("menu-side-btn");
   const direction = isVisible ? "alternate" : "alternate-reverse";
