@@ -2,6 +2,7 @@ import ColorPickerView from "./view/color-picker-view";
 import LineWidthPickerView from "./view/line-width-picker-view";
 import MenuView from "./view/menu-view";
 import SequenceView from "./view/sequence-view";
+import PlayerView from "./view/player-view";
 import eventPublisher from "./publisher";
 
 function ViewManager(framesController) {
@@ -20,6 +21,7 @@ function ViewManager(framesController) {
   this.sequenceEditor =
     new SequenceView(document.getElementById("thumbnails"), framesController);
 
+  this.player = new PlayerView(document.getElementById("btn-play"));
   this.menu = new MenuView();
 }
 
