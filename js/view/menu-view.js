@@ -7,16 +7,14 @@ function MenuView() {
   eventPublisher.subscribe("drawState", (newState) => {
     this.setCollapsibleButtonVisible(newState === "idling");
     if (this.isOpen) {
-      this.isOpen = false;
-      this.toggleMenu(false);
+      this.setMenuVisible(false);
     }
   });
 
   eventPublisher.subscribe("isPlaying", (isPlaying) => {
     this.setCollapsibleButtonMode(isPlaying);
     if (isPlaying) {
-      this.isOpen = false;
-      this.toggleMenu(false);
+      this.setMenuVisible(false);
     }
   });
   document.getElementById("menu-collapsible-btn")
@@ -24,15 +22,15 @@ function MenuView() {
       if (this.isPlaying) {
         eventPublisher.publish("isPlaying", false);
       } else {
-        this.isOpen = !this.isOpen;
-        this.toggleMenu(this.isOpen);
+        this.setMenuVisible(!this.isOpen);
       }
     });
 }
 
-MenuView.prototype.toggleMenu = function(isOpen) {
+MenuView.prototype.setMenuVisible = function(isOpen) {
   const menu = document.getElementById("menu");
   const direction = isOpen ? "alternate" : "alternate-reverse";
+  this.isOpen = isOpen;
   menu.animate(
       [{ transform: "translate(-20vw)" }, { transform: "translate(0px)" }],
       { direction: direction, duration: 250, fill: "both", easing: "ease-in-out"
