@@ -144,7 +144,7 @@ html, body {
   cursor: pointer;
 }
 
-#btn-play {
+#play-btn {
   margin: 10px auto;
   display: block;
   width: 10vh;

@@ -21,7 +21,7 @@ function ViewManager(framesController) {
   this.sequenceEditor =
     new SequenceView(document.getElementById("thumbnails"), framesController);
 
-  this.player = new PlayerView(document.getElementById("btn-play"));
+  this.player = new PlayerView(document.getElementById("play-btn"));
   this.menu = new MenuView();
 }
 
