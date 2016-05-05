@@ -47,12 +47,14 @@ MenuView.prototype.setCollapsibleButtonVisible = function(visible) {
 };
 
 MenuView.prototype.setCollapsibleButtonMode = function(isPlaying) {
-  this.isPlaying = isPlaying
-  const collapsibleButton = document.getElementById("menu-collapsible-btn");
+  this.isPlaying = isPlaying;
+  const icon = document.querySelector("#menu-collapsible-btn i");
   if (isPlaying) {
-    collapsibleButton.innerHTML = "<i class=\"fa fa-pause\"></i>";
+    icon.classList.add("fa-pause");
+    icon.classList.remove("fa-cog");
   } else {
-    collapsibleButton.innerHTML = "<i class=\"fa fa-cog\"></i>";
+    icon.classList.add("fa-cog");
+    icon.classList.remove("fa-pause");
   }
 };
 export default MenuView;
