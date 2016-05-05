@@ -1,17 +1,23 @@
 import Frame from "./frame";
 import eventPublisher from "./publisher";
+import CanvasModel from "./canvas-model";
+
 // frame の追加・削除、currentFrameの切り替えをModel上で行う
-function FramesController() {
+function FramesController(canvas) {
+  let updateImageDataToNextData;
   this.frames = [];
   this.currentFrameId = 0;
-  eventPublisher.subscribe("currentFrameId", (frameId) => {
+  this.canvasModel = new CanvasModel(canvas);
+  updateImageDataToNextData = (frameId) => {
+    let beforeFrame = this.getCurrentFrame();
+    // beforeFrameは削除されている可能性がある
+    if (typeof beforeFrame !== "undefined") {
+      beforeFrame.imageData = this.canvasModel.getImageData();
+    }
     this.currentFrameId = frameId;
-  });
-
-  eventPublisher.subscribe("imageData", (imageData) => {
-    // この時の currentFrame は、変更される前を示す。
-    this.getCurrentFrame().imageData = imageData;
-  });
+    this.canvasModel.setImageData(this.getCurrentFrame().imageData);
+  };
+  eventPublisher.subscribe("currentFrameId", updateImageDataToNextData);
 }
 
 // パラメータ id : どこの後ろに追加するのか（今は実装していない）
@@ -19,23 +25,26 @@ FramesController.prototype.append = function(id) {
   const frame = new Frame();
   // 今はいいが、あとで splice に変える
   this.frames.push(frame);
+  eventPublisher.publish("frames", this.frames);
 };
 
-FramesController.prototype.remove = function() {
-
+FramesController.prototype.remove = function(id) {
+  if (this.frames.length <= 1) {
+    throw new Error("残りフレーム数が1なので、削除することができません。");
+  }
+  let nextCurrentFrameId = this.currentFrameId;
+  if (this.currentFrameId >= this.frames.length - 1) {
+    nextCurrentFrameId--;
+  }
+  this.frames.splice(id, 1);
+  this.canvasModel.setImageData(
+    this.getFrameById(nextCurrentFrameId).imageData);
+  eventPublisher.publish("frames", this.frames);
+  eventPublisher.publish("currentFrameId", nextCurrentFrameId);
 };
 
 FramesController.prototype.setCurrentFrame = function(frameId) {
-  var nextImageData;
-
   eventPublisher.publish("currentFrameId", frameId);
-
-  nextImageData = this.getCurrentFrame().imageData;
-  // 初めて作るFrame（nextImageDataがnull）の時は、
-  // 前のFrameの内容をそのままコピーするため、imageDataをpublishする必要はない。
-  if (nextImageData !== null) {
-    eventPublisher.publish("imageData", nextImageData);
-  }
 };
 
 FramesController.prototype.getFrameById = function(frameId) {

@@ -1,8 +1,8 @@
 import FramesController from "./frames-controller";
 import DrawingConfiguration from "./drawing-configuration";
-import CanvasModel from "./canvas-model";
 import ViewManager from "./view-manager";
 import PaintManager from "./paint-manager";
+import Player from "./player";
 
 // webpack
 import "./../css/style.css";
@@ -11,26 +11,25 @@ import "web-animations-js";
 
 let framesController;
 let drawingConfiguration;
-let canvasModel;
 let viewManager;
 let paintManager;
+let player;
 
 document.addEventListener("DOMContentLoaded", function() {
   const firstFrameId = 0;
   const canvas = document.getElementById("canvas");
+  framesController = new FramesController(canvas);
 
   drawingConfiguration = new DrawingConfiguration();
+  viewManager = new ViewManager(framesController);
 
-  framesController = new FramesController();
-  framesController.append(firstFrameId);
-
-  canvasModel = new CanvasModel(canvas);
   paintManager = new PaintManager(canvas);
 
-  viewManager = new ViewManager();
+  player = new Player(framesController);
 
   drawingConfiguration.setDefaultValues();
 
+  framesController.append(firstFrameId);
   framesController.setCurrentFrame(firstFrameId);
 });
 
