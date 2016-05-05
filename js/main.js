@@ -2,6 +2,7 @@ import FramesController from "./frames-controller";
 import DrawingConfiguration from "./drawing-configuration";
 import ViewManager from "./view-manager";
 import PaintManager from "./paint-manager";
+import Player from "./player";
 
 // webpack
 import "./../css/style.css";
@@ -12,6 +13,7 @@ let framesController;
 let drawingConfiguration;
 let viewManager;
 let paintManager;
+let player;
 
 document.addEventListener("DOMContentLoaded", function() {
   const firstFrameId = 0;
@@ -22,6 +24,8 @@ document.addEventListener("DOMContentLoaded", function() {
   viewManager = new ViewManager(framesController);
 
   paintManager = new PaintManager(canvas);
+
+  player = new Player(framesController);
 
   drawingConfiguration.setDefaultValues();
 
