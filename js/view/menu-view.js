@@ -2,8 +2,8 @@ import eventPublisher from "./../publisher";
 
 function MenuView() {
   this.isOpen = false;
-  this.isCollapsibleButtonPauseMode = false;
-  this.updateCollapsibleButtonMode();
+  this.isPlaying = false;
+  this.setCollapsibleButtonMode(false);
   eventPublisher.subscribe("drawState", (newState) => {
     this.setCollapsibleButtonVisible(newState === "idling");
     if (this.isOpen) {
@@ -13,8 +13,7 @@ function MenuView() {
   });
 
   eventPublisher.subscribe("isPlaying", (isPlaying) => {
-    this.isCollapsibleButtonPauseMode = isPlaying;
-    this.updateCollapsibleButtonMode();
+    this.setCollapsibleButtonMode(isPlaying);
     if (isPlaying) {
       this.isOpen = false;
       this.toggleMenu(false);
@@ -22,10 +21,9 @@ function MenuView() {
   });
   document.getElementById("menu-collapsible-btn")
     .addEventListener("click", () => {
-      if (this.isCollapsibleButtonPauseMode) {
+      if (this.isPlaying) {
         eventPublisher.publish("isPlaying", false);
       } else {
-        this.toggleMenu(this.isOpen);
         this.isOpen = !this.isOpen;
         this.toggleMenu(this.isOpen);
       }
@@ -50,9 +48,10 @@ MenuView.prototype.setCollapsibleButtonVisible = function(visible) {
     { direction: direction, duration: 100, fill: "both" });
 };
 
-MenuView.prototype.updateCollapsibleButtonMode = function() {
+MenuView.prototype.setCollapsibleButtonMode = function(isPlaying) {
+  this.isPlaying = isPlaying
   const collapsibleButton = document.getElementById("menu-collapsible-btn");
-  if (this.isCollapsibleButtonPauseMode) {
+  if (isPlaying) {
     collapsibleButton.innerHTML = "<i class=\"fa fa-pause\"></i>";
   } else {
     collapsibleButton.innerHTML = "<i class=\"fa fa-cog\"></i>";
