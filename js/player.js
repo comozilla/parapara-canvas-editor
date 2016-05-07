@@ -8,8 +8,9 @@ const playInterval = 250;
  * 再生された時に、Frameを切り替える処理もここで行う。
  * 再生された時に他に必要な処理（Menuを隠すなど）は、各自クラスでsubscribeして行う。
  */
-function Player(framesController) {
-  this.isPlaying = false;
+class Player{
+  constructor(){
+    this.isPlaying = false;
   this.playInterval = playInterval;
   this.framesController = framesController;
   this.changeFrameId = -1;
@@ -21,9 +22,10 @@ function Player(framesController) {
       clearTimeout(this.changeFrameId);
     }
   });
-}
+  }
 
-Player.prototype.changeFrame = function(currentFrameId) {
+ 
+changeFrame() {
   let nextCurrentFrameId;
   this.framesController.setCurrentFrame(currentFrameId);
   if (currentFrameId >= this.framesController.frames.length - 1) {
@@ -34,6 +36,6 @@ Player.prototype.changeFrame = function(currentFrameId) {
   this.changeFrameId = setTimeout(() => {
     this.changeFrame(nextCurrentFrameId);
   }, this.playInterval);
-};
-
+}
+}
 export default Player;

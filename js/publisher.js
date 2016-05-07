@@ -1,16 +1,17 @@
 // Publisherは、データを保存せず、外部へ変更を知らせる機能に絞る。
-function Publisher() {
-  this.observers = {};
-}
+class Publisher{
+  constructor(){
+    this.observers = {};
+  }
 
-Publisher.prototype.subscribe = function(type, observer) {
-  if (typeof this.observers[type] === "undefined") {
+subscribe(){
+   if (typeof this.observers[type] === "undefined") {
     this.observers[type] = [];
   }
   this.observers[type].push(observer);
-};
+}
 
-Publisher.prototype.publish = function(type, nextData) {
+publish(){
   if (type.indexOf(":") !== -1) {
     throw new Error("publishのtypeに「:」を含むことはできません。");
   }
@@ -25,7 +26,8 @@ Publisher.prototype.publish = function(type, nextData) {
       observer(nextData);
     });
   }
-};
+}
+}
 
 export default new Publisher();
 
