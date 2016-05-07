@@ -18,6 +18,14 @@ function SequencePanel(elem, framesController) {
     this.maxFrameId--; // 1つ多くなってしまうから
     this.setCurrentFrame(this.currentFrameId);
   });
+  eventPublisher.subscribe("openMenu:after", () => {
+    var canvas = this.elem.querySelector(".thumbnail[data-frame-index=\"" + this.framesController.currentFrameId + "\"] canvas");
+    var imageData = this.framesController.canvasModel.getImageData();
+    canvas.width = imageData.width;
+    canvas.height = imageData.height;
+    var ctx = canvas.getContext("2d");
+    ctx.putImageData(imageData, 0, 0);
+  });
   document.getElementById("sequence-add-btn").addEventListener("click", () => {
     this.framesController.append(++this.maxFrameId);
   });
@@ -45,6 +53,7 @@ function getFrameTemplate(
   let frameDeleteBtn = document.createElement("button");
   let frameUpBtn = document.createElement("button");
   let frameDownBtn = document.createElement("button");
+  let previewCanvas = document.createElement("canvas");
   frame.dataset.frameIndex = frameId;
   frame.classList.add("thumbnail");
   frame.addEventListener("mousedown", mousedownFrameCallback);
@@ -58,7 +67,7 @@ function getFrameTemplate(
   frame.appendChild(frameDeleteBtn);
   frame.appendChild(frameUpBtn);
   frame.appendChild(frameDownBtn);
-
+  frame.appendChild(previewCanvas);
   return frame;
 }
 
