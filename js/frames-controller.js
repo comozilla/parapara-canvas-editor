@@ -44,7 +44,6 @@ FramesController.prototype.remove = function(id) {
 };
 
 FramesController.prototype.moveFrame = function(frameId, moveDirection) {
-  console.log(frameId);
   this.getCurrentFrame().imageData = this.canvasModel.getImageData();
   if (moveDirection === "up") {
     if (frameId <= 0) {
@@ -54,7 +53,8 @@ FramesController.prototype.moveFrame = function(frameId, moveDirection) {
     let frameTmp = this.frames[frameId - 1];
     this.frames[frameId - 1] = this.frames[frameId];
     this.frames[frameId] = frameTmp;
-    this.canvasModel.setImageData(this.frames[frameId].imageData);
+    // currentFrameの内容が変わった可能性があるため、再描画する
+    this.canvasModel.setImageData(this.frames[this.currentFrameId].imageData);
     eventPublisher.publish("frames", this.frames);
   } else if (moveDirection === "down") {
     // ここに下に移動する方法も書いて
