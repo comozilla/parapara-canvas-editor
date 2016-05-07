@@ -1,8 +1,8 @@
 import eventPublisher from "./../publisher";
 
-function ColorPickerView(elem) {
-  // このelem には、ul要素が入ってくる（はず）。
-  this.element = elem;
+class colorpickerview{
+  constructor(){
+    this.element = elem;
   eventPublisher.subscribe("color", (color) => {
     let selectedPalette = this.element.querySelector(".selected-palette");
     let nextPalette;
@@ -14,9 +14,9 @@ function ColorPickerView(elem) {
       nextPalette.classList.add("selected-palette");
     }
   });
-}
+  }
 
-ColorPickerView.prototype.addPalette = function(color) {
+addPalette(){
   let palette;
 
   if (!isColor(color)) {
@@ -31,17 +31,20 @@ ColorPickerView.prototype.addPalette = function(color) {
   palette.addEventListener("click", event => {
     eventPublisher.publish("color", event.target.style.backgroundColor);
   });
-};
-
-ColorPickerView.prototype.clearPalette = function() {
+}
+clearPalette(){
   this.element.innerHTML = "";
 };
+}
 
-function isColor(color) {
-  const testElement = document.createElement("span");
+class isColor{
+  constructor(){
+    const testElement = document.createElement("span");
   testElement.style.backgroundColor = color;
 
   return testElement.style.backgroundColor !== "";
-}
+  }
+  }
+
 
 export default ColorPickerView;
