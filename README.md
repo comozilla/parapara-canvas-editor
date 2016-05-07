@@ -1,5 +1,7 @@
 # parapara-projection-mapping
 
+![](https://docs.google.com/drawings/d/1keQDc-fo5cvi54i6KeqGTSZlK0K9XBf_Np-ftDaUIaA/pub?w=2532&amp;h=1407)
+
 ## 準備
 ### 必要なもの
 - node.js
