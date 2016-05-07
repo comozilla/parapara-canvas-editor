@@ -68,23 +68,25 @@ function getFrameTemplate(
 }
 
 SequencePanel.prototype.updateThumbnail = function(frameId) {
-  var canvas = this.elem.querySelector(".thumbnail[data-frame-index=\"" + frameId + "\"] canvas");
-  var imageData = this.framesController.frames[frameId].imageData;
+  let canvas = this.elem.querySelector(
+    ".thumbnail[data-frame-index=\"" + frameId + "\"] canvas");
+  let imageData = this.framesController.frames[frameId].imageData;
   if (this.framesController.currentFrameId === frameId) {
     imageData = this.framesController.canvasModel.getImageData();
   }
   if (imageData !== null) {
     canvas.width = imageData.width;
     canvas.height = imageData.height;
-    var ctx = canvas.getContext("2d");
-    ctx.putImageData(imageData, 0, 0);    
+    let ctx = canvas.getContext("2d");
+    ctx.putImageData(imageData, 0, 0);
   }
 };
 
 SequencePanel.prototype.append = function(frameId) {
   let newFrame = getFrameTemplate(frameId, (event) => {
     // 子要素のmousedownによる発生を防ぐ
-    if (event.target.nodeName === "CANVAS" || event.target.classList.contains("thumbnail")) {
+    if (event.target.nodeName === "CANVAS" ||
+      event.target.classList.contains("thumbnail")) {
       eventPublisher.publish("currentFrameId", frameId);
       this.setCurrentFrame(newFrame);
     }

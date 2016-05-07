@@ -20,7 +20,7 @@ function MenuView() {
   document.getElementById("menu-collapsible-btn")
     .addEventListener("click", () => {
       if (!this.isOpen) {
-        eventPublisher.publish("openMenu", false);  
+        eventPublisher.publish("openMenu", false);
       }
       if (this.isPlaying) {
         eventPublisher.publish("isPlaying", false);
