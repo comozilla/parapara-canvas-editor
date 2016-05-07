@@ -22,7 +22,7 @@ function FramesController(canvas) {
 
 // パラメータ id : どこの後ろに追加するのか（今は実装していない）
 FramesController.prototype.append = function(id) {
-  const frame = new Frame(id);
+  const frame = new Frame();
   // 今はいいが、あとで splice に変える
   this.frames.push(frame);
   eventPublisher.publish("frames", this.frames);
@@ -43,25 +43,23 @@ FramesController.prototype.remove = function(id) {
   eventPublisher.publish("currentFrameId", nextCurrentFrameId);
 };
 
-FramesController.prototype.moveFrame = function(frameId, buttonType) {
-  console.log(frameId);
-  if (buttonType === "up") {
-    eventPublisher.publish("currentFrameId", this.currentFrameId - 1);
-    console.log(this.frames);
-    var frameTmp = this.frames[frameId - 1];
+FramesController.prototype.moveFrame = function(frameId, moveDirection) {
+  this.getCurrentFrame().imageData = this.canvasModel.getImageData();
+  if (moveDirection === "up") {
+    if (frameId <= 0) {
+      // frameIdが0以下だった場合は、上と交換する事ができない
+      return;
+    }
+    let frameTmp = this.frames[frameId - 1];
     this.frames[frameId - 1] = this.frames[frameId];
     this.frames[frameId] = frameTmp;
-    console.log(this.frames);
+    // currentFrameの内容が変わった可能性があるため、再描画する
+    this.canvasModel.setImageData(this.frames[this.currentFrameId].imageData);
     eventPublisher.publish("frames", this.frames);
-    alert("hoge↑");
-  } else if (buttonType === "down") {
-    alert("hoge↓");
+  } else if (moveDirection === "down") {
+    // ここに下に移動する方法も書いて
   }
 };
-
-FramesController.prototype.saveFrame = function(frameId) {
-
-}
 
 FramesController.prototype.setCurrentFrame = function(frameId) {
   eventPublisher.publish("currentFrameId", frameId);
