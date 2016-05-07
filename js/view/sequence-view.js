@@ -40,7 +40,9 @@ function SequencePanel(elem, framesController) {
 function getFrameTemplate(
     frameId,
     mousedownFrameCallback,
-    mousedownRemoveCallback) {
+    mousedownRemoveCallback,
+    frameUpBtnCallback,
+    frameDownBtnCallback) {
   let frame = document.createElement("div");
   let frameDeleteBtn = document.createElement("button");
   let frameUpBtn = document.createElement("button");
@@ -50,7 +52,9 @@ function getFrameTemplate(
   frame.addEventListener("mousedown", mousedownFrameCallback);
   frameDeleteBtn.classList.add("frame-delete");
   frameUpBtn.classList.add("frame-up");
+  frameUpBtn.addEventListener("mousedown", frameUpBtnCallback);
   frameDownBtn.classList.add("frame-down");
+  frameDownBtn.addEventListener("mousedown", frameDownBtnCallback);
   frameDeleteBtn.innerHTML = "<i class=\"fa fa-times\"></i>";
   frameDeleteBtn.addEventListener("mousedown", mousedownRemoveCallback);
   frameUpBtn.innerHTML = "<i class=\"fa fa-sort-asc\"></i>";
@@ -74,6 +78,10 @@ SequencePanel.prototype.append = function(frameId) {
     if (this.maxFrameId > 0) {
       this.framesController.remove(frameId);
     }
+  }, () => {
+    alert("up");
+  }, () => {
+    alert("down");
   });
   this.elem.appendChild(newFrame);
 };
