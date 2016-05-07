@@ -5,19 +5,25 @@ import CanvasModel from "./canvas-model";
 // frame の追加・削除、currentFrameの切り替えをModel上で行う
 function FramesController(canvas) {
   let updateImageDataToNextData;
+  let setImageData;
   this.frames = [];
   this.currentFrameId = 0;
   this.canvasModel = new CanvasModel(canvas);
   updateImageDataToNextData = (frameId) => {
+    setImageData();
+    this.currentFrameId = frameId;
+    this.canvasModel.setImageData(this.getCurrentFrame().imageData);
+  };
+  setImageData = () => {
     let beforeFrame = this.getCurrentFrame();
     // beforeFrameは削除されている可能性がある
     if (typeof beforeFrame !== "undefined") {
       beforeFrame.imageData = this.canvasModel.getImageData();
     }
-    this.currentFrameId = frameId;
-    this.canvasModel.setImageData(this.getCurrentFrame().imageData);
   };
+
   eventPublisher.subscribe("currentFrameId", updateImageDataToNextData);
+  eventPublisher.subscribe("openMenu", setImageData);
 }
 
 // パラメータ id : どこの後ろに追加するのか（今は実装していない）

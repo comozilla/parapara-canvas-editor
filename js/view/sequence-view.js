@@ -14,9 +14,13 @@ function SequencePanel(elem, framesController) {
     for (this.maxFrameId = 0;
         this.maxFrameId < frames.length; this.maxFrameId++) {
       this.append(this.maxFrameId);
+      this.updateThumbnail(this.maxFrameId);
     }
     this.maxFrameId--; // 1つ多くなってしまうから
     this.setCurrentFrame(this.currentFrameId);
+  });
+  eventPublisher.subscribe("openMenu:after", () => {
+    this.updateThumbnail(this.framesController.currentFrameId);
   });
   document.getElementById("sequence-add-btn").addEventListener("click", () => {
     this.framesController.append(++this.maxFrameId);
@@ -45,6 +49,7 @@ function getFrameTemplate(
   let frameDeleteBtn = document.createElement("button");
   let frameUpBtn = document.createElement("button");
   let frameDownBtn = document.createElement("button");
+  let previewCanvas = document.createElement("canvas");
   frame.dataset.frameIndex = frameId;
   frame.classList.add("thumbnail");
   frame.addEventListener("mousedown", mousedownFrameCallback);
@@ -58,14 +63,28 @@ function getFrameTemplate(
   frame.appendChild(frameDeleteBtn);
   frame.appendChild(frameUpBtn);
   frame.appendChild(frameDownBtn);
-
+  frame.appendChild(previewCanvas);
   return frame;
 }
+
+SequencePanel.prototype.updateThumbnail = function(frameId) {
+  var canvas = this.elem.querySelector(".thumbnail[data-frame-index=\"" + frameId + "\"] canvas");
+  var imageData = this.framesController.frames[frameId].imageData;
+  if (this.framesController.currentFrameId === frameId) {
+    imageData = this.framesController.canvasModel.getImageData();
+  }
+  if (imageData !== null) {
+    canvas.width = imageData.width;
+    canvas.height = imageData.height;
+    var ctx = canvas.getContext("2d");
+    ctx.putImageData(imageData, 0, 0);    
+  }
+};
 
 SequencePanel.prototype.append = function(frameId) {
   let newFrame = getFrameTemplate(frameId, (event) => {
     // 子要素のmousedownによる発生を防ぐ
-    if (event.target.classList.contains("thumbnail")) {
+    if (event.target.nodeName === "CANVAS" || event.target.classList.contains("thumbnail")) {
       eventPublisher.publish("currentFrameId", frameId);
       this.setCurrentFrame(newFrame);
     }

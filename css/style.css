@@ -99,6 +99,10 @@ html, body {
   border-radius: 20px;
   position: relative;
 }
+#menu-thumbnails canvas {
+  width: 100%;
+  height: 100%;
+}
 #menu-thumbnails .thumbnail-selected {
   border-color: cyan;
 }
