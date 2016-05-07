@@ -79,9 +79,9 @@ SequencePanel.prototype.append = function(frameId) {
       this.framesController.remove(frameId);
     }
   }, () => {
-    alert("up");
+    this.framesController.moveFrame(frameId, "up");
   }, () => {
-    alert("down");
+    this.framesController.moveFrame(frameId, "down");
   });
   this.elem.appendChild(newFrame);
 };

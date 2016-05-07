@@ -1,4 +1,5 @@
-function Frame() {
+function Frame(id) {
+  this.id = id;
   this.imageData = null;
 }
 
