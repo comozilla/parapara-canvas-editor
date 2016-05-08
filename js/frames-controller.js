@@ -58,6 +58,15 @@ FramesController.prototype.moveFrame = function(frameId, moveDirection) {
     eventPublisher.publish("frames", this.frames);
   } else if (moveDirection === "down") {
     // ここに下に移動する方法も書いて
+    if (frameId >= this.frames.length - 1) {
+    return;
+    }
+    let frameTmp = this.frames[frameId + 1];
+    this.frames[frameId + 1] = this.frames[frameId];
+    this.frames[frameId] = frameTmp;
+
+    this.canvasModel.setImageData(this.frames[this.currentFrameId].imageData);
+    eventPublisher.publish("frames", this.frames);
   }
 };
 
