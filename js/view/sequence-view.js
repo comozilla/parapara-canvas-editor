@@ -1,31 +1,28 @@
 import eventPublisher from "./../publisher";
 
+const DISABLE_FRAME_ID = -1;
+
 function SequencePanel(elem, framesController) {
   this.elem = elem;
-  this.maxFrameId = 0;
   this.currentFrameId = 0;
   this.framesController = framesController;
   eventPublisher.subscribe("currentFrameId", (currentFrameId) => {
     this.currentFrameId = currentFrameId;
     this.setCurrentFrame(currentFrameId);
   });
-  eventPublisher.subscribe("frames", (framesDetail) => {
-    if (framesDetail.action === "append") {
-      this.append(this.maxFrameId);
-    } else if (framesDetail.action === "remove") {
-      this.remove(framesDetail.actionFrame);
-    } else {
-      this.clear();
-      for (this.maxFrameId = 0;
-          this.maxFrameId < framesDetail.frames.length; this.maxFrameId++) {
-        this.append(this.maxFrameId);
-      }
-      this.maxFrameId--; // 1つ多くなってしまうから
-      this.setCurrentFrame(this.currentFrameId);
+  eventPublisher.subscribe("frames", (frameDetail) => {
+    if (frameDetail.action === "append") {
+      this.append();
+    } else if (frameDetail.action === "remove") {
+      this.remove(frameDetail.actionFrame);
+    } else if (frameDetail.action === "moveUp") {
+      this.moveUp(frameDetail.actionFrame);
+    } else if (frameDetail.action === "moveDown") {
+      this.moveDown(frameDetail.actionFrame);
     }
   });
   document.getElementById("sequence-add-btn").addEventListener("click", () => {
-    this.framesController.append(++this.maxFrameId);
+    this.framesController.append();
   });
 }
 
@@ -69,7 +66,7 @@ SequencePanel.prototype.getFrameTemplate = function(frameId) {
   frameDeleteBtn.innerHTML = "<i class=\"fa fa-times\"></i>";
   frameDeleteBtn.addEventListener("mousedown", () => {
     // フレーム数が１つの時は、エラーになるため削除しない。
-    if (this.maxFrameId > 0) {
+    if (this.getMaxFrameId() > 0) {
       this.framesController.remove(frame.dataset.frameIndex);
     }
   });
@@ -82,8 +79,8 @@ SequencePanel.prototype.getFrameTemplate = function(frameId) {
   return frame;
 }
 
-SequencePanel.prototype.append = function(frameId) {
-  let newFrame = this.getFrameTemplate(frameId);
+SequencePanel.prototype.append = function() {
+  let newFrame = this.getFrameTemplate(0);
   // 追加アニメーションを実行
   newFrame.animate(
     [{ transformOrigin: "0px 0px", transform: "scaleY(0)" },
@@ -91,6 +88,7 @@ SequencePanel.prototype.append = function(frameId) {
     { direction: "alternate", duration: 250, fill: "both", easing: "ease-in-out" });
 
   this.elem.appendChild(newFrame);
+  this.renumber();
 };
 
 SequencePanel.prototype.clear = function() {
@@ -99,8 +97,7 @@ SequencePanel.prototype.clear = function() {
 
 SequencePanel.prototype.remove = function(frameId) {
   let frame = this.elem.querySelector("[data-frame-index=\"" + frameId + "\"]");
-  // バグを防止するため、frameIndexは変更しておく
-  frame.dataset.frameIndex = -1;
+  frame.dataset.frameIndex = DISABLE_FRAME_ID;
   frame.animate(
     [{ transformOrigin: "0px 0px", transform: "scaleY(1)" },
     { transformOrigin: "0px 100%", transform: "scaleY(0)" }],
@@ -117,24 +114,43 @@ SequencePanel.prototype.renumber = function() {
   let children = this.elem.children;
   let disableFrameCount = 0;
   let childNode;
-  this.maxFrameId = 0;
-  while (typeof (childNode = children[this.maxFrameId + disableFrameCount]) !== "undefined") {
+  let index = 0;
+  while (typeof (childNode = children[index + disableFrameCount]) !== "undefined") {
     if (typeof childNode.dataset === "undefined" ||
         parseInt(childNode.dataset.frameIndex) === -1) {
       disableFrameCount++;
       continue;
     }
-    childNode.dataset.frameIndex = this.maxFrameId++;
+    childNode.dataset.frameIndex = index++;
   }
-  this.maxFrameId -= disableFrameCount;
+  this.setCurrentFrame(this.currentFrameId);
 };
 
-SequencePanel.prototype.moveUp = function() {
-  // TODO
+SequencePanel.prototype.getMaxFrameId = function() {
+  return this.elem.children.length - 1;
+}
+
+SequencePanel.prototype.moveUp = function(frameId) {
+  // 表示上では、frameIdの1つ上の要素を下にしているのと同じである。
+  this.moveDown(frameId - 1);
 };
 
-SequencePanel.prototype.moveDown = function() {
-  // TODO
+SequencePanel.prototype.moveDown = function(frameId) {
+  let moveDownFrame = this.elem.querySelector("[data-frame-index=\"" + frameId + "\"]");
+  let moveUpFrame = this.elem.querySelector("[data-frame-index=\"" + (frameId + 1) + "\"]");
+  this.elem.removeChild(moveDownFrame);
+  this.elem.insertBefore(moveDownFrame, moveUpFrame);
+
+  this.renumber();
+
+  moveDownFrame.animate(
+    [{ transform: "translateY(" + getComputedStyle(moveUpFrame).height + ")" },
+    { transform: "translateY(0px)" }],
+    { direction: "alternate", duration: 250, fill: "both", easing: "ease-in-out" });
+  moveUpFrame.animate(
+    [{ transform: "translateY(-" + getComputedStyle(moveDownFrame).height + ")" },
+    { transform: "translateY(0px)" }],
+    { direction: "alternate", duration: 250, fill: "both", easing: "ease-in-out" });
 };
 
 SequencePanel.prototype.setCurrentFrame = function(frameIndex) {
