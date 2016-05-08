@@ -12,6 +12,8 @@ function SequencePanel(elem, framesController) {
   eventPublisher.subscribe("frames", (framesDetail) => {
     if (framesDetail.action === "append") {
       this.append(this.maxFrameId);
+    } else if (framesDetail.action === "remove") {
+      this.remove(framesDetail.actionFrame);
     } else {
       this.clear();
       for (this.maxFrameId = 0;
@@ -72,6 +74,7 @@ function getFrameTemplate(
 
 SequencePanel.prototype.append = function(frameId) {
   let newFrame = getFrameTemplate(frameId, (event) => {
+    console.log(frameId);
     // 子要素のmousedownによる発生を防ぐ
     if (event.target.classList.contains("thumbnail")) {
       eventPublisher.publish("currentFrameId", frameId);
@@ -89,10 +92,9 @@ SequencePanel.prototype.append = function(frameId) {
   });
   // 追加アニメーションを実行
   newFrame.animate(
-      [{ transformOrigin: "0px 0px", transform: "scaleY(0)" },
-      { transformOrigin: "0px 100%", transform: "scaleY(1)" }],
-      { direction: "alternate", duration: 250, fill: "both", easing: "ease-in-out"
-    });
+    [{ transformOrigin: "0px 0px", transform: "scaleY(0)" },
+    { transformOrigin: "0px 100%", transform: "scaleY(1)" }],
+    { direction: "alternate", duration: 250, fill: "both", easing: "ease-in-out" });
 
   this.elem.appendChild(newFrame);
 };
@@ -101,7 +103,36 @@ SequencePanel.prototype.clear = function() {
   this.elem.innerHTML = "";
 };
 
-SequencePanel.prototype.remove = function(frame) {
+SequencePanel.prototype.remove = function(frameId) {
+  let frame = this.elem.querySelector("[data-frame-index=\"" + frameId + "\"]");
+  // バグを防止するため、frameIndexは変更しておく
+  frame.dataset.frameIndex = -1;
+  frame.animate(
+    [{ transformOrigin: "0px 0px", transform: "scaleY(1)" },
+    { transformOrigin: "0px 100%", transform: "scaleY(0)" }],
+    { direction: "alternate", duration: 250, fill: "both", easing: "ease-in-out" });
+
+  this.renumber();
+
+  setTimeout(() => {
+    this.elem.removeChild(frame);
+  }, 250);
+};
+
+SequencePanel.prototype.renumber = function() {
+  let children = this.elem.children;
+  let disableFrameCount = 0;
+  let childNode;
+  this.maxFrameId = 0;
+  while (typeof (childNode = children[this.maxFrameId + disableFrameCount]) !== "undefined") {
+    if (typeof childNode.dataset === "undefined" ||
+        parseInt(childNode.dataset.frameIndex) === -1) {
+      disableFrameCount++;
+      continue;
+    }
+    childNode.dataset.frameIndex = this.maxFrameId++;
+  }
+  this.maxFrameId -= disableFrameCount;
 };
 
 SequencePanel.prototype.moveUp = function() {
