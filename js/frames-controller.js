@@ -59,7 +59,7 @@ FramesController.prototype.moveFrame = function(frameId, moveDirection) {
   } else if (moveDirection === "down") {
     // ここに下に移動する方法も書いて
     if (frameId >= this.frames.length - 1) {
-    return;
+      return;
     }
     let frameTmp = this.frames[frameId + 1];
     this.frames[frameId + 1] = this.frames[frameId];
