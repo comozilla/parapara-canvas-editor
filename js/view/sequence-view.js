@@ -9,10 +9,10 @@ function SequencePanel(elem, framesController) {
     this.currentFrameId = currentFrameId;
     this.setCurrentFrame(currentFrameId);
   });
-  eventPublisher.subscribe("frames", (frames) => {
+  eventPublisher.subscribe("frames", (framesDetail) => {
     this.clear();
     for (this.maxFrameId = 0;
-        this.maxFrameId < frames.length; this.maxFrameId++) {
+        this.maxFrameId < framesDetail.frames.length; this.maxFrameId++) {
       this.append(this.maxFrameId);
     }
     this.maxFrameId--; // 1つ多くなってしまうから

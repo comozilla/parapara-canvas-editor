@@ -25,7 +25,11 @@ FramesController.prototype.append = function(id) {
   const frame = new Frame();
   // 今はいいが、あとで splice に変える
   this.frames.push(frame);
-  eventPublisher.publish("frames", this.frames);
+  eventPublisher.publish("frames", {
+    frames: this.frames,
+    action: "append",
+    actionFrame: this.frames.length - 1
+  });
 };
 
 FramesController.prototype.remove = function(id) {
@@ -39,7 +43,11 @@ FramesController.prototype.remove = function(id) {
   this.frames.splice(id, 1);
   this.canvasModel.setImageData(
     this.getFrameById(nextCurrentFrameId).imageData);
-  eventPublisher.publish("frames", this.frames);
+  eventPublisher.publish("frames", {
+    frames: this.frames,
+    action: "remove",
+    actionFrame: id
+  });
   eventPublisher.publish("currentFrameId", nextCurrentFrameId);
 };
 
@@ -55,7 +63,11 @@ FramesController.prototype.moveFrame = function(frameId, moveDirection) {
     this.frames[frameId] = frameTmp;
     // currentFrameの内容が変わった可能性があるため、再描画する
     this.canvasModel.setImageData(this.frames[this.currentFrameId].imageData);
-    eventPublisher.publish("frames", this.frames);
+    eventPublisher.publish("frames", {
+      frames: this.frames,
+      action: "moveUp",
+      actionFrame: frameId
+    });
   } else if (moveDirection === "down") {
     // ここに下に移動する方法も書いて
     if (frameId >= this.frames.length - 1) {
@@ -66,7 +78,11 @@ FramesController.prototype.moveFrame = function(frameId, moveDirection) {
     this.frames[frameId] = frameTmp;
 
     this.canvasModel.setImageData(this.frames[this.currentFrameId].imageData);
-    eventPublisher.publish("frames", this.frames);
+    eventPublisher.publish("frames", {
+      frames: this.frames,
+      action: "moveDown",
+      actionFrame: frameId
+    });
   }
 };
 
