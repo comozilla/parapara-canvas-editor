@@ -43,26 +43,36 @@ function SequencePanel(elem, framesController) {
   </div>
 </div>
 */
-function getFrameTemplate(
-    frameId,
-    mousedownFrameCallback,
-    mousedownRemoveCallback,
-    frameUpBtnCallback,
-    frameDownBtnCallback) {
+SequencePanel.prototype.getFrameTemplate = function(frameId) {
   let frame = document.createElement("div");
   let frameDeleteBtn = document.createElement("button");
   let frameUpBtn = document.createElement("button");
   let frameDownBtn = document.createElement("button");
   frame.dataset.frameIndex = frameId;
   frame.classList.add("thumbnail");
-  frame.addEventListener("mousedown", mousedownFrameCallback);
+  frame.addEventListener("mousedown", (event) => {
+    // 子要素のmousedownによる発生を防ぐ
+    if (event.target.classList.contains("thumbnail")) {
+      eventPublisher.publish("currentFrameId", frame.dataset.frameIndex);
+      this.setCurrentFrame(frame);
+    }
+  });
   frameDeleteBtn.classList.add("frame-delete");
   frameUpBtn.classList.add("frame-up");
-  frameUpBtn.addEventListener("mousedown", frameUpBtnCallback);
+  frameUpBtn.addEventListener("mousedown", () => {
+    this.framesController.moveFrame(frame.dataset.frameIndex, "up");
+  });
   frameDownBtn.classList.add("frame-down");
-  frameDownBtn.addEventListener("mousedown", frameDownBtnCallback);
+  frameDownBtn.addEventListener("mousedown", () => {
+    this.framesController.moveFrame(frame.dataset.frameIndex, "down");
+  });
   frameDeleteBtn.innerHTML = "<i class=\"fa fa-times\"></i>";
-  frameDeleteBtn.addEventListener("mousedown", mousedownRemoveCallback);
+  frameDeleteBtn.addEventListener("mousedown", () => {
+    // フレーム数が１つの時は、エラーになるため削除しない。
+    if (this.maxFrameId > 0) {
+      this.framesController.remove(frame.dataset.frameIndex);
+    }
+  });
   frameUpBtn.innerHTML = "<i class=\"fa fa-sort-asc\"></i>";
   frameDownBtn.innerHTML = "<i class=\"fa fa-sort-desc\"></i>";
   frame.appendChild(frameDeleteBtn);
@@ -73,23 +83,7 @@ function getFrameTemplate(
 }
 
 SequencePanel.prototype.append = function(frameId) {
-  let newFrame = getFrameTemplate(frameId, (event) => {
-    console.log(frameId);
-    // 子要素のmousedownによる発生を防ぐ
-    if (event.target.classList.contains("thumbnail")) {
-      eventPublisher.publish("currentFrameId", frameId);
-      this.setCurrentFrame(newFrame);
-    }
-  }, () => {
-    // フレーム数が１つの時は、エラーになるため削除しない。
-    if (this.maxFrameId > 0) {
-      this.framesController.remove(frameId);
-    }
-  }, () => {
-    this.framesController.moveFrame(frameId, "up");
-  }, () => {
-    this.framesController.moveFrame(frameId, "down");
-  });
+  let newFrame = this.getFrameTemplate(frameId);
   // 追加アニメーションを実行
   newFrame.animate(
     [{ transformOrigin: "0px 0px", transform: "scaleY(0)" },
