@@ -10,13 +10,17 @@ function SequencePanel(elem, framesController) {
     this.setCurrentFrame(currentFrameId);
   });
   eventPublisher.subscribe("frames", (framesDetail) => {
-    this.clear();
-    for (this.maxFrameId = 0;
-        this.maxFrameId < framesDetail.frames.length; this.maxFrameId++) {
+    if (framesDetail.action === "append") {
       this.append(this.maxFrameId);
+    } else {
+      this.clear();
+      for (this.maxFrameId = 0;
+          this.maxFrameId < framesDetail.frames.length; this.maxFrameId++) {
+        this.append(this.maxFrameId);
+      }
+      this.maxFrameId--; // 1つ多くなってしまうから
+      this.setCurrentFrame(this.currentFrameId);
     }
-    this.maxFrameId--; // 1つ多くなってしまうから
-    this.setCurrentFrame(this.currentFrameId);
   });
   document.getElementById("sequence-add-btn").addEventListener("click", () => {
     this.framesController.append(++this.maxFrameId);
@@ -83,6 +87,13 @@ SequencePanel.prototype.append = function(frameId) {
   }, () => {
     this.framesController.moveFrame(frameId, "down");
   });
+  // 追加アニメーションを実行
+  newFrame.animate(
+      [{ transformOrigin: "0px 0px", transform: "scaleY(0)" },
+      { transformOrigin: "0px 100%", transform: "scaleY(1)" }],
+      { direction: "alternate", duration: 250, fill: "both", easing: "ease-in-out"
+    });
+
   this.elem.appendChild(newFrame);
 };
 
