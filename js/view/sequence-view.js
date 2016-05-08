@@ -57,11 +57,11 @@ SequencePanel.prototype.getFrameTemplate = function(frameId) {
   frameDeleteBtn.classList.add("frame-delete");
   frameUpBtn.classList.add("frame-up");
   frameUpBtn.addEventListener("mousedown", () => {
-    this.framesController.moveFrame(frame.dataset.frameIndex, "up");
+    this.framesController.moveFrame(parseInt(frame.dataset.frameIndex), "up");
   });
   frameDownBtn.classList.add("frame-down");
   frameDownBtn.addEventListener("mousedown", () => {
-    this.framesController.moveFrame(frame.dataset.frameIndex, "down");
+    this.framesController.moveFrame(parseInt(frame.dataset.frameIndex), "down");
   });
   frameDeleteBtn.innerHTML = "<i class=\"fa fa-times\"></i>";
   frameDeleteBtn.addEventListener("mousedown", () => {
@@ -136,6 +136,7 @@ SequencePanel.prototype.moveUp = function(frameId) {
 };
 
 SequencePanel.prototype.moveDown = function(frameId) {
+  console.log(frameId);
   let moveDownFrame = this.elem.querySelector("[data-frame-index=\"" + frameId + "\"]");
   let moveUpFrame = this.elem.querySelector("[data-frame-index=\"" + (frameId + 1) + "\"]");
   this.elem.removeChild(moveDownFrame);

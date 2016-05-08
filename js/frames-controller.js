@@ -77,6 +77,7 @@ FramesController.prototype.moveFrame = function(frameId, moveDirection) {
     this.frames[frameId + 1] = this.frames[frameId];
     this.frames[frameId] = frameTmp;
 
+    console.log(typeof frameId);
     this.canvasModel.setImageData(this.frames[this.currentFrameId].imageData);
     eventPublisher.publish("frames", {
       frames: this.frames,
