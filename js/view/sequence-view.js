@@ -97,7 +97,7 @@ SequencePanel.prototype.clear = function() {
 };
 
 SequencePanel.prototype.remove = function(frameId) {
-  let frame = this.elem.querySelector("[data-frame-index=\"" + frameId + "\"]");
+  let frame = this.elem.querySelector(`[data-frame-index=\"${frameId}\"]`);
   frame.dataset.frameIndex = DISABLE_FRAME_ID;
   frame.animate(
     [{ transformOrigin: "0px 0px", transform: "scaleY(1)" },
