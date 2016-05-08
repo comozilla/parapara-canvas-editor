@@ -77,7 +77,7 @@ SequencePanel.prototype.getFrameTemplate = function(frameId) {
   frame.appendChild(frameDownBtn);
 
   return frame;
-}
+};
 
 SequencePanel.prototype.append = function() {
   let newFrame = this.getFrameTemplate(0);
@@ -85,7 +85,8 @@ SequencePanel.prototype.append = function() {
   newFrame.animate(
     [{ transformOrigin: "0px 0px", transform: "scaleY(0)" },
     { transformOrigin: "0px 100%", transform: "scaleY(1)" }],
-    { direction: "alternate", duration: 250, fill: "both", easing: "ease-in-out" });
+    { direction: "alternate", duration: 250,
+      fill: "both", easing: "ease-in-out" });
 
   this.elem.appendChild(newFrame);
   this.renumber();
@@ -101,7 +102,8 @@ SequencePanel.prototype.remove = function(frameId) {
   frame.animate(
     [{ transformOrigin: "0px 0px", transform: "scaleY(1)" },
     { transformOrigin: "0px 100%", transform: "scaleY(0)" }],
-    { direction: "alternate", duration: 250, fill: "both", easing: "ease-in-out" });
+    { direction: "alternate", duration: 250, fill: "both",
+      easing: "ease-in-out" });
 
   this.renumber();
 
@@ -115,7 +117,8 @@ SequencePanel.prototype.renumber = function() {
   let disableFrameCount = 0;
   let childNode;
   let index = 0;
-  while (typeof (childNode = children[index + disableFrameCount]) !== "undefined") {
+  while (typeof (
+        childNode = children[index + disableFrameCount]) !== "undefined") {
     if (typeof childNode.dataset === "undefined" ||
         parseInt(childNode.dataset.frameIndex) === -1) {
       disableFrameCount++;
@@ -128,7 +131,7 @@ SequencePanel.prototype.renumber = function() {
 
 SequencePanel.prototype.getMaxFrameId = function() {
   return this.elem.children.length - 1;
-}
+};
 
 SequencePanel.prototype.moveUp = function(frameId) {
   // 表示上では、frameIdの1つ上の要素を下にしているのと同じである。
@@ -136,22 +139,25 @@ SequencePanel.prototype.moveUp = function(frameId) {
 };
 
 SequencePanel.prototype.moveDown = function(frameId) {
-  console.log(frameId);
-  let moveDownFrame = this.elem.querySelector("[data-frame-index=\"" + frameId + "\"]");
-  let moveUpFrame = this.elem.querySelector("[data-frame-index=\"" + (frameId + 1) + "\"]");
+  let moveDownFrame =
+    this.elem.querySelector(`[data-frame-index=\"${frameId}\"]`);
+  let moveUpFrame =
+    this.elem.querySelector(`[data-frame-index=\"${(frameId + 1)}\"]`);
   this.elem.removeChild(moveDownFrame);
   this.elem.insertBefore(moveDownFrame, moveUpFrame);
 
   this.renumber();
 
   moveDownFrame.animate(
-    [{ transform: "translateY(" + getComputedStyle(moveUpFrame).height + ")" },
+    [{ transform: `translateY(${getComputedStyle(moveUpFrame).height})` },
     { transform: "translateY(0px)" }],
-    { direction: "alternate", duration: 250, fill: "both", easing: "ease-in-out" });
+    { direction: "alternate", duration: 250,
+      fill: "both", easing: "ease-in-out" });
   moveUpFrame.animate(
-    [{ transform: "translateY(-" + getComputedStyle(moveDownFrame).height + ")" },
+    [{ transform: `translateY(-${getComputedStyle(moveDownFrame).height})` },
     { transform: "translateY(0px)" }],
-    { direction: "alternate", duration: 250, fill: "both", easing: "ease-in-out" });
+    { direction: "alternate", duration: 250,
+      fill: "both", easing: "ease-in-out" });
 };
 
 SequencePanel.prototype.setCurrentFrame = function(frameIndex) {
