@@ -79,14 +79,26 @@ SequencePanel.prototype.getFrameTemplate = function(frameId) {
   return frame;
 };
 
+SequencePanel.prototype.appendToggleFrameEffect = function(frame, isAppend) {
+  let direction = isAppend ? "alternate" : "alternate-reverse";
+  frame.animate(
+    [{ transformOrigin: "0px 0px", transform: "scaleY(0)" },
+    { transformOrigin: "0px 100%", transform: "scaleY(1)" }],
+    { direction: direction, duration: 250,
+      fill: "both", easing: "ease-in-out" });
+};
+SequencePanel.prototype.appendMoveFrameEffect = function(frame, isMoveDown, frameHeight) {
+  frame.animate(
+    [{ transform: `translateY(${isMoveDown ? "" : "-"}${frameHeight})` },
+    { transform: "translateY(0px)" }],
+    { direction: "alternate", duration: 250,
+      fill: "both", easing: "ease-in-out" });
+};
+
 SequencePanel.prototype.append = function() {
   let newFrame = this.getFrameTemplate(0);
   // 追加アニメーションを実行
-  newFrame.animate(
-    [{ transformOrigin: "0px 0px", transform: "scaleY(0)" },
-    { transformOrigin: "0px 100%", transform: "scaleY(1)" }],
-    { direction: "alternate", duration: 250,
-      fill: "both", easing: "ease-in-out" });
+  this.appendToggleFrameEffect(newFrame, true);
 
   this.elem.appendChild(newFrame);
   this.renumber();
@@ -99,11 +111,7 @@ SequencePanel.prototype.clear = function() {
 SequencePanel.prototype.remove = function(frameId) {
   let frame = this.elem.querySelector(`[data-frame-index=\"${frameId}\"]`);
   frame.dataset.frameIndex = DISABLE_FRAME_ID;
-  frame.animate(
-    [{ transformOrigin: "0px 0px", transform: "scaleY(1)" },
-    { transformOrigin: "0px 100%", transform: "scaleY(0)" }],
-    { direction: "alternate", duration: 250, fill: "both",
-      easing: "ease-in-out" });
+  this.appendToggleFrameEffect(frame, false);
 
   this.renumber();
 
@@ -148,16 +156,8 @@ SequencePanel.prototype.moveDown = function(frameId) {
 
   this.renumber();
 
-  moveDownFrame.animate(
-    [{ transform: `translateY(${getComputedStyle(moveUpFrame).height})` },
-    { transform: "translateY(0px)" }],
-    { direction: "alternate", duration: 250,
-      fill: "both", easing: "ease-in-out" });
-  moveUpFrame.animate(
-    [{ transform: `translateY(-${getComputedStyle(moveDownFrame).height})` },
-    { transform: "translateY(0px)" }],
-    { direction: "alternate", duration: 250,
-      fill: "both", easing: "ease-in-out" });
+  this.appendMoveFrameEffect(moveDownFrame, true, getComputedStyle(moveUpFrame).height);
+  this.appendMoveFrameEffect(moveUpFrame, false, getComputedStyle(moveDownFrame).height);
 };
 
 SequencePanel.prototype.setCurrentFrame = function(frameIndex) {
