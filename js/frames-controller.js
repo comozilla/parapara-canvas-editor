@@ -20,8 +20,8 @@ function FramesController(canvas) {
   eventPublisher.subscribe("currentFrameId", updateImageDataToNextData);
 }
 
-// パラメータ id : どこの後ろに追加するのか（今は実装していない）
-FramesController.prototype.append = function(id) {
+// パラメータ frameId : どこの後ろに追加するのか（今は実装していない）
+FramesController.prototype.append = function(frameId) {
   const frame = new Frame();
   // 今はいいが、あとで splice に変える
   this.frames.push(frame);
@@ -32,7 +32,7 @@ FramesController.prototype.append = function(id) {
   });
 };
 
-FramesController.prototype.remove = function(id) {
+FramesController.prototype.remove = function(frameId) {
   if (this.frames.length <= 1) {
     throw new Error("残りフレーム数が1なので、削除することができません。");
   }
@@ -40,13 +40,13 @@ FramesController.prototype.remove = function(id) {
   if (this.currentFrameId >= this.frames.length - 1) {
     nextCurrentFrameId--;
   }
-  this.frames.splice(id, 1);
+  this.frames.splice(frameId, 1);
   this.canvasModel.setImageData(
     this.getFrameById(nextCurrentFrameId).imageData);
   eventPublisher.publish("frames", {
     frames: this.frames,
     action: "remove",
-    actionFrame: id
+    actionFrame: frameId
   });
   eventPublisher.publish("currentFrameId", nextCurrentFrameId);
 };
