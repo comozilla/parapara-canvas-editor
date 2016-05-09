@@ -83,14 +83,16 @@ SequencePanel.prototype.appendToggleFrameEffect = function(frame, isAppend) {
   let direction = isAppend ? "alternate" : "alternate-reverse";
   frame.animate(
     [{ transformOrigin: "0px 0px", transform: "scaleY(0)" },
-    { transformOrigin: "0px 100%", transform: "scaleY(1)" }],
+     { transformOrigin: "0px 100%", transform: "scaleY(1)" }],
     { direction: direction, duration: 250,
       fill: "both", easing: "ease-in-out" });
 };
-SequencePanel.prototype.appendMoveFrameEffect = function(frame, isMoveDown, frameHeight) {
+SequencePanel.prototype.appendMoveFrameEffect = function(
+    frame, isMoveDown, frameHeight) {
+  let beginningValue = isMoveDown ? "" : "-";
   frame.animate(
-    [{ transform: `translateY(${isMoveDown ? "" : "-"}${frameHeight})` },
-    { transform: "translateY(0px)" }],
+    [{ transform: `translateY(${beginningValue}${frameHeight})` },
+     { transform: "translateY(0px)" }],
     { direction: "alternate", duration: 250,
       fill: "both", easing: "ease-in-out" });
 };
@@ -125,8 +127,8 @@ SequencePanel.prototype.renumber = function() {
   let disableFrameCount = 0;
   let childNode;
   let index = 0;
-  while (typeof (
-        childNode = children[index + disableFrameCount]) !== "undefined") {
+  while (
+    typeof (childNode = children[index + disableFrameCount]) !== "undefined") {
     if (typeof childNode.dataset === "undefined" ||
         parseInt(childNode.dataset.frameIndex) === -1) {
       disableFrameCount++;
@@ -156,8 +158,10 @@ SequencePanel.prototype.moveDown = function(frameId) {
 
   this.renumber();
 
-  this.appendMoveFrameEffect(moveDownFrame, true, getComputedStyle(moveUpFrame).height);
-  this.appendMoveFrameEffect(moveUpFrame, false, getComputedStyle(moveDownFrame).height);
+  this.appendMoveFrameEffect(moveDownFrame, true,
+    getComputedStyle(moveUpFrame).height);
+  this.appendMoveFrameEffect(moveUpFrame, false,
+    getComputedStyle(moveDownFrame).height);
 };
 
 SequencePanel.prototype.setCurrentFrame = function(frameIndex) {
