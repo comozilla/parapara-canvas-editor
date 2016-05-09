@@ -89,9 +89,9 @@ SequencePanel.prototype.appendToggleFrameEffect = function(frame, isAppend) {
 };
 SequencePanel.prototype.appendMoveFrameEffect = function(
     frame, isMoveDown, frameHeight) {
-  let beginningValue = isMoveDown ? "" : "-";
+  let beginningValue = (isMoveDown ? "" : "-") + frameHeight;
   frame.animate(
-    [{ transform: `translateY(${beginningValue}${frameHeight})` },
+    [{ transform: `translateY(${beginningValue})` },
      { transform: "translateY(0px)" }],
     { direction: "alternate", duration: 250,
       fill: "both", easing: "ease-in-out" });
