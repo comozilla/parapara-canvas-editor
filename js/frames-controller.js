@@ -12,7 +12,7 @@ function FramesController(canvas) {
   updateImageDataToNextData = (frameId) => {
     updateCurrentFrameImageData();
     this.currentFrameId = frameId;
-    this.canvasModel.updateCurrentFrameImageData(this.getCurrentFrame().imageData);
+    this.canvasModel.setImageData(this.getCurrentFrame().imageData);
   };
   updateCurrentFrameImageData = () => {
     let CurrentFrame = this.getCurrentFrame();
