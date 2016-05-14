@@ -13,7 +13,7 @@ function SequencePanel(elem, framesController) {
   eventPublisher.subscribe("frames", (frameDetail) => {
     if (frameDetail.action === "append") {
       this.append();
-      this.updateThumbnail(this.maxFrameId);
+      this.updateThumbnail(this.framesController.frames.length - 1);
     } else if (frameDetail.action === "remove") {
       this.remove(frameDetail.actionFrame);
     } else if (frameDetail.action === "moveUp") {
@@ -52,9 +52,9 @@ SequencePanel.prototype.getFrameTemplate = function(frameId) {
   let previewCanvas = document.createElement("canvas");
   frame.dataset.frameIndex = frameId;
   frame.classList.add("thumbnail");
-  previewCanvas.addEventListener("mousedown", (event) => {
+  frame.addEventListener("mousedown", (event) => {
     // 子要素のmousedownによる発生を防ぐ
-    if (event.target.classList.contains("thumbnail")) {
+    if (event.target.nodeName === "CANVAS") {
       eventPublisher.publish("currentFrameId", frame.dataset.frameIndex);
       this.setCurrentFrame(frame);
     }
