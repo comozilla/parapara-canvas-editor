@@ -104,7 +104,7 @@ SequencePanel.prototype.appendMoveFrameEffect = function(
 
 SequencePanel.prototype.updateThumbnail = function(frameId) {
   let canvas = this.elem.querySelector(
-    ".thumbnail[data-frame-index=\"" + frameId + "\"] canvas");
+    `.thumbnail[data-frame-index=\"${frameId}\"] canvas`);
   let imageData = this.framesController.frames[frameId].imageData;
   if (this.framesController.currentFrameId === frameId) {
     imageData = this.framesController.canvasModel.getImageData();

@@ -9,7 +9,7 @@ function ColorPickerView(elem) {
     if (selectedPalette !== null) {
       selectedPalette.classList.remove("selected-palette");
     }
-    nextPalette = this.element.querySelector("[data-color=\"" + color + "\"]");
+    nextPalette = this.element.querySelector(`[data-color=\"${color}\"]`);
     if (nextPalette !== null) {
       nextPalette.classList.add("selected-palette");
     }
@@ -20,7 +20,7 @@ ColorPickerView.prototype.addPalette = function(color) {
   let palette;
 
   if (!isColor(color)) {
-    throw new Error("不正な色が指定されました。:" + color);
+    throw new Error(`不正な色が指定されました。:${color}`);
   }
 
   palette = document.createElement("li");
