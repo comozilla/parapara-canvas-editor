@@ -1,5 +1,3 @@
-import eventPublisher from "./publisher";
-
 // HTMLCanvasElementをラップし, canvasRenderingContext2Dに関する操作を提供する
 function CanvasModel(element) {
   this.element = element;

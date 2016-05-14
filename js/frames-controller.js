@@ -15,10 +15,10 @@ function FramesController(canvas) {
     this.canvasModel.updateCurrentFrameImageData(this.getCurrentFrame().imageData);
   };
   updateCurrentFrameImageData = () => {
-    let CurrentFrame = this.getCurrentFrame();
-    // CurrentFrameは削除されている可能性がある
-    if (typeof CurrentFrame !== "undefined") {
-      CurrentFrame.imageData = this.canvasModel.getImageData();
+    let currentFrame = this.getCurrentFrame();
+    // currentFrameは削除されている可能性がある
+    if (typeof currentFrame !== "undefined") {
+      currentFrame.imageData = this.canvasModel.getImageData();
     }
   };
 
