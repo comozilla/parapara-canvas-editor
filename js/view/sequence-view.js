@@ -13,7 +13,7 @@ function SequencePanel(elem, framesController) {
   eventPublisher.subscribe("frames", (frameDetail) => {
     if (frameDetail.action === "append") {
       this.append();
-      this.updateThumbnail(this.maxFrameId);
+      this.updateThumbnail(this.framesController.frames.length - 1);
     } else if (frameDetail.action === "remove") {
       this.remove(frameDetail.actionFrame);
     } else if (frameDetail.action === "moveUp") {
@@ -52,9 +52,9 @@ SequencePanel.prototype.getFrameTemplate = function(frameId) {
   let previewCanvas = document.createElement("canvas");
   frame.dataset.frameIndex = frameId;
   frame.classList.add("thumbnail");
-  previewCanvas.addEventListener("mousedown", (event) => {
+  frame.addEventListener("mousedown", (event) => {
     // 子要素のmousedownによる発生を防ぐ
-    if (event.target.classList.contains("thumbnail")) {
+    if (event.target.nodeName === "CANVAS") {
       eventPublisher.publish("currentFrameId", frame.dataset.frameIndex);
       this.setCurrentFrame(frame);
     }
@@ -102,18 +102,10 @@ SequencePanel.prototype.appendMoveFrameEffect = function(
       fill: "both", easing: "ease-in-out" });
 };
 
-SequencePanel.prototype.append = function() {
-  let newFrame = this.getFrameTemplate(0);
-  // 追加アニメーションを実行
-  this.appendToggleFrameEffect(newFrame, true);
-  this.elem.appendChild(newFrame);
-  this.renumber();
-};
-
 SequencePanel.prototype.updateThumbnail = function(frameId) {
   let canvas = this.elem.querySelector(
-    ".thumbnail[data-frame-index=\"" + frameId + "\"] canvas");
-  let imageData;
+    `.thumbnail[data-frame-index=\"${frameId}\"] canvas`);
+  let imageData = this.framesController.frames[frameId].imageData;
   if (this.framesController.currentFrameId === frameId) {
     imageData = this.framesController.canvasModel.getImageData();
   } else {
@@ -125,6 +117,15 @@ SequencePanel.prototype.updateThumbnail = function(frameId) {
     let ctx = canvas.getContext("2d");
     ctx.putImageData(imageData, 0, 0);
   }
+};
+
+SequencePanel.prototype.append = function() {
+  let newFrame = this.getFrameTemplate(0);
+  // 追加アニメーションを実行
+  this.appendToggleFrameEffect(newFrame, true);
+
+  this.elem.appendChild(newFrame);
+  this.renumber();
 };
 
 SequencePanel.prototype.clear = function() {
