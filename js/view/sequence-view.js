@@ -13,7 +13,6 @@ function SequencePanel(elem, framesController) {
   eventPublisher.subscribe("frames", (frameDetail) => {
     if (frameDetail.action === "append") {
       this.append();
-      this.updateThumbnail(this.framesController.frames.length - 1);
     } else if (frameDetail.action === "remove") {
       this.remove(frameDetail.actionFrame);
     } else if (frameDetail.action === "moveUp") {
@@ -126,6 +125,7 @@ SequencePanel.prototype.append = function() {
 
   this.elem.appendChild(newFrame);
   this.renumber();
+  this.updateThumbnail(this.framesController.frames.length - 1);
 };
 
 SequencePanel.prototype.clear = function() {
@@ -184,6 +184,9 @@ SequencePanel.prototype.moveDown = function(frameId) {
     getComputedStyle(moveUpFrame).height);
   this.appendMoveFrameEffect(moveUpFrame, false,
     getComputedStyle(moveDownFrame).height);
+
+  this.updateThumbnail(frameId);
+  this.updateThumbnail(frameId + 1);
 };
 
 SequencePanel.prototype.setCurrentFrame = function(frameIndex) {

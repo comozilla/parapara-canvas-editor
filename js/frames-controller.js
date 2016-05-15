@@ -47,7 +47,7 @@ FramesController.prototype.remove = function(frameId) {
     nextCurrentFrameId--;
   }
   this.frames.splice(frameId, 1);
-  this.canvasModel.updateCurrentFrameImageData(
+  this.canvasModel.setImageData(
     this.getFrameById(nextCurrentFrameId).imageData);
   eventPublisher.publish("frames", {
     frames: this.frames,
