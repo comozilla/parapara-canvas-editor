@@ -21,6 +21,9 @@ function SequencePanel(elem, framesController) {
       this.moveDown(frameDetail.actionFrame);
     }
   });
+  eventPublisher.subscribe("openMenu:after", () => {
+    this.updateThumbnail(this.framesController.currentFrameId);
+  });
   document.getElementById("sequence-add-btn").addEventListener("click", () => {
     this.framesController.append();
   });
@@ -45,11 +48,12 @@ SequencePanel.prototype.getFrameTemplate = function(frameId) {
   let frameDeleteBtn = document.createElement("button");
   let frameUpBtn = document.createElement("button");
   let frameDownBtn = document.createElement("button");
+  let previewCanvas = document.createElement("canvas");
   frame.dataset.frameIndex = frameId;
   frame.classList.add("thumbnail");
   frame.addEventListener("mousedown", (event) => {
     // 子要素のmousedownによる発生を防ぐ
-    if (event.target.classList.contains("thumbnail")) {
+    if (event.target.nodeName === "CANVAS") {
       eventPublisher.publish("currentFrameId", frame.dataset.frameIndex);
       this.setCurrentFrame(frame);
     }
@@ -75,7 +79,7 @@ SequencePanel.prototype.getFrameTemplate = function(frameId) {
   frame.appendChild(frameDeleteBtn);
   frame.appendChild(frameUpBtn);
   frame.appendChild(frameDownBtn);
-
+  frame.appendChild(previewCanvas);
   return frame;
 };
 
@@ -97,6 +101,23 @@ SequencePanel.prototype.appendMoveFrameEffect = function(
       fill: "both", easing: "ease-in-out" });
 };
 
+SequencePanel.prototype.updateThumbnail = function(frameId) {
+  let canvas = this.elem.querySelector(
+    `.thumbnail[data-frame-index=\"${frameId}\"] canvas`);
+  let imageData = this.framesController.frames[frameId].imageData;
+  if (this.framesController.currentFrameId === frameId) {
+    imageData = this.framesController.canvasModel.getImageData();
+  } else {
+    imageData = this.framesController.frames[frameId].imageData;
+  }
+  if (imageData !== null) {
+    canvas.width = imageData.width;
+    canvas.height = imageData.height;
+    let ctx = canvas.getContext("2d");
+    ctx.putImageData(imageData, 0, 0);
+  }
+};
+
 SequencePanel.prototype.append = function() {
   let newFrame = this.getFrameTemplate(0);
   // 追加アニメーションを実行
@@ -104,6 +125,7 @@ SequencePanel.prototype.append = function() {
 
   this.elem.appendChild(newFrame);
   this.renumber();
+  this.updateThumbnail(this.framesController.frames.length - 1);
 };
 
 SequencePanel.prototype.clear = function() {
@@ -162,6 +184,9 @@ SequencePanel.prototype.moveDown = function(frameId) {
     getComputedStyle(moveUpFrame).height);
   this.appendMoveFrameEffect(moveUpFrame, false,
     getComputedStyle(moveDownFrame).height);
+
+  this.updateThumbnail(frameId);
+  this.updateThumbnail(frameId + 1);
 };
 
 SequencePanel.prototype.setCurrentFrame = function(frameIndex) {

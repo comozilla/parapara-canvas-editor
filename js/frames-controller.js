@@ -5,19 +5,25 @@ import CanvasModel from "./canvas-model";
 // frame の追加・削除、currentFrameの切り替えをModel上で行う
 function FramesController(canvas) {
   let updateImageDataToNextData;
+  let updateCurrentFrameImageData;
   this.frames = [];
   this.currentFrameId = 0;
   this.canvasModel = new CanvasModel(canvas);
   updateImageDataToNextData = (frameId) => {
-    let beforeFrame = this.getCurrentFrame();
-    // beforeFrameは削除されている可能性がある
-    if (typeof beforeFrame !== "undefined") {
-      beforeFrame.imageData = this.canvasModel.getImageData();
-    }
+    updateCurrentFrameImageData();
     this.currentFrameId = frameId;
     this.canvasModel.setImageData(this.getCurrentFrame().imageData);
   };
+  updateCurrentFrameImageData = () => {
+    let currentFrame = this.getCurrentFrame();
+    // currentFrameは削除されている可能性がある
+    if (typeof currentFrame !== "undefined") {
+      currentFrame.imageData = this.canvasModel.getImageData();
+    }
+  };
+
   eventPublisher.subscribe("currentFrameId", updateImageDataToNextData);
+  eventPublisher.subscribe("openMenu", updateCurrentFrameImageData);
 }
 
 // パラメータ frameId : どこの後ろに追加するのか（今は実装していない）
@@ -42,9 +48,9 @@ FramesController.prototype.remove = function(frameId) {
   }
   this.frames.splice(frameId, 1);
   this.canvasModel.setImageData(
-    this.getFrameById(nextCurrentFrameId).imageData);
-  eventPublisher.publish("frames", {
-    frames: this.frames,
+     this.getFrameById(nextCurrentFrameId).imageData);
+   eventPublisher.publish("frames", {
+     frames: this.frames,
     action: "remove",
     actionFrame: frameId
   });
