@@ -6,6 +6,7 @@ class CanvasModel {
     this.element = element;
     this.context = this.element.getContext("2d");
   }
+  // 外からはアクセスしないでください。
   getImageData() {
     return this.context.getImageData(0, 0,
       this.element.width, this.element.height);

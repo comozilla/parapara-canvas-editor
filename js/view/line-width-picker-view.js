@@ -1,7 +1,7 @@
 import eventPublisher from "./../publisher";
 
-class LineWidthPickerPanel{
-  constructor(){
+class LineWidthPickerPanel {
+  constructor(elem){
      this.element = elem;
   eventPublisher.subscribe("lineWidth", (lineWidth) => {
     this.element.value = lineWidth;
@@ -11,12 +11,12 @@ class LineWidthPickerPanel{
   });
   }
 
-changeMaxLineWidth(){
+changeMaxLineWidth(maxLineWidth){
 
   // TODO
 };
 
-changeMinLineWidth(){
+changeMinLineWidth(minLineWidth){
    // TODO
 }
 }

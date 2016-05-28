@@ -6,7 +6,7 @@ import PlayerView from "./view/player-view";
 import eventPublisher from "./publisher";
 
 class ViewManager{
-  constructor(){
+  constructor(framesController){
     this.colorPicker =
     new ColorPickerView(document.getElementById("menu-colors"));
   eventPublisher.subscribe("defaultPalleteColors", (colors) => {

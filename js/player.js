@@ -9,7 +9,7 @@ const playInterval = 250;
  * 再生された時に他に必要な処理（Menuを隠すなど）は、各自クラスでsubscribeして行う。
  */
 class Player{
-  constructor(){
+  constructor(framesController){
     this.isPlaying = false;
   this.playInterval = playInterval;
   this.framesController = framesController;
@@ -25,7 +25,7 @@ class Player{
   }
 
  
-changeFrame() {
+changeFrame(currentFrameId) {
   let nextCurrentFrameId;
   this.framesController.setCurrentFrame(currentFrameId);
   if (currentFrameId >= this.framesController.frames.length - 1) {

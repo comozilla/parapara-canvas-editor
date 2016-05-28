@@ -30,7 +30,7 @@ class DrawingConfiguration {
       this.lineWidth = lineWidth;
     });
     eventPublisher.publish("lineWidth", 10);
-  }  
+  }
 }
 
 export default DrawingConfiguration;

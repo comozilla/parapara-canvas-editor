@@ -3,7 +3,7 @@ let isMouseDown = false;
 let previousMousePosition;
 // HTMLCanvasElementをラップし, canvasRenderingContext2Dに関する操作を提供する
 class PaintManager{
-  constructor() {
+  constructor(element) {
     let changeDrawState;
 
     this.element = element;
@@ -41,7 +41,7 @@ class PaintManager{
     });
   }
   
-  mouseDownCanvas() {
+  mouseDownCanvas(event) {
     if (!this.isLock) {
       isMouseDown = true;
       previousMousePosition = { x: event.clientX, y: event.clientY };
@@ -55,7 +55,7 @@ class PaintManager{
       eventPublisher.publish("drawState", "idling");
     }
   }
-  mouseMoveCanvas() {
+  mouseMoveCanvas(event) {
     if (!this.isLock) {
       if (isMouseDown) {
         if (this.color === "white") {
