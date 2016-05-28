@@ -53,7 +53,9 @@ SequencePanel.prototype.getFrameTemplate = function(frameId) {
   frame.classList.add("thumbnail");
   frame.addEventListener("mousedown", (event) => {
     // 子要素のmousedownによる発生を防ぐ
-    if (event.target.nodeName === "IMG") {
+    // IMGタグ、DIVタグのどちらかのときに作動するようにする
+    // （画像がないときはDIVタグのmousedownとなるため）
+    if (/IMG|DIV/.test(event.target.nodeName)) {
       eventPublisher.publish("currentFrameId", frame.dataset.frameIndex);
       this.setCurrentFrame(frame);
     }
