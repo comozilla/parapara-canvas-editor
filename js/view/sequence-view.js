@@ -200,4 +200,14 @@ SequencePanel.prototype.setCurrentFrame = function(frameIndex) {
   }
 };
 
+function imageDataToDataURL(imageData) {
+  let canvas = document.createElement("canvas");
+  canvas.width = imageData.width;
+  canvas.height = imageData.height;
+  let ctx = canvas.getContext("2d");
+  ctx.putImageData(imageData, 0, 0);
+
+  return canvas.toDataURL("image/png");
+}
+
 export default SequencePanel;
