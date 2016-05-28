@@ -174,18 +174,15 @@ SequencePanel.prototype.moveDown = function(frameId) {
     this.elem.querySelector(`[data-frame-index=\"${frameId}\"]`);
   let moveUpFrame =
     this.elem.querySelector(`[data-frame-index=\"${(frameId + 1)}\"]`);
-  this.elem.removeChild(moveDownFrame);
-  this.elem.insertBefore(moveDownFrame, moveUpFrame);
+  this.elem.removeChild(moveUpFrame);
+  this.elem.insertBefore(moveUpFrame, moveDownFrame);
 
   this.renumber();
 
-  this.appendMoveFrameEffect(moveDownFrame, true,
+  this.appendMoveFrameEffect(moveDownFrame, false,
     getComputedStyle(moveUpFrame).height);
-  this.appendMoveFrameEffect(moveUpFrame, false,
+  this.appendMoveFrameEffect(moveUpFrame, true,
     getComputedStyle(moveDownFrame).height);
-
-  this.updateThumbnail(frameId);
-  this.updateThumbnail(frameId + 1);
 };
 
 SequencePanel.prototype.setCurrentFrame = function(frameIndex) {
