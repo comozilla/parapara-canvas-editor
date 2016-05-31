@@ -4,7 +4,7 @@ import CanvasModel from "./canvas-model";
 
 // frame の追加・削除、currentFrameの切り替えをModel上で行う
 class FramesController{
-constructor() {
+constructor(canvas) {
   let updateImageDataToNextData;
   this.frames = [];
   this.currentFrameId = 0;

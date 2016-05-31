@@ -1,7 +1,7 @@
 import eventPublisher from "./../publisher";
 
 class colorpickerview{
-  constructor(){
+  constructor(elem){
     this.element = elem;
   eventPublisher.subscribe("color", (color) => {
     let selectedPalette = this.element.querySelector(".selected-palette");
@@ -16,7 +16,7 @@ class colorpickerview{
   });
   }
 
-addPalette(){
+addPalette(color)){
   let palette;
 
   if (!isColor(color)) {
@@ -38,7 +38,7 @@ clearPalette(){
 }
 
 class isColor{
-  constructor(){
+  constructor(color){
     const testElement = document.createElement("span");
   testElement.style.backgroundColor = color;
 

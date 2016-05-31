@@ -1,7 +1,7 @@
 import eventPublisher from "./../publisher";
 
 class SequencePanel{
-  constructor(){
+  constructor(elem, framesController){
       this.elem = elem;
   this.maxFrameId = 0;
   this.currentFrameId = 0;
@@ -63,7 +63,7 @@ class getFrameTemplate{
 
     return frame;
   }
-  append(){
+  append(frameId){
     let newFrame = getFrameTemplate(frameId, (event) => {
       // 子要素のmousedownによる発生を防ぐ
       if (event.target.classList.contains("thumbnail")) {
@@ -81,7 +81,7 @@ class getFrameTemplate{
   clear(){
     this.elem.innerHTML = "";
   }
-  remove(){
+  remove(frame){
     }
   moveUp(){
     // TODO

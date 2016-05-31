@@ -28,7 +28,7 @@ class MenuView{
     });
   }
 
-setMenuVisible(){
+setMenuVisible(isOpen){
   const menu = document.getElementById("menu");
   const direction = isOpen ? "alternate" : "alternate-reverse";
   this.isOpen = isOpen;
@@ -39,7 +39,7 @@ setMenuVisible(){
 }
 // collapsibleButton : メニューの右側にあるボタン
 
-setCollapsibleButtonVisible(){
+setCollapsibleButtonVisible(visible){
   const collapsibleButton = document.getElementById("menu-collapsible-btn");
   const direction = visible ? "alternate" : "alternate-reverse";
   collapsibleButton.animate(
@@ -47,7 +47,7 @@ setCollapsibleButtonVisible(){
     { direction: direction, duration: 100, fill: "both" });
 }
 
-setCollapsibleButtonMode(){
+setCollapsibleButtonMode(isPlaying){
   this.isPlaying = isPlaying;
   const icon = document.querySelector("#menu-collapsible-btn i");
   if (isPlaying) {
