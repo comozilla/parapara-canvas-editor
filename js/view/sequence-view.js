@@ -48,12 +48,14 @@ SequencePanel.prototype.getFrameTemplate = function(frameId) {
   let frameDeleteBtn = document.createElement("button");
   let frameUpBtn = document.createElement("button");
   let frameDownBtn = document.createElement("button");
-  let previewCanvas = document.createElement("canvas");
+  let previewImage = document.createElement("img");
   frame.dataset.frameIndex = frameId;
   frame.classList.add("thumbnail");
   frame.addEventListener("mousedown", (event) => {
     // 子要素のmousedownによる発生を防ぐ
-    if (event.target.nodeName === "CANVAS") {
+    // IMGタグ、DIVタグのどちらかのときに作動するようにする
+    // （画像がないときはDIVタグのmousedownとなるため）
+    if (/IMG|DIV/.test(event.target.nodeName)) {
       eventPublisher.publish("currentFrameId", frame.dataset.frameIndex);
       this.setCurrentFrame(frame);
     }
@@ -79,7 +81,7 @@ SequencePanel.prototype.getFrameTemplate = function(frameId) {
   frame.appendChild(frameDeleteBtn);
   frame.appendChild(frameUpBtn);
   frame.appendChild(frameDownBtn);
-  frame.appendChild(previewCanvas);
+  frame.appendChild(previewImage);
   return frame;
 };
 
@@ -102,19 +104,18 @@ SequencePanel.prototype.appendMoveFrameEffect = function(
 };
 
 SequencePanel.prototype.updateThumbnail = function(frameId) {
-  let canvas = this.elem.querySelector(
-    `.thumbnail[data-frame-index=\"${frameId}\"] canvas`);
-  let imageData = this.framesController.frames[frameId].imageData;
+  let previewImage = this.elem.querySelector(
+    `.thumbnail[data-frame-index=\"${frameId}\"] img`);
+  let imageData;
   if (this.framesController.currentFrameId === frameId) {
     imageData = this.framesController.canvasModel.getImageData();
   } else {
     imageData = this.framesController.frames[frameId].imageData;
   }
   if (imageData !== null) {
-    canvas.width = imageData.width;
-    canvas.height = imageData.height;
-    let ctx = canvas.getContext("2d");
-    ctx.putImageData(imageData, 0, 0);
+    previewImage.width = imageData.width;
+    previewImage.height = imageData.height;
+    previewImage.src = imageDataToDataURL(imageData);
   }
 };
 
@@ -175,18 +176,15 @@ SequencePanel.prototype.moveDown = function(frameId) {
     this.elem.querySelector(`[data-frame-index=\"${frameId}\"]`);
   let moveUpFrame =
     this.elem.querySelector(`[data-frame-index=\"${(frameId + 1)}\"]`);
-  this.elem.removeChild(moveDownFrame);
-  this.elem.insertBefore(moveDownFrame, moveUpFrame);
+  this.elem.removeChild(moveUpFrame);
+  this.elem.insertBefore(moveUpFrame, moveDownFrame);
 
   this.renumber();
 
-  this.appendMoveFrameEffect(moveDownFrame, true,
+  this.appendMoveFrameEffect(moveDownFrame, false,
     getComputedStyle(moveUpFrame).height);
-  this.appendMoveFrameEffect(moveUpFrame, false,
+  this.appendMoveFrameEffect(moveUpFrame, true,
     getComputedStyle(moveDownFrame).height);
-
-  this.updateThumbnail(frameId);
-  this.updateThumbnail(frameId + 1);
 };
 
 SequencePanel.prototype.setCurrentFrame = function(frameIndex) {
@@ -199,5 +197,15 @@ SequencePanel.prototype.setCurrentFrame = function(frameIndex) {
     frame.classList.add("thumbnail-selected");
   }
 };
+
+function imageDataToDataURL(imageData) {
+  let canvas = document.createElement("canvas");
+  canvas.width = imageData.width;
+  canvas.height = imageData.height;
+  let ctx = canvas.getContext("2d");
+  ctx.putImageData(imageData, 0, 0);
+
+  return canvas.toDataURL("image/png");
+}
 
 export default SequencePanel;
