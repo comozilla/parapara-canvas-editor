@@ -6,6 +6,7 @@ import CanvasModel from "./canvas-model";
 function FramesController(canvas) {
   let updateImageDataToNextData;
   let updateCurrentFrameImageData;
+  let aa;
   this.frames = [];
   this.currentFrameId = 0;
   this.canvasModel = new CanvasModel(canvas);
@@ -21,9 +22,11 @@ function FramesController(canvas) {
       currentFrame.imageData = this.canvasModel.getImageData();
     }
   };
-
+  aa=(data)=>{
+    console.log("aa");
+  }
   eventPublisher.subscribe("currentFrameId", updateImageDataToNextData);
-  
+  eventPublisher.subscribe("drawState", aa);//updateImageDataToNextData);
   eventPublisher.subscribe("openMenu", updateCurrentFrameImageData);
 }
 
