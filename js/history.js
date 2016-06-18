@@ -7,7 +7,8 @@ function test(framescontroller){
         let frames=[];
         //framesは各レイヤを入れる。
         
-        
+        let currentFrame = framescontroller.getCurrentFrame();
+        console.log(currentFrame)
         console.log(data);
         if(data=="drawing"){
             
