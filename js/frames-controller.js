@@ -23,6 +23,7 @@ function FramesController(canvas) {
   };
 
   eventPublisher.subscribe("currentFrameId", updateImageDataToNextData);
+  
   eventPublisher.subscribe("openMenu", updateCurrentFrameImageData);
 }
 
