@@ -2,6 +2,11 @@ import Frame from "./frame";
 import eventPublisher from "./publisher";
 import CanvasModel from "./canvas-model";
 
+//frames...arr,frameごとの実態が入ってる
+//currentFrameId...0から始まる。現在のframeid
+//canvasModel...getimagedataとsetimagedataがある。どちらもcanvasからimagedataを取得する
+//getframebyid...frames[id]
+
 // frame の追加・削除、currentFrameの切り替えをModel上で行う
 function FramesController(canvas) {
   let updateImageDataToNextData;
@@ -11,11 +16,18 @@ function FramesController(canvas) {
   this.currentFrameId = 0;
   this.canvasModel = new CanvasModel(canvas);
   updateImageDataToNextData = (frameId) => {
+    //こいつはframeを切り替えた時に出る。
+    
+    console.log("updateImageDataToNextData")
     updateCurrentFrameImageData();
     this.currentFrameId = frameId;
     this.canvasModel.setImageData(this.getCurrentFrame().imageData);
   };
   updateCurrentFrameImageData = () => {
+    //こいつは設定を開いた時にも出るし閉じた時にモデル。
+    //frameを切り替えた時にもでる
+    
+    console.log("updateCurrentFrameImageData")
     let currentFrame = this.getCurrentFrame();
     // currentFrameは削除されている可能性がある
     if (typeof currentFrame !== "undefined") {
@@ -23,7 +35,12 @@ function FramesController(canvas) {
     }
   };
   aa=(data)=>{
+    if(data=="idling"){
     console.log("aa");
+      updateCurrentFrameImageData();
+      //this.currentFrameId = frameId;
+      this.canvasModel.setImageData(this.getCurrentFrame().imageData);
+    }
   }
   eventPublisher.subscribe("currentFrameId", updateImageDataToNextData);
   eventPublisher.subscribe("drawState", aa);//updateImageDataToNextData);
