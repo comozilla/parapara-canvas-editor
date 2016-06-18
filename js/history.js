@@ -1,6 +1,6 @@
 import eventPublisher from "./publisher";
 
-function test(){
+function test(canvas){
     eventPublisher.subscribe("drawState",function(data){
         console.log(data);
     });

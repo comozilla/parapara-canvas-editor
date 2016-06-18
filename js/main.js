@@ -34,6 +34,6 @@ document.addEventListener("DOMContentLoaded", function() {
   framesController.append(firstFrameId);
   framesController.setCurrentFrame(firstFrameId);
   
-  test();
+  test(canvas);
 });
 
