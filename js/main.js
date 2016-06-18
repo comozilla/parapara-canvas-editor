@@ -3,6 +3,8 @@ import DrawingConfiguration from "./drawing-configuration";
 import ViewManager from "./view-manager";
 import PaintManager from "./paint-manager";
 import Player from "./player";
+import test from "./history.js";
+
 
 // webpack
 import "./../css/style.css";
@@ -31,5 +33,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   framesController.append(firstFrameId);
   framesController.setCurrentFrame(firstFrameId);
+  
+  test(framesController);
 });
 
